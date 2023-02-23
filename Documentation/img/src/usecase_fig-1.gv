@@ -1,0 +1,23 @@
+graph G{
+    labelloc="t"
+    fontsize=19
+    label="Usecase for\n Resume Builder
+    Actors: User, Website\n\n"
+    rankdir=LR
+    
+    node [shape="box" ]
+    start [label="User" fontsize=19]
+    end [label="Website" fontsize=19]
+    
+    node [shape="oval" ]
+    a [label="Build\nand\n Download\n Resume" ]
+    b [label="Sign up" ]
+    c [label="Sign in" ]
+    d [label="Edit/Update\n profile" ]
+    e [label="Save\n built Resume" ]
+    f [label="add\n new resumes" ]
+    g [label="update saved\n resumes" ]
+    
+    start -- {a b c d e f g}[headport="w" minlen="7"]
+    {a b c d e f g } -- end [tailport="e" minlen=7 ]
+}
