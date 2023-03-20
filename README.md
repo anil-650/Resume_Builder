@@ -52,4 +52,4 @@ professional and polished resumes.
 - [ ] Synopsis Submission
     - [x] Synopsis Writing
 
-## [Server Setup](./server/README.md)
+## [Backend Server Setup](./server/README.md)
