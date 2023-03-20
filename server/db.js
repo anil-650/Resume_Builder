@@ -5,7 +5,7 @@ const pool = new Pool({
     password: "dev",
     host: "localhost",
     port: "5432",
-    database: "users"
+    database: "myresumebuilder"
 });
 
 module.exports = pool;

@@ -109,3 +109,8 @@ tmp/
 tmp/*
 
 serv2/
+test-*
+#### My test db
+mydb/
+*.swp
+logfile

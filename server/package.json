@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "packageManager": "pnpm@7.30.0",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
