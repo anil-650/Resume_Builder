@@ -5,19 +5,18 @@ This file contains the instruction to set up the backend of the project
 ## Current project setup
 
 ```
- server
-├──  APIU_TEST.rest
-├──  db.js
-├──  db.pgsql
-├──  index.js
-├──  logfile
-├──  package.json
-├──  pnpm-lock.yaml
-├──  README.md
-├──  routes
-│  └──  jwtAuth.js
-└──  utils
-   └──  jwtGenerator.js
+📂 server
+├── 📄 APIU_TEST.rest
+├── 📄 db.js
+├── 📄 db.pgsql
+├── 📄 index.js
+├── 📄 package.json
+├── 📄 pnpm-lock.yaml
+├── 📄 README.md
+├── 📂 routes
+│   └── 📄 jwtAuth.js
+└── 📂 utils
+    └── 📄 jwtGenerator.js
 ```
 
 ## WE ARE USING
@@ -78,23 +77,23 @@ listening_addresses = '*'
 
 **After Installation Restart your PostgreSQL server.**
 
-- Check if PostgreSQL is running and restart it for changes to take effect.
+Check if PostgreSQL is running and restart it for changes to take effect.
 
-- UBUNTU
+#### UBUNTU
 
 ```sh
 sudo systemctl status spostgresql
 sudo systemctl restart spostgresql
 ```
 
-- WSL (UBUNTU)
+#### WSL (UBUNTU)
 
 ```sh
 sudo service postgresql status
 sudo service postgresql restart
 ```
 
-- WINDOWS
+#### WINDOWS
 
 **Idk🗿** figure it out.
 
@@ -123,7 +122,7 @@ pnpm install
 
 Create a `.evn` file inside the root directory for jwt secrete.
 
-- Inside ***.env*** file
+Inside ***.env*** file
 
 ```conf
 jwtSecrete=<you_screate>
