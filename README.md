@@ -6,6 +6,33 @@ This is a BCA final year group project for Making resume in web.
 
 ## Title: MyResumeBuilder - An Online Resume Building Website
 
+
+### Current Goals
+
+- ✅ Choosing Project
+- ✅ Creating git repo
+    - ✅ Creating README
+    
+- ✅ Deciding on Tech Stack
+- ✅ Synopsis Submission
+    - ✅ Synopsis Writing
+
+- ❌ Project
+    - ✅ Partial functional Database
+    - ✅ Functional Database
+    - ❌ Fully functional Database
+    - ✅ Partial functional Back-end
+    - ✅ Functional Back-end
+        - ✅ register
+        - ✅ login
+        - ✅ dashboard
+    - ❌ Fully functional Back-end
+    - ❌ Partial functional Front-end
+    - ❌ Functional Front-end
+    - ❌ Fully functional Front-end
+
+## [Backend Server Setup](./server/README.md)
+
 ### Group members
 - MRITYUNJAYA NAYAK
 - BIGHNESH PANDA
@@ -42,14 +69,3 @@ professional and polished resumes.
 
 - Nodejs (Frontend: Astro ,Backend: express)
 - Postgress SQL
-
-### Current Goals
-
-- [x] Choosing Project
-- [x] Creating git repo
-    - [x] Creating README
-- [x] Deciding on Tech Stack
-- [ ] Synopsis Submission
-    - [x] Synopsis Writing
-
-## [Backend Server Setup](./server/README.md)

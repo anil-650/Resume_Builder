@@ -2,6 +2,7 @@
 
 This file contains the instruction to set up the backend of the project
 
+**⚠️BACK-END IS NOW FUNCTIONAL⚠️**
 ## Current project setup
 
 ```
@@ -13,7 +14,11 @@ This file contains the instruction to set up the backend of the project
 ├── 📄 package.json
 ├── 📄 pnpm-lock.yaml
 ├── 📄 README.md
+├── 📂 middleware
+│  ├── 📄 authorize.js
+│  └── 📄 validinfo.js
 ├── 📂 routes
+│   ├── 📄 dashboard.js
 │   └── 📄 jwtAuth.js
 └── 📂 utils
     └── 📄 jwtGenerator.js
