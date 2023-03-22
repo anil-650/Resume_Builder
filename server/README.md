@@ -120,13 +120,13 @@ pnpm install
 
 ## START THE SERVER
 
-Create a `.evn` file inside the root directory for jwt secrete.
+Create a `.evn` file inside the root directory for jwt secret.
 
 Inside ***.env*** file
 
 ```conf
-jwtSecrete=<you_screate>
-# jwtSecrete=mycat
+jwtSecret="<you_screat>"
+# jwtSecret="I_am_BATMAN"
 ```
 
 We are finally here just run this and it will be started
