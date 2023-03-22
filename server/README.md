@@ -14,6 +14,7 @@ This file contains the instruction to set up the backend of the project
 ├── 📄 package.json
 ├── 📄 pnpm-lock.yaml
 ├── 📄 README.md
+├── 📄 .env
 ├── 📂 middleware
 │  ├── 📄 authorize.js
 │  └── 📄 validinfo.js
@@ -125,6 +126,7 @@ pnpm install
 
 ## START THE SERVER
 
+<!--
 Create a `.evn` file inside the root directory for jwt secret.
 
 Inside ***.env*** file
@@ -133,6 +135,7 @@ Inside ***.env*** file
 jwtSecret="<you_screat>"
 # jwtSecret="I_am_BATMAN"
 ```
+-->
 
 We are finally here just run this and it will be started
 
