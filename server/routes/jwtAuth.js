@@ -2,8 +2,9 @@ const pool = require("../db");
 const bcrypt = require("bcrypt");
 const jwtGenerator = require("../utils/jwtGenerator");
 const router = require("express").Router();
+const validinfo = require("../middleware/validinfo")
 
-router.post("/register", async (req, res) => {
+router.post("/register", validinfo, async (req, res) => {
 	// 1. desructure body name,  email, password
 	const {name, email, password} = req.body;
 
@@ -35,7 +36,7 @@ router.post("/register", async (req, res) => {
 		// 5. JWT token generation
 		const token = jwtGenerator(newUser.rows[0].user_id);
 
-        // for debuging
+        // DEBUG ONLY
         console.log("token sent");
         
 		res.json({ token });
@@ -47,12 +48,12 @@ router.post("/register", async (req, res) => {
 
 // LOGIN ROUTE
 
-router.post("/login", async (req, res)=> {
+router.post("/login", validinfo, async (req, res)=> {
 try {
-	// 1. destructure body
+	// 1. De-structure body
 	const { email, password } = req.body;
 
-	// 2. check if user does not exist
+	// 2. Check if user does not exist
 	const user = await pool.query("SELECT * FROM uuser WHERE user_email = $1", [ email ]);
 
 	if (user.rows.length === 0) {
@@ -68,11 +69,14 @@ try {
 		return	res.status(401).json({error:"Password or Email Incorrect."});
 	}
 	
+	// 4. Give them the jwtToken
+
 	const token = jwtGenerator(user.rows[0].user_id);
 	res.json({ token });
+    
+    // DEBUG ONLY
+    console.log(`token sent ${token}`)
 
-	// 4. give them the jwtToken
-	
 } catch (error) {
 	console.error(error.message);
 	res.status(500).send("Server Error") 
