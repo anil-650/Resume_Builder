@@ -37,7 +37,7 @@
 Itemized pages
 |SL no.|Item no.|Item Name|*More ?*|
 |-|-|:-:|-|
-|1.||**Project cover page**|| 
+|1.||**Project cover page**||
 |2.|(**i**)|**Tittle page**|*Lamination/ glossy paper*|
 |3.|(**ii**)|**Declaration**||
 |4.|(**iii**)|**Certificate of approval**||
