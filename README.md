@@ -27,7 +27,9 @@ This is a BCA final year group project for Making resume in web.
         - ✅ login
         - ✅ dashboard
     - ❌ Fully functional Back-end
-    - ❌ Partial functional Front-end
+    - ✅ Partial functional Front-end
+        - ✅ display landing, register, login page
+        - ✅ Navigation-bar, Footer, Hero Section
     - ❌ Functional Front-end
     - ❌ Fully functional Front-end
 
