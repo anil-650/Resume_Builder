@@ -1,0 +1,17 @@
+---
+const pathname = new URL(Astro.request.url).pathname;
+const current = pathname.slice(1);
+const active = "bg-white text-orange-600 p-2 rounded-md"; 
+const inactive = "text-white font-bold";
+---
+<nav class="bg-orange-600 mb-10">
+    <div class="container flex flex-wrap items-center justify-between mx-auto">
+        <div class="w-full">
+            <ul class="flex p-4 mt-4 justify-around text-lg">
+                <li><a class={current === "" ? `${active}` : `${inactive}`} href="/">Home</a></li>
+                <li><a class={current === "about" ? `${active}` : `${inactive}`} href="/about">About</a></li>
+                <li><a class={current === "register" ? `${active}` : `${inactive}`} href="/register">Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
