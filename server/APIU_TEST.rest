@@ -1,0 +1,85 @@
+@baseurl = http://localhost:5000
+###
+{{baseurl}}/
+
+###
+POST {{baseurl}}/auth/register
+Content-Type: application/json
+
+{
+    "name": "ram",
+    "email": "ram@gmail.com",
+    "password": "ram123"
+}
+
+###
+POST {{baseurl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "ram@gmail.com",
+    "password": "ram123"
+}
+
+
+### curl quires
+#register
+
+curl -si -X POST \
+'http://localhost:5000/auth/register' \
+-H 'Content-Type: application/json' \
+-d '{"name": "hari", "email": "sita@gmail.com", "password": "sita@123"}'
+
+# Example Response
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 211
+ETag: W/"d3-EcnCFEwGRRWTUdNUqDo74LHOm6U"
+Date: Wed, 22 Mar 2023 05:30:05 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiZmNkNzM3YTEtMjAzZi00OTY5LTg1NTEtZDI3MmRhYWUzN2IwIn0sImlhdCI6MTY3OTQ2MzAwNCwiZXhwIjoxNjc5NDY2NjA0fQ.4oAqOvGCQjVqJuBc4e40MhKvG_jfTGr8cV5vZKQJDfs"}
+
+#login
+
+curl -X POST \
+'http://localhost:5000/auth/login' \
+-H 'Content-Type: application/json' \
+-d '{"email": "sita@gmail.com", "password": "sita@123"}' -i -s
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 211
+ETag: W/"d3-EcnCFEwGRRWTUdNUqDo74LHOm6U"
+Date: Wed, 22 Mar 2023 05:30:05 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiZmNkNzM3YTEtMjAzZi00OTY5LTg1NTEtZDI3MmRhYWUzN2IwIn0sImlhdCI6MTY3OTQ2MzAwNCwiZXhwIjoxNjc5NDY2NjA0fQ.4oAqOvGCQjVqJuBc4e40MhKvG_jfTGr8cV5vZKQJDfs"}
+
+# Dashboard
+
+curl -si -X GET \
+'http://localhost:5000/dashboard' \
+-H 'token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiZmNkNzM3YTEtMjAzZi00OTY5LTg1NTEtZDI3MmRhYWUzN2IwIn0sImlhdCI6MTY3OTQ2MzAwNCwiZXhwIjoxNjc5NDY2NjA0fQ.4oAqOvGCQjVqJuBc4e40MhKvG_jfTGr8cV5vZKQJDfs'
+
+# Example response
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 50
+ETag: W/"32-hjouKWXpcRFJDFStOvkxjfp+uDE"
+Date: Wed, 22 Mar 2023 06:02:00 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"user_name":"sita","user_email":"sita@gmail.com"}
