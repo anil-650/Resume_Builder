@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+import { fetchJoke } from "../api/fetchJokes"
+
+const req = Astro.cookie.headers
+console.log(req)
+const joke = await fetchJoke();
+---
+
+<BaseLayout title="Dashboard">
+  <p>Hello </p>
+  <p>{joke}</p>
+  <p>
+  <code>
+      {req}
+  </code>
+  </p>
+  <p id="na"></p>
+</BaseLayout>

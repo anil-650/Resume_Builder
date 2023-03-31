@@ -1,0 +1,56 @@
+---
+export interface Props {
+lname: string;
+name: string;
+id: string;
+input_type: string;
+required?: boolean;
+placeholder?: string;
+classes
+}
+
+const {
+lname,
+name,
+id,
+placeholder,
+input_type,
+required=false,
+classes,
+...rest
+} = Astro.props;
+
+const label_class=["block","text-gray-700","font-bold","mb-2"]
+const input_class=[
+"apperance-none",
+"border",
+"focus:ring",
+"focus:outline-none",
+"focus:invalid:border-pink-600",
+"focus:invalid:ring-pink-500",
+"leading-tight",
+"invalid:text-pink-600",
+"invalid:border-pink-500",
+"px-3",
+"py-2",
+"rounded",
+"text-gray-700",
+"w-full",
+]
+---
+<div class="mb-4">
+    <label
+            class:list={[classes, label_class]}
+            for={id}
+            >
+        {lname}
+    </label>
+    <input
+            class:list={[classes, input_class]}
+            type={input_type}
+            placeholder={placeholder ? placeholder : "Enter " + lname.toLowerCase().split(":")[0] }
+            name={name}
+            id={id}
+            {...rest}
+            >
+</div>

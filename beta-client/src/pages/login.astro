@@ -1,0 +1,49 @@
+---
+import Links from "../components/Links.astro"
+import Text_input from "../components/Text_input.astro"
+import Button from "../components/Button.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+---
+<BaseLayout title="Login Page" classes="bg-slate-100">
+    <div class="flex items-center justify-center h-[70vh]">
+        <div class="w-[75vw]">
+            <form
+                    action="http://192.168.29.138:5000/auth/login"
+                    method="post"
+                    class="bg-white px-8 py-6 shadow-lg rounded-lg"
+                    >
+                    <h2 class="text-lg text-gray-700 font-medium mb-4">
+                        Enter Credentials
+                    </h2>
+                    <div class="flex flex-col">
+                        <div class="mb-4">
+                            <Text_input
+                            lname="Email:"
+                            name="email"
+                            id="uemail"
+                            input_type="email"
+                            />
+                        </div>
+                            <Text_input
+                            lname="Password:"
+                            name="password"
+                            id="upassword"
+                            input_type="password"
+                            minlength="6"
+                            />
+                            <small>Minimum 6 characters</small>
+                        <div class="mb-4">
+                        </div>
+                        <Button name="Login" color="blue" type="Submit" />
+                        <Links
+                            text="Don't have an account ? Sign Up"
+                            href="/register"
+                            name="register"
+                            classes="text-blue-400 rounded focus:ring"
+                            />
+                    </div>
+            </form>
+        </div>
+    </div>
+    <p>Wrapped page</p>
+</BaseLayout>
