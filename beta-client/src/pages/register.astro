@@ -1,6 +1,57 @@
 ---
+import Links from "../components/Links.astro"
+import Text_input from "../components/Text_input.astro"
+import Button from "../components/Button.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
+
 ---
-<BaseLayout title="Register Page">
+<BaseLayout title="Register Page" classes="bg-slate-100">
+    <div class="flex items-center justify-center h-[70vh]">
+        <div class="w-[75vw]">
+            <form
+                    action="http://192.168.29.138:5000/auth/register"
+                    method="POST"
+                    id="register"
+                    class="bg-white px-8 py-6 shadow-lg rounded-lg"
+                    >
+                    <h2 class="text-lg font-medium mb-4">
+                        Create an account
+                    </h2>
+                    <div class="flex flex-col">
+                        <div class="mb-4">
+                            <Text_input
+                            lname="Name:"
+                            name="name"
+                            id="uname"
+                            input_type="text"
+                            />
+                        </div>
+                        <div class="mb-4">
+                            <Text_input
+                            lname="Email:"
+                            name="email"
+                            id="uemail"
+                            input_type="email"
+                            />
+                        </div>
+                            <Text_input
+                            lname="Password:"
+                            name="password"
+                            id="upassword"
+                            input_type="password"
+                            />
+                        <div class="mb-4">
+                        </div>
+                        <Button name="Register" type="submit" form="register" value="Submit" />
+                        <Links
+                            text="Already Registered ? Login"
+                            href="/login"
+                            name="login"
+                            classes="text-blue-400"
+                            />
+                    </div>
+            </form>
+        </div>
+    </div>
     <p>Wrapped page</p>
 </BaseLayout>

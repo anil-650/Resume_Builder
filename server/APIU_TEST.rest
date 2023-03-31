@@ -28,7 +28,7 @@ Content-Type: application/json
 curl -si -X POST \
 'http://localhost:5000/auth/register' \
 -H 'Content-Type: application/json' \
--d '{"name": "hari", "email": "sita@gmail.com", "password": "sita@123"}'
+-d '{"name": "hari", "email": "sita@gmail.com", "password": "sita123"}'
 
 # Example Response
 
@@ -49,7 +49,7 @@ Keep-Alive: timeout=5
 curl -X POST \
 'http://localhost:5000/auth/login' \
 -H 'Content-Type: application/json' \
--d '{"email": "sita@gmail.com", "password": "sita@123"}' -i -s
+-d '{"email": "sita@gmail.com", "password": "sita123"}' -i -s
 
 
 HTTP/1.1 200 OK
@@ -68,7 +68,7 @@ Keep-Alive: timeout=5
 
 curl -si -X GET \
 'http://localhost:5000/dashboard' \
--H 'token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiZmNkNzM3YTEtMjAzZi00OTY5LTg1NTEtZDI3MmRhYWUzN2IwIn0sImlhdCI6MTY3OTQ2MzAwNCwiZXhwIjoxNjc5NDY2NjA0fQ.4oAqOvGCQjVqJuBc4e40MhKvG_jfTGr8cV5vZKQJDfs'
+-H 'Cookie: jwttoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc1NmNiMjctZWQyMC00ZWMzLTg5MjMtMzBmOWJhZTJhYmIxIn0sImlhdCI6MTY4MDI2MzU5MSwiZXhwIjoxNjgwMjY3MTkxfQ.nKEPpAl0lOwUYkIE_zH4smaiLOlHyHceaXlimQCDNEw'
 
 # Example response
 
