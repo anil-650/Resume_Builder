@@ -1,15 +1,46 @@
 ---
+//visuals
 import Links from "../components/Links.astro"
 import Text_input from "../components/Text_input.astro"
 import Button from "../components/Button.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
+// scripts
+import { loginUser} from "../utils/utilites"
+
+let cookie;
+if (Astro.cookies.has('isLoggedin')){
+    return Astro.redirect('/dashboard')
+}
+
+if (Astro.request.method === 'POST') {
+    try {
+       const data = await Astro.request.formData();
+       console.log(data.get('email'))
+       const recive = await loginUser(data);
+       if(recive.ok){
+           cookie = recive.token;
+           Astro.cookies.set('isLoggedin', 'true', {
+               httpOnly: true,
+               maxAge: 60 * 60
+           })
+           Astro.cookies.set('token', cookie, {
+               httpOnly: true,
+               maxAge: 60 * 60
+           })
+           Astro.redirect('/dashboard');
+        } 
+    } catch (error ) {
+        if (error instanceof Error){
+            console.error(error.message)
+        }
+    }
+}
 ---
 <BaseLayout title="Login Page" classes="bg-slate-100">
     <div class="flex items-center justify-center h-[70vh]">
         <div class="w-[75vw]">
             <form
-                    action="http://192.168.29.138:5000/auth/login"
-                    method="post"
+                    method="POST"
                     class="bg-white px-8 py-6 shadow-lg rounded-lg"
                     >
                     <h2 class="text-lg text-gray-700 font-medium mb-4">
@@ -34,7 +65,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
                             <small>Minimum 6 characters</small>
                         <div class="mb-4">
                         </div>
-                        <Button name="Login" color="blue" type="Submit" />
+                        <Button name="Login" color="blue" type="Submit" classes="bg-blue-500 hover:bg-blue-600"/>
                         <Links
                             text="Don't have an account ? Sign Up"
                             href="/register"
