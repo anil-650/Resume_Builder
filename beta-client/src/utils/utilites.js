@@ -13,12 +13,11 @@ return fetch(`${url}/dashboard`, {
 });
 }
 
-export async function createUser(user, token){
+export async function createUser(user){
 return fetch(`${url}/auth/register`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        'token': token,
     },
     body: user
 });
