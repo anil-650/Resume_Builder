@@ -7,9 +7,11 @@ const active = "text-orange-600 font-bold bg-white p-1 rounded-sm"
 const inactive = "text-white font-bold"
 ---
 <nav class="mb-5 bg-orange-600">
-    <div class="container flex items-center justify-between mx-auto w-[92%]">
+    <div class="container my-2 flex items-center justify-between mx-auto w-[92%]">
         <div>
-            <img class="w-14 h-14" src="/images/writing.png" alt="logo" />
+            <a href="/" class="w-14 h-14">
+            <img class="w-14"  src="/images/writing.png" alt="logo" />
+            </a>
         </div>
         <div>
             <ul class="flex items-center gap-[4vw]">
@@ -31,9 +33,9 @@ const inactive = "text-white font-bold"
         </div>
         <div>
             <Link
-            text="Sign Up"
+            text={current === "login" ? "Sign In" : "Sign Up"}
             href="/register"
-            classes={current === "register" ? `${active} items-center flex` : `${inactive} items-center flex`}
+            classes={current === "register" || "login" ? `${active} items-center flex` : `${inactive} items-center flex`}
             icon={{
             name: "mdi:user-circle",
             side: "left",
