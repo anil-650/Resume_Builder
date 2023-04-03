@@ -3,10 +3,11 @@ export interface Props {
 lname: string;
 name: string;
 id: string;
-input_type: string;
+input_type: 'text' | 'password' | 'email' | 'number';
 required?: boolean;
 placeholder?: string;
-classes
+min?: string;
+classes?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ placeholder,
 input_type,
 required=false,
 classes,
+min,
 ...rest
 } = Astro.props;
 
@@ -30,7 +32,6 @@ const input_class=[
 "focus:invalid:ring-pink-500",
 "leading-tight",
 "invalid:text-pink-600",
-"invalid:border-pink-500",
 "px-3",
 "py-2",
 "rounded",
@@ -50,6 +51,8 @@ const input_class=[
             type={input_type}
             placeholder={placeholder ? placeholder : "Enter " + lname.toLowerCase().split(":")[0] }
             name={name}
+            minlength={ min ? min : '0'}
+            required={required}
             id={id}
             {...rest}
             >
