@@ -1,57 +1,62 @@
 ---
+import { Icon } from "astro-icon"
 import Links from "../components/Links.astro"
 import Text_input from "../components/Text_input.astro"
 import Button from "../components/Button.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 
+// scripts
+import { createUser } from "../utils/utilites"
+
+
+let cookie;
+if (Astro.cookies.has('isLoggedin')){
+    return Astro.redirect('/dashboard')
+}
+
+if (Astro.request.method === 'POST') {
+    try {
+       const data = await Astro.request.formData();
+       console.log(data.get('email'))
+       const recive = await createUser(data);
+       if(recive.ok){
+           cookie = recive.token;
+           Astro.cookies.set('isLoggedin', 'true', {
+               httpOnly: true,
+               maxAge: 60 * 60
+           })
+           Astro.cookies.set('token', cookie, {
+               httpOnly: true,
+               maxAge: 60 * 60
+           })
+           Astro.redirect('/dashboard');
+        } 
+        // NO SERVER EORROR HANDELING YET
+    } catch (error ) {
+        if (error instanceof Error){
+            console.error(error.message)
+        }
+    }
+}
+
 ---
-<BaseLayout title="Register Page" classes="bg-slate-100">
-    <div class="flex items-center justify-center h-[70vh]">
-        <div class="w-[75vw]">
-            <form
-                    action="http://192.168.29.138:5000/auth/register"
-                    method="POST"
-                    id="register"
-                    class="bg-white px-8 py-6 shadow-lg rounded-lg"
-                    >
-                    <h2 class="text-lg font-medium mb-4">
-                        Create an account
-                    </h2>
-                    <div class="flex flex-col">
-                        <div class="mb-4">
-                            <Text_input
-                            lname="Name:"
-                            name="name"
-                            id="uname"
-                            input_type="text"
-                            />
-                        </div>
-                        <div class="mb-4">
-                            <Text_input
-                            lname="Email:"
-                            name="email"
-                            id="uemail"
-                            input_type="email"
-                            />
-                        </div>
-                            <Text_input
-                            lname="Password:"
-                            name="password"
-                            id="upassword"
-                            input_type="password"
-                            />
-                        <div class="mb-4">
-                        </div>
-                        <Button name="Register" type="submit" form="register" value="Submit" />
-                        <Links
-                            text="Already Registered ? Login"
-                            href="/login"
-                            name="login"
-                            classes="text-blue-400"
-                            />
-                    </div>
-            </form>
-        </div>
+<BaseLayout title="Register Page" classes="bg-slate-200">
+ <div class="flex-1 flex justify-center items-center">
+    <div
+  class="container mx-auto max-w-xs md:max-w-md lg:max-w-lg w-full rounded-lg bg-white p-6 shadow-lg">
+   <div class="flex flex-col items-center mb-2">
+   <Icon name="majesticons:briefcase-line" class="w-11 text-gray-500 center" />
+  <h2 class="font-bold text-xl text-gray-600">Sign Up</h2>
+   </div>
+  <form method="POST">
+    <div class="relative mb-12" data-te-input-wrapper-init>
+     <Text_input lname="Name:" input_type="text" name="name" id="username" input_type="text"  required/>
+     <Text_input lname="Email:" input_type="email" name="email" id="useremail" input_type="email" required />
+     <Text_input lname="Password:" input_type="password" name="password" id="userpassword" input_type="password" min="6"  required/>
     </div>
-    <p>Wrapped page</p>
+    <Button type="submit" name="Submit" color="blue" />
+    <Links href="/login" text="Already have an accout? Sign In" classes="text-blue-500 visited:text-purple-600 hover:underline hover:font-medium "/>
+  </form>
+</div>
+ </div>
 </BaseLayout>
