@@ -22,7 +22,7 @@ const { title , classes } = Astro.props;
     </head>
     <body class:list={["flex","flex-col","min-h-screen",classes]}>
         <Nav class="py-4"/>
-        <main class="flex-1">
+        <main class="flex-1 flex flex-col">
             <h1 class="text-center text-bold">{title}</h1>
             <slot />
         </main>
