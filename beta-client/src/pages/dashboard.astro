@@ -1,19 +1,8 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro"
-import { fetchJoke } from "../api/fetchJokes"
+import Userlayout from "../layouts/Userlayout.astro";
 
-const req = Astro.cookie.headers
-console.log(req)
-const joke = await fetchJoke();
 ---
 
-<BaseLayout title="Dashboard">
-  <p>Hello </p>
-  <p>{joke}</p>
-  <p>
-  <code>
-      {req}
-  </code>
-  </p>
-  <p id="na"></p>
-</BaseLayout>
+<Userlayout title="Dashboard" >
+  <p>hello dashboard</p>
+</Userlayout>
