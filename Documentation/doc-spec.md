@@ -10,9 +10,9 @@
 
         . Work Flow
         │
-        └───►  Registratioen page
+        └───►  Registration page
              │
-             ├───►  Resumeg Builder
+             ├───►  Resume Builder
              │    │
              │    └─►  Editing
              │       │
