@@ -2,39 +2,39 @@
 import { Icon } from "astro-icon"
 import Link from "../components/Links.astro"
 
-const current = new URL(Astro.request.url).pathname.slice(1);
+const current = new URL(Astro.request.url).pathname.slice(1).split('/').pop();
 const active = "text-orange-600 font-bold bg-white p-1 rounded-sm items-center flex"
 const inactive = "text-white font-bold items-center flex"
 ---
 <nav class="mb-5 bg-orange-600">
     <div class="container my-2 flex items-center justify-between mx-auto w-[92%]">
-        <div>
-            <a href="/" class="w-14 h-14">
-            <img class="w-14"  src="/images/writing.png" alt="logo" />
+        <div> 
+            <a href="/">
+            <img class="w-14 h-14" src="/images/writing.png" alt="logo" />
             </a>
         </div>
         <div>
             <ul class="flex items-center gap-[4vw]">
                 <li>
                     <Link
-                    text="Home"
-                    href="/"
-                    classes={current === "" ? active : inactive}
-                    icon= {{
-                    name: "mdi:home-circle-outline",
-                    side: "left"
+                    text="Resumes"
+                    href="/user/cv"
+                    classes={current === "cv" ? active : inactive}
+                    icon={{
+                        name: "fluent:document-person-16-regular",
+                        side: "left"
                     }}
                     isNav
                     />
                 </li>
                 <li>
                     <Link
-                    text="About"
-                    href="/about"
-                    classes={current === "about" ? active : inactive}
+                    text="Profile"
+                    href="/user/profile"
+                    classes={current === "profile" ? `${active}` : `${inactive}`}
                     icon={{
-                    name: "ph:info-bold",
-                    side: "left",
+                        name: "mdi:user-circle",
+                        side: "left"
                     }}
                     isNav
                     />
@@ -43,11 +43,11 @@ const inactive = "text-white font-bold items-center flex"
         </div>
         <div>
             <Link
-            text={current === "login" ? "Sign In" : "Sign Up"}
-            href="/register"
-            classes={current === "register" ? active : current === "login" ? active : inactive }
+            text="Logout"
+            href="/logout"
+            classes={current === "logout" ? active : inactive }
             icon={{
-            name: "mdi:user-circle",
+            name: "mdi:location-exit",
             side: "left",
             }}
             isNav

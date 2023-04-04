@@ -1,20 +1,24 @@
 // we are using express validator in case of project going big
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 module.exports = async (req, res, next) => {
 
     // '/register' path name email password validation
 
+    console.log(req.headers)
+
+    console.log(req.body.name)
+
   if (req.path === '/register') {
-      await body('name')
+      await check('name')
           .notEmpty()
           .withMessage('Name is required')
           .run(req);
-      await body('email')
+      await check('email')
           .isEmail()
           .withMessage('Email is invalid')
           .run(req);
-      await body('password')
+      await check('password')
           .isLength({ min: 6 })
           .withMessage('Password must be at least 6 characters long')
           .run(req);
@@ -22,11 +26,11 @@ module.exports = async (req, res, next) => {
     // '/login' path name email password validation
 
   } else if (req.path === '/login') {
-      await body('email')
+      await check('email')
           .isEmail()
           .withMessage('Email is invalid')
           .run(req);
-      await body('password')
+      await check('password')
           .isLength({ min: 6 })
           .withMessage('Password must be at least 6 characters long')
           .run(req);
@@ -35,6 +39,7 @@ module.exports = async (req, res, next) => {
     // Check if error and return error to user
 
   const errors = validationResult(req);
+    console.log(errors.array());
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }

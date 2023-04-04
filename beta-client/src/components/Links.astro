@@ -8,6 +8,7 @@ icon?: {
 name: string;
 side: "left" | "right";
 };
+isNav?: boolean;
 isFilled?: boolean;
 borderVisible?: boolean;
 classes: string;
@@ -19,11 +20,14 @@ href,
 icon,
 name,
 side,
+isNav = false,
 isFilled = true,
 borderVisible = false,
 classes,
 ...rest
 } = Astro.props;
+
+const navStyles = "text-xs md:text-base lg:text-2xl"
 ---
 
 <a
@@ -36,10 +40,10 @@ class:list={[ classes, { filled: isFilled, bordered: borderVisible } ]}
 <Icon name={icon.name} height="24" width="24" />
 )}
 
-<span>{text}</span>
+<span class:list={  isNav ? navStyles : null } >{text}</span>
 
 { icon && icon.side === "right" && (
-<Icon name={icon.name} height="24" width="24" />
+<Icon name={icon.name} height="2rem" width="2rem" />
 )}
 
 </a>
