@@ -1,0 +1,15 @@
+---
+// scripts
+if(Astro.cookies.has('isLoggedin')){
+return Astro.redirect('/user/dashboard');
+}
+
+// REDIRECT TO LOGIN IF COOKIE NOT FOUND
+// return Astro.redirect('/login')
+
+// JUST FOR DEV PERPOSES SET TO /USER/DASHBOARD
+
+return Astro.redirect('/user/dashboard')
+---
+
+<p class="font-bold text-4xl">⚠️ IF YOU ARE HERE IT'S POSSIBLE THAT UPPER FRONT MATTER ROUTING IS NOT WORKING ⚠️</p>
