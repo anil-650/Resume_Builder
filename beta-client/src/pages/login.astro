@@ -6,12 +6,12 @@ import Text_input from "../components/Text_input.astro"
 import Button from "../components/Button.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 // scripts
-import { loginUser} from "../utils/utilites"
+import { loginUser } from "../utils/auth"
 
 // CHECK FOR LOGIN COOKIE
 let cookie;
 if (Astro.cookies.has('isLoggedin')){
-    return Astro.redirect('/dashboard')
+    return Astro.redirect('/user')
 }
 
 // SET COOKIE FOR LOGGED IN USER
@@ -31,7 +31,7 @@ if (Astro.request.method === 'POST') {
                httpOnly: true,
                maxAge: 60 * 60
            })
-           Astro.redirect('/dashboard');
+           Astro.redirect('/user');
         }
     } catch (error ) {
         if (error instanceof Error){

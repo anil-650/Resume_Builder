@@ -6,12 +6,13 @@ import Button from "../components/Button.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 
 // scripts
-import { createUser } from "../utils/utilites"
+import { createUser } from "../utils/auth"
 
 // CHECK FOR LOGIN COOKIE
 let cookie;
-if (Astro.cookies.has('isLoggedin')){
-    return Astro.redirect('/dashboard')
+
+if (Astro.cookies.has('isLoggedin') && Astro.cookies.has('token')){
+return Astro.redirect('/user')
 }
 
 // SET COOKIES FOR LOGGING IN USER
@@ -19,10 +20,14 @@ if (Astro.cookies.has('isLoggedin')){
 if (Astro.request.method === 'POST') {
     try {
        const data = await Astro.request.formData();
-       console.log(data.get('email'))
+       // const email = data.get('email')
+       // const name = data.get('name')
+       // const password = data.get('password')
        const recive = await createUser(data);
        if(recive.ok){
-           cookie = recive.token;
+            const data = await recive.json();
+            console.log(data)
+           cookie = data.token;
            Astro.cookies.set('isLoggedin', 'true', {
                httpOnly: true,
                maxAge: 60 * 60
@@ -31,7 +36,7 @@ if (Astro.request.method === 'POST') {
                httpOnly: true,
                maxAge: 60 * 60
            })
-           Astro.redirect('/dashboard');
+           return Astro.redirect('/login');
         }
         // NO SERVER ERROR HANDLING YET
     } catch (error ) {

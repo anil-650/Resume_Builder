@@ -2,14 +2,15 @@
 // scripts
 
 // DELETE COOKIES OF token AND isLoggedin
+
 if(Astro.cookies.has('isLoggedin')){
-Astro.cookies.set(isLoggedin, false, {maxAge: 0});
-Astro.cookies.set(token, '', {maxAge: 0});
+Astro.cookies.get('isLoggedin').value;
+Astro.cookies.set('isLoggedin', false, {maxAge: 0});
+Astro.cookies.set('token', '', {maxAge: 0});
+return Astro.redirect('/login');
 }
 
 // RETURN REDIRECT TO LOGIN PAGE
 return Astro.redirect('/login')
 ---
-
-
 <p>Well This is awkward You shouldn't be here <b>MORE LIKE YOU CAN'T BE HERE</b></p>
