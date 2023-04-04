@@ -3,8 +3,8 @@ import { Icon } from "astro-icon"
 import Link from "../components/Links.astro"
 
 const current = new URL(Astro.request.url).pathname.slice(1);
-const active = "text-orange-600 font-bold bg-white p-1 rounded-sm"
-const inactive = "text-white font-bold"
+const active = "text-orange-600 font-bold bg-white p-1 rounded-sm items-center flex"
+const inactive = "text-white font-bold items-center flex"
 ---
 <nav class="mb-5 bg-orange-600">
     <div class="container my-2 flex items-center justify-between mx-auto w-[92%]">
@@ -20,6 +20,11 @@ const inactive = "text-white font-bold"
                     text="Home"
                     href="/"
                     classes={current === "" ? active : inactive}
+                    icon= {{
+                    name: "mdi:home-circle-outline",
+                    side: "left"
+                    }}
+                    isNav
                     />
                 </li>
                 <li>
@@ -27,6 +32,11 @@ const inactive = "text-white font-bold"
                     text="About"
                     href="/about"
                     classes={current === "about" ? active : inactive}
+                    icon={{
+                    name: "ph:info-bold",
+                    side: "left",
+                    }}
+                    isNav
                     />
                 </li>
             </ul>
@@ -35,11 +45,12 @@ const inactive = "text-white font-bold"
             <Link
             text={current === "login" ? "Sign In" : "Sign Up"}
             href="/register"
-            classes={current === "register" || "login" ? `${active} items-center flex` : `${inactive} items-center flex`}
+            classes={current === "register" || "login" ? active : inactive }
             icon={{
             name: "mdi:user-circle",
             side: "left",
             }}
+            isNav
             />
         </div>
     </div>
