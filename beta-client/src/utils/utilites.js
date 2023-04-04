@@ -1,3 +1,4 @@
+// ORIGINAL FILE FOR BACKUP
 const url = "http://192.168.29.138:5000"
 
 export async function getUserdata(data){
@@ -14,12 +15,20 @@ return fetch(`${url}/dashboard`, {
 }
 
 export async function createUser(user){
+    const data = user;
+    const sendData={
+       email : data.get('email'),
+       name : data.get('name'),
+       password : data.get('password'),
+    }
+
+    console.log(user)
 return fetch(`${url}/auth/register`, {
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
     },
-    body: user
+    body: JSON.stringify(sendData)
 });
 }
 
