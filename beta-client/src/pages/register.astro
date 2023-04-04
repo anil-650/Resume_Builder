@@ -8,12 +8,14 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 // scripts
 import { createUser } from "../utils/utilites"
 
-
+// CHECK FOR LOGIN COOKIE
 let cookie;
 if (Astro.cookies.has('isLoggedin')){
     return Astro.redirect('/dashboard')
 }
 
+// SET COOKIES FOR LOGGING IN USER
+// NO USER ERROR HANDLING YET
 if (Astro.request.method === 'POST') {
     try {
        const data = await Astro.request.formData();
@@ -30,8 +32,8 @@ if (Astro.request.method === 'POST') {
                maxAge: 60 * 60
            })
            Astro.redirect('/dashboard');
-        } 
-        // NO SERVER EORROR HANDELING YET
+        }
+        // NO SERVER ERROR HANDLING YET
     } catch (error ) {
         if (error instanceof Error){
             console.error(error.message)

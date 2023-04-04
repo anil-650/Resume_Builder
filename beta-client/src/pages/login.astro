@@ -8,11 +8,14 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 // scripts
 import { loginUser} from "../utils/utilites"
 
+// CHECK FOR LOGIN COOKIE
 let cookie;
 if (Astro.cookies.has('isLoggedin')){
     return Astro.redirect('/dashboard')
 }
 
+// SET COOKIE FOR LOGGED IN USER
+// NO REDIRECTS YET FOR USER AND SERVER ERROR
 if (Astro.request.method === 'POST') {
     try {
        const data = await Astro.request.formData();
