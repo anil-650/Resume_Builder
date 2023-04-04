@@ -29,7 +29,7 @@ if (Astro.request.method === 'POST') {
                maxAge: 60 * 60
            })
            Astro.redirect('/dashboard');
-        } 
+        }
     } catch (error ) {
         if (error instanceof Error){
             console.error(error.message)
@@ -50,7 +50,7 @@ if (Astro.request.method === 'POST') {
      <Text_input lname="Email:" input_type="email" name="email" id="useremail" input_type="email" required/>
      <Text_input lname="Password:" input_type="password" name="password" id="userpassword" input_type="password" min="6"  required/>
     </div>
-    <Button type="submit" name="Submit" color="blue" />
+    <Button type="submit" name="Login" classes="bg-blue-500 hover:bg-blue-600" />
     <Links href="/register" text="Don't have an account ? Sign Up" classes="text-blue-500 visited:text-purple-600 hover:underline hover:font-medium "/>
   </form>
 </div>
