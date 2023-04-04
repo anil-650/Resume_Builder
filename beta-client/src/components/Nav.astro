@@ -45,7 +45,7 @@ const inactive = "text-white font-bold items-center flex"
             <Link
             text={current === "login" ? "Sign In" : "Sign Up"}
             href="/register"
-            classes={current === "register" || "login" ? active : inactive }
+            classes={current === "register" ? active : current === "login" ? active : inactive }
             icon={{
             name: "mdi:user-circle",
             side: "left",
