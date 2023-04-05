@@ -1,12 +1,102 @@
 ---
 // VISUALS
+import { Icon } from "astro-icon";
+import Links from "../../components/Links.astro";
 import Userlayout from "../../layouts/Userlayout.astro";
 
 // IMPORTS
 
+// KEEP THIS HERE
+const cvWraper="flex items-center"
+const cvS="container mx-auto max-w-sm md:max-w-3xl lg:max-w-6xl "
+
+// THIS MOVED WITH COMPONENT
+const cvclasses="border-2 border-gray-700 rounded-lg p-4 m-4"
+const cvML =[
+"flex",
+"mt-3",
+"gap-1",
+"p-2",
+"md:p-1",
+"md:px-2",
+"text-blue-500", // Text color small screen
+"md:text-white", // Text color for big volor
+"bg-white", // Background white for small screen
+"md:bg-blue-600", // Background blue for big sceen
+"hover:text-white", // hover color small screen
+"hover:bg-blue-500", // hover backgrounf color for small screen
+"border-2",
+"border-blue-500", // border color
+"rounded-full", // border rounding for small screen
+"md:rounded-2xl", // border rounding for big screen
+"justify-center",
+"items-cenetr",
+"focus:outline-none",
+"focus:ring-1",
+"focus:ring-offset-2",
+"focus:ring-blue-600", // focus ring color
+"hover:ring-2",
+"hover:ring-offset-2",
+"hover:ring-blue-600" // hover ring color
+]
 ---
 
-<Userlayout title="Dashboard" >
+<Userlayout title="Dashboard" classes="w-full">
+  <div id="cv-warper" class:list={[ cvWraper ]}>
+  <div id="cv-s" class:list={[ cvS ]}>
+  <div class="my-3" id="cards">
+  <!-- CARD STARTS HERE -->
+    <div id="card-body" class:list={[ cvclasses]}>
+      <h5 class="font-semibold text-2xl font-mono">Astro Developer - (1 year Exp)</h5>
+      <p id="created on">Created : DD/MM/YYYY</p> 
+
+      <ul class="flex flex-wrap gap-2">
+      <li>
+        <a href="#" >
+          <div class:list={[ cvML ]} >
+          <Icon name="mdi:square-edit-outline" class="w-7 hover:w-8 " />
+          <span class="text-lg sr-only font-bold md:not-sr-only ">Update</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class:list={[ cvML ]}>
+          <Icon name="carbon:document-view" class="w-7 hover:w-8 " />
+          <span class="text-lg sr-only font-bold md:not-sr-only ">View</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class:list={[ cvML ]}>
+          <Icon name="mdi:trashcan-outline" class="w-7 hover:w-8 " />
+          <span class="text-lg sr-only font-bold md:not-sr-only ">Delete</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class:list={[ cvML ]}>
+          <Icon name="mdi:square-edit-outline" class="w-7 hover:w-8 " />
+          <span class="text-lg sr-only font-bold md:not-sr-only ">Update</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <div class="flex mt-3 gap-1 p-2 md:p-1 md:px-2 text-blue-500 hover:text-white border-2 hover:bg-blue-500 border-blue-500 rounded-full md:rounded-2xl justify-center items-cenetr focus:outline-none focus:ring focus:ring-offset-2 focus:ring-blue-600 hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 ">
+          <Icon name="mdi:square-edit-outline" class="w-7 hover:w-8 " />
+          <span class="text-lg sr-only font-bold md:not-sr-only ">Update</span>
+          </div>
+        </a>
+      </li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  <!-- W  A   R   N    I    N    G    S -->
   <p class="font-bold pb-5 text-center text-4xl">hello Resumes</p>
   <p class="font-bold pb-5 text-center text-4xl"> ⚠️ IF YOU ARE HERE WITHOUT LOGIN THEN LOGIN CHECKING ARE EITHER NOT WORKING OR HAVEN'T BEEN SET ⚠️</p>
   <p class="font-bold pb-5 text-center text-4xl"> ⚠️  OR THE ROUTING IN USER/INDEX IS SET TO SEND YOU HERE ⚠️</p>
