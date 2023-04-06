@@ -22,7 +22,6 @@ const cardBody=[
 "hover:ring",
 "focus-within:ring",
 "ring-gray-800"
-
 ]
 
 const cardHeading=[
@@ -33,7 +32,7 @@ const cardHeading=[
 "mb-1"
 ]
 
-const cardTimeData=[
+const cardTimeData=[ // FOR CV CREATE AND UPDATE DATE
 "text-sm",
 "font-semibold",
 "md:font-medium",
@@ -53,8 +52,12 @@ const liClass=[
 "md:rounded-none",
 "hover:text-white",
 "focus-within:text-white",
-"focus-within:outline-none", // Remove Focus outline when tabbing
-"focus-within:ring" // Put tailwind rings instead
+// Remove Focus outline when tabbing
+"focus-within:outline-none",
+// Put tailwind rings instead
+"focus-within:ring",
+"transition-color",
+"duration-200"
 ]
 
 const aSizing=[
@@ -64,6 +67,13 @@ const aSizing=[
 "md:p-3",
 "items-center",
 "justify-center"
+]
+
+const aTextStyles=[
+"text-lg",
+"sr-only",
+"font-bold",
+"md:not-sr-only"
 ]
 
 const TextColorPrimary=[
@@ -113,32 +123,21 @@ TextColorSecondary
 
     { updated && (
 
-    <p id="created on" class:list={[ cardTimeData ]} >Updated : { updated } </p> 
+    <p id="created on" class:list={[ cardTimeData ]} >Updated : { updated } </p>
 
     )}
 
-    <p id="created on" class:list={[ cardTimeData ]} >Created : { created }</p> 
+    <p id="created on" class:list={[ cardTimeData ]} >Created : { created }</p>
 
     <!-- LINK WRAPPER -->
-    <div class="flex">
-        <!-- LINK GROUP ONE -->
-        <ul class:list={[ ulClass , "flex-1"]}>
-            <!-- DELETE LINK -->
-            <li class:list={[ liColorSecondary,liHoverDanger, liClass]}>
-                <a href="#" class:list={[ aSizing ]}>
-                    <Icon name="mdi:trashcan-outline" class="w-7 md:w-8 hover:w-8 " />
-                    <span class="text-lg sr-only font-bold md:not-sr-only ">Delete</span>
-                </a>
-            </li>
-            <!-- LINK END -->
-        </ul>
+    <div class="flex flex-row-reverse">
         <!-- LINK GROUP TWO -->
-        <ul class:list={[ ulClass, "flex","justify-between", "md:gap-2"]}>
-            <!-- SHARE LINK -->
-            <li class:list={[ liColorPrimary, liHoverSecondary, liClass ]}>
+        <ul class:list={[ ulClass, "flex", "flex-row-reverse","justify-between", "md:gap-2"]}>
+            <!-- VIEW LINK -->
+            <li class:list={[ liColorPrimary, liHoverPrimary, liClass ]}>
                 <a href="#" class:list={[ aSizing ]}>
-                    <Icon name="mdi:share" class="w-7 hover:w-8 " />
-                    <span class="text-lg sr-only font-bold md:not-sr-only ">Share</span>
+                    <Icon name="mdi:eye" class="w-7 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>View</span>
                 </a>
             </li>
             <!-- LINK END -->
@@ -146,15 +145,26 @@ TextColorSecondary
             <li class:list={[ liColorPrimary, liHoverPrimary, liClass ]}>
                 <a href="#" class:list={[ aSizing ]}>
                     <Icon name="mdi:square-edit-outline" class="w-7 hover:w-8 " />
-                    <span class="text-lg sr-only font-bold md:not-sr-only ">Update</span>
+                    <span class:list={[ aTextStyles ]}>Update</span>
                 </a>
             </li>
             <!-- LINK END -->
-            <!-- VIEW LINK -->
-            <li class:list={[ liColorPrimary, liHoverPrimary, liClass ]}>
+            <!-- SHARE LINK -->
+            <li class:list={[ liColorPrimary, liHoverSecondary, liClass ]}>
                 <a href="#" class:list={[ aSizing ]}>
-                    <Icon name="mdi:eye" class="w-7 hover:w-8 " />
-                    <span class="text-lg sr-only font-bold md:not-sr-only ">View</span>
+                    <Icon name="mdi:share" class="w-7 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>Share</span>
+                </a>
+            </li>
+            <!-- LINK END -->
+        </ul>
+        <!-- LINK GROUP ONE -->
+        <ul class:list={[ ulClass , "flex-1"]}>
+            <!-- DELETE LINK -->
+            <li class:list={[ liColorSecondary, liHoverDanger, liClass]}>
+                <a href="#" class:list={[ aSizing ]}>
+                    <Icon name="mdi:trashcan-outline" class="w-7 md:w-8 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>Delete</span>
                 </a>
             </li>
             <!-- LINK END -->
