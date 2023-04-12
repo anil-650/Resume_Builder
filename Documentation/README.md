@@ -6,4 +6,4 @@
 
 ## [Documentation Specification ➡](./doc-spec.md)
 
-## [ERD ➡](./ER_Diagram.md)
+## [ERD ➡](./ER_diagram.md)
