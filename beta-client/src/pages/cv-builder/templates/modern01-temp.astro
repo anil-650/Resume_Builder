@@ -1,0 +1,139 @@
+---
+import PrintLayout from "../../../layouts/PrintLayout.astro"
+
+const cv_container=[
+'container',
+'print:h-a4',
+'print:w-a4',
+'mx-auto',
+'border-2',
+'border-black',
+// 'p-8',
+'m-4',
+'mt-0',
+'h-a4',
+'w-a4',
+// Specific template styles after this
+'font-sans',
+'flex',
+]
+
+---
+<PrintLayout>
+    <div class:list={[cv_container]}>
+        <div id="personal_key_skill" class="personal_key_skill" >
+            <div class="name">
+                <h1>John Miller</h1>
+            </div>
+            <div class="contancts">
+                <p>123 Your Street</p>
+                <p>Columbus, OH 12345</p>
+                <p>youremail@example.com</p>
+                <p>(123)-456-7890</p>
+            </div>
+            <div>
+                Creative marketing student with exceptional GPA, growing portfolio and desire to develop entire campaigns from inception to completion. Designed award-winning print ad for local coffee shop and included Fortune 2000 companies as clients. Technical proficiency includes all standard office software and graphic design and desktop publishing options like Adobe-Design or Photoshop
+            </div>
+            <div>
+                <h2>Key Skills</h2>
+                <div class="ul_container">
+                <ul>
+                    <li>Attention to detail</li>
+                    <li>Experience with multiple Art medium</li>
+                    <li>Good understanding of colour</li>
+                    <li>Responsive to customer design requests</li>
+                </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="professonal_edu" class="professonal_edu" >
+            <div>
+                <h2>Professional Experience</h2>
+
+                <div class="cards">
+                    <h3>Freelance Graphics Designer</h3>
+                    <h4>XYZ Company, New York City, NY | April 2016-Present</h4>
+                    <div class="ul_container">
+                        <ul>
+                            <li>Create diverse marketing materials to spec</li>
+                            <li>Collaborate with marketing teams to design campaigns and track ROI</li>
+                            <li>Design logos and event graphics for nonprofit organizations Book cover design experience</li>
+                            <li>Make infographics using data provided by sales teams</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cards">
+                    <h3>Library Materials Associate</h3>
+                    <h4>Community Library, New York City, NY | June 2014-April 2016</h4>
+                    <div class="ul_container">
+                        <ul>
+                            <li>Greeted students and verified account status for check out</li>
+                            <li>Assisted with research and pulling appropriate materials to support learning goals</li>
+                            <li>Managed schedules for meeting and study rooms</li>
+                            <li>Re-shelved materials at end of day</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>Education</h2>
+
+                <div class="cards">
+                    <h3>Advertising Bachelor of Fine Arts</h3>
+                    <h4>University of Texas Austin, TX | September 2012-June 2014</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</PrintLayout>
+
+<style>
+    h1 {
+        @apply text-6xl;
+    }
+
+    h2 {
+        @apply text-3xl;
+    }
+
+    h3 {
+        @apply text-xl;
+    }
+
+    h4 {
+        @apply text-lg italic;
+    }
+
+    .personal_key_skill {
+        @apply text-sm bg-gray-300 text-gray-600 w-[36%];
+    }
+
+    .professonal_edu {
+        @apply text-sm text-gray-600;
+    }
+
+    .personal_key_skill > div , .professonal_edu > div {
+        @apply p-4;
+    }
+    .name {
+        @apply max-w-min leading-none;
+    }
+
+    .contancts {
+        @apply container mx-auto;
+    }
+
+    .ul_container {
+        @apply pl-2;
+    }
+
+    .cards {
+        @apply my-2.5;
+    }
+
+    ul {
+        @apply list-disc my-2;
+    }
+</style>

@@ -1,0 +1,158 @@
+---
+import Userlayout from "../../layouts/Userlayout.astro"
+
+const data = await fetch("http://localhost:3000/api/templates.json").catch((error) => console.error(error));
+const templates = await data.json();
+
+// DEBUG ONLY
+console.log(templates)
+---
+<Userlayout>
+    <div id="templates" class="templates">
+        <h1>Templates</h1>
+        <hr>
+        <div id="cards" class="cards">
+
+            <!-- ORIGINAL TEMPLATE CODE
+
+            <div class="cardbody">
+                <img
+                        class="cardimg"
+                        src="/images/ats01.jpg"
+                        alt="" />
+                <div>
+                    <h5>
+                        ATS01
+                    </h5>
+                    <p class="cardtext">
+                    This is a simple ATS template for entry to intermediate level resumes.
+                    </p>
+                    <div class="tags">
+                        <span>#ats</span>
+                        <span>#entry-level</span>
+                        <span>#intermediate-level</span>
+                    </div>
+                    <div class="linkcontainer">
+                        <a href="/cv-builder/templates/ast01" >
+                            <span>USE</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cardbody">
+                <img
+                        class="cardimg"
+                        src="/images/modern01.jpg"
+                        alt="" />
+                <div>
+                    <h5>
+                        MODERN01
+                    </h5>
+                    <p class="cardtext">
+                    This is a simple MODERN01 template for entry to intermediate level resumes.
+                    </p>
+                    <div class="tags">
+                        <span>#modern</span>
+                        <span>#entry-level</span>
+                        <span>#intermediate-level</span>
+                    </div>
+                    <div class="linkcontainer">
+                        <a href="/cv-builder/templates/modern01" >
+                            <span>USE</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            -->
+
+            {
+            templates.map(
+            templates => (
+            
+            <div class="cardbody">
+                <img
+                        class="cardimg"
+                        src={templates.image}
+                        alt={templates.image.split('/').pop()} />
+                <div>
+                    <h5>
+                        {templates.name} This is api generated
+                    </h5>
+                    <p class="cardtext">
+                    {templates.text}
+                    </p>
+                    <div class="tags">
+                        { templates.tags.map(tags =>(
+                        <span>#{tags}</span>
+                        ))}
+                    </div>
+                    <div class="linkcontainer">
+                        <a href={templates.page}>
+                            <span>USE</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            ))
+            }
+
+        </div> 
+    </div>
+</Userlayout>
+
+<style>
+    h1 {
+        @apply font-bold text-xl md:text-2xl text-gray-600 text-center;
+    }
+
+    hr {
+        @apply border;
+    }
+
+    h5 {
+        @apply mb-2 text-xl font-medium text-neutral-800;
+    }
+
+    .templates {
+        @apply container mx-auto max-w-sm md:max-w-3xl;
+    }
+
+    .cards {
+        @apply py-3 flex flex-col md:items-center gap-3;
+    }
+
+    .cardbody {
+        @apply flex flex-col rounded-lg bg-white md:max-w-xl md:flex-row border border-black border-2;
+    }
+
+    .cardimg {
+        @apply bg-slate-200 h-96 w-full rounded-t-lg object-scale-down md:h-auto md:w-48 md:rounded-none md:rounded-l-lg;
+    }
+
+    .cardbody > div {
+        @apply flex flex-col justify-start p-6;
+    }
+
+    .cardtext {
+        @apply mb-4 text-base text-neutral-600;
+    }
+
+    .tags {
+        @apply flex flex-wrap gap-2 text-white text-xs font-bold;
+    }
+
+    .tags > span {
+        @apply bg-gray-500 rounded-full px-3 py-2;
+    }
+
+    .linkcontainer {
+        @apply h-20 flex justify-end items-end;
+    }
+
+    .linkcontainer > a {
+        @apply border text-white rounded-xl font-bold text-base text-white bg-blue-600 drop-shadow-lg px-3 py-1;
+    }
+</style>

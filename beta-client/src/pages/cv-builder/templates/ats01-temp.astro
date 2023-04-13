@@ -1,0 +1,223 @@
+---
+import PrintLayout from "../../../layouts/PrintLayout.astro"
+
+const cv_container=[
+'container',
+'print:h-a4',
+'print:w-a4',
+'mx-auto',
+'border-2',
+'border-black',
+'p-8',
+'m-4',
+'mt-0',
+'h-a4',
+'w-a4',
+// Page Specific styles
+'font-serif'
+]
+
+---
+<PrintLayout>
+    <div class:list={[cv_container]}>
+        <h1>
+            First Last
+        </h1>
+
+        <div class="personal_box">
+            <p class="pr-2 ">first.last@gmail.com</p>
+            <p class="px-2 border-x border-gray-700">+91 12345 67890</p>
+            <p class="pl-2 ">San Francisco, La</p>
+        </div>
+
+        <h2>EXPERIENCE</h2>
+        <hr>
+        <div id="exp1" class="exp_card">
+            <div>
+                <h3>Resume Worded & Co.</h3>
+                <h3>Oct 2017-Present</h3>
+            </div>
+            <div>
+                <h4>Financial Data Analyst, Business Development & Operations</h4>
+                <h4>San Francisco, CA</h4>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        Managed cross-functional team of 10 in 3 locations (Palo Alto, Austin and New York), ranging from entry-level analysts to vice presidents, and collaborated with business development, data analysis, operations and marketing
+                    </li>
+                    <li>
+                        Achieved $200K reduction in department overspend by establishing ROI metrics and budget controls to improve prioritisation of the $4MM department budget.
+                    </li>
+                    <li>
+                        Notes: Your most recent experience should have the most detail; avoid using more than 6 bullet points per experience; if you have accomplished a lot at one company and have more than 6 bullets, split them up into 2 more job titles at the same company.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="exp2" class="exp_card">
+            <div>
+                <h3>Instamake</h3>
+                <h3>Jun 2015-Oct 2017</h3>
+            </div>
+            <div>
+                <h4>Associate Product Manager</h4>
+                <h4>San Francisco, CA</h4>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        Spearheaded a major pricing restructure by redirecting focus on consumer willingness to pay instead of product or cost; implemented a three-tiered pricing model which increased average sale 35% and margin 12%
+                    </li>
+                    <li>
+                        Promoted within 12 months due to strong performance and organizational impact (1 year ahead of schedule)
+                    </li>
+                    <li>
+                        Identified steps to reduce return rates by 10% resulting in an eventual $75k cost savings
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="exp3" class="exp_card">
+            <div>
+                <h3>Resume Worded & Co.</h3>
+                <h3>Jun 2011-May 2013</h3>
+            </div>
+            <div>
+                <h4>Associate Product Manager</h4>
+                <h4>Austin, TX</h4>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        Analyzed data from 25000 monthly active users and used outputs to guide marketing and product strategies; increased app engagement time by 2x, 30% decrease in drop off rate, and 3x shares on social media 
+                    </li>
+                    <li>
+                        Drove redevelopment of internal tracking system in use by 125 employees, resulting in 20+ new features, reduction of 20% in save/load time and 15% operation time
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>EDUCATION</h2>
+        <hr>
+
+        <div id="edu1" class="edu_card">
+            <div>
+                <h3>Resume Worded Business School</h3>
+                <h3>May 2015</h3>
+            </div>
+            <div>
+                <h4>Master of Business Administration Candidate; Major in Business Analytics</h3>
+                <h4>Austin, TX</h3>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        Awards: Bill & Melinda Gates Fellow (only 5 awarded to class), Director's List 2017 (top 10%)
+                    </li>
+                    <li>
+                        Leadership: Resume Worded Investment Club (Board Member), Consulting Club (Engagement Manager)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="edu2" class="edu_card">
+            <div>
+                <h3>Resume Worded University</h3>
+                <h3>May 2011</h3>
+            </div>
+            <div>
+                <h4>Master of Business Administration Candidate; Major in Business Analytics</h3>
+                <h4>San Francisco, CA</h3>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        Note: Your education section can be much shorter than this; only add bullet points to your education if they add value to your overall experience; prioritize accomplishments in your work experience
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>OTHERS</h2>
+        <hr>
+
+        <div id="others">
+        <ul>
+            <li>
+                <span>Technical Skills:</span>
+                R, Visual Basic, Microsoft SQL Server, Tableau, SQL, Financial Modeling, Python
+            </li>
+            <li>
+                <span>Certificates & Training:</span>
+                Certified Scrum Master, Passed Resume Worded examinations
+            </li>
+            <li>
+                <span>Languages:</span>
+                English (native), Spanish (fluent), Chinese (intermediate)
+            </li>
+        </ul>
+    </div>
+
+        </div>
+</PrintLayout>
+
+<style>
+
+    /*
+       after apply are all tailwind classes
+
+    .cv_container {
+        @apply container print:h-a4 print:w-a4 mx-auto border-2 border-black p-8 m-4 mt-0 h-a4 w-a4 font-serif;
+    }
+
+     */
+
+    .personal_box {
+        @apply flex mb-3;
+    }
+
+    h1, h2, h3 {
+        @apply font-bold;
+    }
+
+    h1 {
+        @apply text-2xl;
+    }
+
+    h2 {
+        @apply text-base;
+    }
+
+    h3, h4 {
+        @apply text-sm;
+    }
+
+    hr {
+        @apply border border-gray-600;
+    }
+
+    ul {
+        @apply text-sm list-disc;
+    }
+
+    ul > li > span {
+        @apply font-bold;
+    }
+
+    #others {
+        @apply my-2;
+    }
+
+    .edu_card, .exp_card {
+        @apply my-2;
+    }
+
+    .edu_card > div, .exp_card > div {
+        @apply flex justify-between;
+    }
+</style>
