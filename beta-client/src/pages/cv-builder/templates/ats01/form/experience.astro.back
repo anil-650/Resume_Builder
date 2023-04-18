@@ -1,0 +1,217 @@
+---
+import { Icon } from "astro-icon"
+import Userlayout from "../../../../../layouts/Userlayout.astro"
+import Text_input from "../../../../../components/Text_input.astro"
+import convertFormData from "../../../../../utils/convertFormData.js"
+
+let x;
+
+if (Astro.request.method === "POST"){
+    try{
+        const data = await Astro.request.formData();
+        const d = {}
+        for (const [key,value] of data.entries()){
+        d[key] = value;
+        }
+
+        let exp=[];
+        let e;
+
+        if(Astro.cookies.has("exp")){
+            e=Astro.cookies.get("exp").value;
+            exp.push(e)
+            }
+
+        exp.push(JSON.stringify(d))
+
+        // code to convert into useable obj arrays
+        x = JSON.parse(`[${exp}]`)
+        
+        Astro.cookies.set('exp', exp, {maxAge: 60 * 60} )
+        Astro.redirect(Astro.url.pathname)
+
+
+    } catch (err){
+        if (err instanceof Error){
+        console.error(err.message);
+        }
+    }
+
+}
+
+// FOR SETTING MAX month in the form
+
+const maxmonth = await (()=>{
+let date = new Date().toJSON().slice(0, 7);
+return date;
+})();
+
+// DEBUG ONLY
+// console.log(maxmonth);
+console.log(x)
+console.log(Astro.cookies.get("exp").value)
+
+---
+<Userlayout>
+    <div class="form_container">
+
+        <h1>Step:2/7 Personal Experience details</h1>
+
+        <hr>
+
+        <div class="my-2 leading-tight flex flex-col justify-center gap-2 border-green-500 bg-green-200 text-green-800 border-l-4 border-y rounded border-r mx-2">
+            <div class="flex gap-2 items-center font-bold">
+            <Icon name="mdi:lightbulb-on" class="w-8 "/>
+            Tips:
+            </div>
+            <p class="px-2 pb-1">
+            Fill out the form in chronological order, from present to past.
+            </p>
+        </div>
+
+        <div class="my-2 leading-tight flex flex-col justify-center gap-2 border-yellow-500 bg-yellow-200 text-yellow-800 border-l-4 border-y rounded border-r mx-2">
+            <div class="flex gap-2 items-center font-bold">
+            <Icon name="mdi:warning" class="w-8 "/>
+            Things to keep in mind:
+            </div>
+            <p class="px-2 pb-1">
+            If you don't have at least 15 years of experience keep your achievements to 4-5 points.
+            Only write about relevant points, short and concise.
+            </p>
+            <p class="px-2 pb-1">
+            Do not try to pad-out your resume.
+            </p>
+        </div>
+
+        <hr>
+
+        <form method="POST" id="myc" autocomplete="off">
+
+            <fieldset>
+                <legend class="text-sm text-gray-600 font-semibold">Most Recent Experience:</legend>
+
+            <Text_input
+                    name="company"
+                    required
+                    id="company"
+                    type="text"
+                    lname="Company name"
+                    placeholder="XYZ Company"
+                    />
+
+            <Text_input
+                    name="desgnation"
+                    required
+                    id="desgnation"
+                    type="text"
+                    lname="Desgnation"
+                    placeholder="ex: Junior Programmer"
+                    />
+
+            <Text_input
+                    name="c_address"
+                    required
+                    id="c_address"
+                    type="text"
+                    lname="Company Address"
+                    placeholder="ex: Unit-3, Bhubaneswar"
+                    />
+
+                    <hr>
+
+            <div class="mob_container">
+
+            <small class="text-gray-500">Input a valid date from 1990-01 to {maxmonth} </small>
+
+            <Text_input
+                    name="joined"
+                    required
+                    id="joined"
+                    type="text"
+                    pattern="(19[9][0-9]|20[0-9][0-9])-(0[1-9]|1[0-2])"
+                    placeholder="2020-01"
+                    lname="Joined on"
+                    />
+
+            <Text_input
+                    name="departed"
+                    id="departed"
+                    type="text"
+                    lname="Departed on"
+                    pattern="(19[9][0-9]|20[0-9][0-9])-(0[1-9]|1[0-2])"
+                    placeholder={maxmonth}
+                    classes=""
+                    />
+
+            <small class="text-gray-500">P.S. Leave Departed field if your currently hired for said company</small>
+
+            </div>
+
+            <div class="flex gap-2 flex-col">
+
+                <label
+                        id="ach_label"
+                        class="my-2 font-bold text-gray-700"
+                        for="achivments">
+                    Achievements or Things you worked on
+                </label>
+
+                <textarea
+                        id="achievements"
+                        name="achievements"
+                        class="resize-y bg-gray-100 border-2 rounded"
+                        placeholder="Ex: Wrote code for SaaS web app in Python\r\nEach newline is a new point"
+                        rows="4"></textarea>
+            </div>
+
+            </fieldset>
+
+            <button class="submit" type="submit">Add<button>
+
+        </form>
+
+        <h2 class="my-3 text-center font-semibold text-gray-600">Added experience will appear under here:</h2>
+
+        {
+        x &&
+        <div>
+        <ol class="list-decimal list-inside font-semibold text-sm text-gray-600">
+            {x.map(x => (
+            <li>{x.company}, {x.desgnation} - {x.c_address}</li>
+            ))}
+        </ol>
+        </div>
+        }
+
+
+    </div>
+    <a href="/cv-builder/templates/ats01/form/edu" >
+        <div class="bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">NEXT</div>
+    </a>
+</Userlayout>
+
+<style>
+    h1 {
+        @apply text-center font-bold text-gray-700 my-3;
+    }
+
+    hr {
+        @apply border-2 my-4;
+    }
+
+    .form_container {
+        @apply container mx-auto max-w-sm md:max-w-2xl;
+    }
+
+    form {
+        @apply shadow-md p-8;
+    }
+
+    .submit {
+        @apply bg-orange-500 w-full my-4 py-4 text-white font-bold;
+    }
+
+    .mob_container {
+        @apply flex flex-col gap-1 ;
+    }
+</style>

@@ -1,0 +1,137 @@
+---
+import Userlayout from "../../../../../layouts/Userlayout.astro"
+import Text_input from "../../../../../components/Text_input.astro"
+import convertFormData from "../../../../../utils/convertFormData.js"
+
+if (Astro.request.method === "POST"){
+try{
+const data = await Astro.request.formData();
+const d = {}
+for (const [key,value] of data.entries()){
+d[key] = value;
+}
+
+console.log(d)
+} catch (err){
+if (err instanceof Error){
+console.error(err.message);
+}
+}
+
+}
+---
+<Userlayout>
+    <div class="form_container">
+
+        <h1>Step:1/7 Name and Contact details</h1>
+
+        <hr>
+
+        <form method="POST" id="myc">
+
+            <input type="hidden" name="cv_template" value="ats01" id="cv_template">
+
+            <Text_input
+                    name="name"
+                    required
+                    id="fullname"
+                    type="text"
+                    lname="Full name"
+                    />
+
+            <Text_input
+                    name="cv_title"
+                    required
+                    id="cv_title"
+                    type="text"
+                    lname="CV title"
+                    placeholder="ex: PHP dev-4 yrs experience"
+                    />
+
+            <Text_input
+                    name="cv_objective"
+                    required
+                    id="cv_objective"
+                    type="text"
+                    lname="Objective"
+                    placeholder="ex: Applying for xyz Company"
+                    />
+
+                    <hr>
+
+            <Text_input
+                    name="email"
+                    required
+                    id="email"
+                    type="email"
+                    lname="Email"
+                    />
+
+            <div class="mob_container">
+
+            <Text_input
+                    name="cc"
+                    required
+                    id="cc"
+                    type="number"
+                    lname="Country code"
+                    minlength="1"
+                    maxlength="2"
+                    placeholder="00"
+                    />
+
+            <Text_input
+                    name="mobile"
+                    required
+                    id="mobile"
+                    type="number"
+                    lname="Mobile no."
+                    minlength="10"
+                    maxlength="10"
+                    placeholder="12345 67890"
+                    />
+
+            </div>
+
+            <Text_input
+                    name="address"
+                    required
+                    id="address"
+                    type="text"
+                    lname="Address"
+                    placeholder="e.x: Bhubaneswar, Odisha"
+                    minlength="3"
+                    classes="mb-4"
+                    />
+
+                    <button class="submit" type="submit">Next<button>
+
+        </form>
+    </div>
+</Userlayout>
+
+<style>
+    h1 {
+        @apply text-center font-bold text-gray-700 my-3;
+    }
+
+    hr {
+        @apply border-2 my-4;
+    }
+
+    .form_container {
+        @apply container mx-auto max-w-sm md:max-w-2xl;
+    }
+
+    form {
+        @apply shadow-md p-8;
+    }
+
+    .submit {
+        @apply bg-blue-500 w-full my-4 py-4 text-white font-bold;
+    }
+
+    .mob_container {
+        @apply flex gap-1;
+    }
+</style>
