@@ -11,7 +11,7 @@ if (Astro.request.method === "POST"){
     d[key] = value;
     }
 
-    Astro.redirect("/cv-builder/templates/ats01/form/experience")
+    return Astro.redirect("/cv-builder/templates/ats01/form/experience")
     console.log(d)
     } catch (err){
     if (err instanceof Error){
