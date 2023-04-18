@@ -51,7 +51,7 @@ if (Astro.request.method === 'POST') {
   <form method="POST">
     <div class="relative mb-12" data-te-input-wrapper-init>
      <Text_input lname="Email:" input_type="email" name="email" id="useremail" input_type="email" required/>
-     <Text_input lname="Password:" input_type="password" name="password" id="userpassword" input_type="password" min="6"  required/>
+     <Text_input lname="Password:" input_type="password" name="password" id="userpassword" input_type="password" minlength="6"  required/>
     </div>
     <Button type="submit" name="Login" classes="bg-blue-500 hover:bg-blue-600" />
     <Links href="/register" text="Don't have an account ? Sign Up" classes="text-blue-500 visited:text-purple-600 hover:underline hover:font-medium "/>
