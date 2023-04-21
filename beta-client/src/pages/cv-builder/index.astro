@@ -1,11 +1,24 @@
 ---
 import Userlayout from "../../layouts/Userlayout.astro"
 
-const data = await fetch("http://localhost:3000/api/templates.json").catch((error) => console.error(error));
-const templates = await data.json();
+let templates;
+try {
+const response = await fetch("http://localhost:5000/templates");
+
+if (!response.ok){
+throw new Error('Error fetching data');
+}
+
+templates = await response.json();
+
+} catch (error) {
+    console.error(error);
+    return Astro.redirect("/500");
+}
+
 
 // DEBUG ONLY
-console.log(templates)
+// console.log(templates)
 ---
 <Userlayout>
     <div id="templates" class="templates">
@@ -70,7 +83,7 @@ console.log(templates)
             {
             templates.map(
             templates => (
-            
+
             <div class="cardbody">
                 <img
                         class="cardimg"
@@ -78,7 +91,7 @@ console.log(templates)
                         alt={templates.image.split('/').pop()} />
                 <div>
                     <h5>
-                        {templates.name} This is api generated
+                        {templates.name}
                     </h5>
                     <p class="cardtext">
                     {templates.text}
@@ -99,7 +112,7 @@ console.log(templates)
             ))
             }
 
-        </div> 
+        </div>
     </div>
 </Userlayout>
 
