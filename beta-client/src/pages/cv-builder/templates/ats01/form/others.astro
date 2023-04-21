@@ -4,34 +4,117 @@ import Userlayout from "../../../../../layouts/Userlayout.astro"
 import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
 
-let x;
 
-x = Astro.cookies.has("other") ? Astro.cookies.get("other").json() : null;
+// function Handel skills type array
+// single word = all Uppercase
+
+let capSkill = (array) => (
+array.map(b=>{
+    if(!b.includes(" ")){
+    return b.toUpperCase()
+    } else {
+    return b
+    }
+}));
+
+// function Handel languages type array
+// single word = first letter Uppercase
+
+let capLang = (array) => (
+array.map(b=>
+b[0].toUpperCase() + b.substring(1).toLowerCase()
+));
+
+
+// function to sanitize input strings
+
+function sanitize(string, arrayName){
+// split them into array
+// remove space from before and after element
+
+    let array = string.split(',').map(b => b.trim()).filter(b => b)
+
+// respective Capitalization of array
+
+    if(arrayName === "skill"){
+    array = capSkill(array)
+    }
+
+    if(arrayName === "languages"){
+    array = capLang(array)
+    }
+
+    return array
+}
+
+// function to combine pre and new values
+
+function total(a1, a2){
+
+// concatenate 2 array remove false values
+
+let array = a1.concat(a2).filter(b=>b)
+
+// remove duplicates and sort
+
+array = ([...new Set(array)]).sort()
+return array
+}
 
 if (Astro.request.method === "POST"){
     try{
         const data = await Astro.request.formData();
 
-        // OBJECT ENTRIES METHOD
-        const d = Object.fromEntries(data.entries());
+        // INITIALISE others obj
 
-        // Check and assign other cookie val to other or []
-        let other = Astro.cookies.has("other") ? Astro.cookies.get("other").json() : [];
+        const others = Astro.cookies.has("others") ? Astro.cookies.get("others").json() : {};
 
-        const isDuplicate = other.some((obj)=> JSON.stringify(obj) === JSON.stringify(d));
+        // UPDATE SKILLS
 
-        if(!isDuplicate){
-            other.push(d);
+        if(data.has("skills")){
+        let newSkill
+        let preSkill = 'skills' in others ? others.skills : null
 
-            console.log("---------- other val ----------")
-            console.log(other)
-            console.log("--------------------\n")
+        const inputSkills = data.get("skills");
+        newSkill = sanitize(inputSkills, 'skill')
 
-            Astro.cookies.set('other', JSON.stringify(other), {maxAge: 60 * 60} )
+        let tSkill = total(newSkill, preSkill)
+        others.skills = tSkill
         }
 
-        // code to convert into useable obj arrays
-        x = other.filter(e => typeof e === "object")
+        // UPDATE LANGUAGES
+
+        if(data.has("languages")){
+        let newLang
+        let preLang = 'languages' in others ? others.languages : null
+
+        const inputLang = data.get("languages");
+        newLang = sanitize(inputLang, 'languages')
+
+        let tLang = total(newLang, preLang)
+        others.languages = tLang
+        }
+
+       // UPDATE CERTIFICATES
+
+        if(data.has("certificates")){
+        let newCert
+        let preCert = 'certificates' in others ? others.certificates : null;
+
+        const inputCert = data.get("certificates");
+        newCert = sanitize(inputCert, 'skill')
+
+        let tCert = total(newCert, preCert)
+        others.certificates = tCert
+        }
+
+        // DEBUG ONLY
+        console.log("---------- others val ----------")
+        console.log(others)
+        console.log("--------------------\n")
+
+        // SET COOKIE
+        Astro.cookies.set('others', JSON.stringify(others), {maxAge: 60*60})
 
         Astro.redirect(Astro.url.pathname)
 
@@ -50,12 +133,14 @@ let date = new Date().toJSON().slice(0, 7);
 return date;
 })();
 
-// DEBUG ONLY
-// console.log(maxmonth);
-console.log(x)
+let x = 'empty';
 console.log("---------- Cookie val ----------")
-console.log(Astro.cookies.get("other").value)
-console.log("This is other --------------------\n")
+if(Astro.cookies.has("others")){
+    x = Astro.cookies.get("others").json()
+
+    console.log(Astro.cookies.get("others").json())
+}
+console.log("This is others --------------------\n")
 
 ---
 <Userlayout>
@@ -93,7 +178,7 @@ console.log("This is other --------------------\n")
         <form method="POST" id="myc" autocomplete="off">
 
             <fieldset>
-                <legend class="text-sm text-gray-600 font-semibold">Most Recent Experience:</legend>
+                <legend class="text-sm text-gray-600 font-semibold">Skills, Languages proficiency and Certificates</legend>
 
             <Text_input
                     name="skills"
@@ -122,33 +207,67 @@ console.log("This is other --------------------\n")
                     <hr>
             </fieldset>
 
-            <button class="submit" type="submit">Add<button>
+            <button class="submit" type="submit">Add</button>
 
         </form>
 
-        <h2 class="my-3 text-center font-semibold text-gray-600">Added experience will appear under here:</h2>
+        <h2 class="my-3 text-center font-semibold text-gray-600">Added fields will appear under here:</h2>
 
+        <div class="container px-5 mx-auto max-w-sm md:max-w-md ">
         {
-        x &&
-        <div>
-        <ol class="list-decimal list-inside font-semibold text-sm text-gray-600">
-            {x.map(x => (
-            <li>{x.skills}</li>
-            <li>{x.languages}</li>
-            <li>{x.certificates}</li>
-            ))}
-        </ol>
-        </div>
+        !(x==='empty') &&
+        <ul class="space-y-4">
+            {x.skills.length ? (
+            <li>
+                <h3 class="oh">Skills:</h3>
+                <ul class="in_ul">
+                    {x.skills.map(skill => (
+                    <li>{skill}</li>
+                    ))}
+                </ul>
+            </li>
+            ):(
+            <p class="nty">No added Skills yet</p>
+            )}
+            {x.languages.length ? (
+            <li>
+                <h3 class="oh">Languages:</h3>
+                <ul class="in_ul">
+                    {x.languages.map(language => (
+                    <li>{language}</li>
+                    ))}
+                </ul>
+            </li>
+            ):(
+            <p class="nty">No added Languages yet</p>
+            )}
+            {x.certificates.length ? (
+            <li>
+                <h3 class="oh">Certificates:</h3>
+                <ul class="in_ul">
+                    {x.certificates.map(certificate => (
+                    <li>{certificate}</li>
+                    ))}
+                </ul>
+            </li>
+            ):(
+            <p class="nty">No Certificates yet</p>
+            )}
+        </ul>
         }
 
+        </div>
 
     </div>
-    <a href="/cv-builder/templates/ats01/form/confother" >
-        <div class="bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">NEXT</div>
+    <a href="/cv-builder/templates/ats01/form/confother" class="container mx-auto max-w-sm md:max-w-2xl">
+        <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">NEXT</div>
     </a>
 </Userlayout>
 
 <style>
+    body{
+        @apply bg-gray-100;
+    }
     h1 {
         @apply text-center font-bold text-gray-700 my-3;
     }
@@ -158,7 +277,7 @@ console.log("This is other --------------------\n")
     }
 
     .form_container {
-        @apply container mx-auto max-w-sm md:max-w-2xl;
+        @apply container mx-auto max-w-sm md:max-w-2xl bg-white;
     }
 
     form {
@@ -169,7 +288,15 @@ console.log("This is other --------------------\n")
         @apply bg-orange-500 w-full my-4 py-4 text-white font-bold;
     }
 
-    .mob_container {
-        @apply flex flex-col gap-1 ;
+    .in_ul{
+        @apply text-base list-disc grid grid-rows-3 md:grid-rows-4 grid-flow-col ;
+    }
+
+    .oh{
+        @apply font-bold text-center;
+    }
+
+    .nty{
+        @apply text-gray-400 text-center;
     }
 </style>
