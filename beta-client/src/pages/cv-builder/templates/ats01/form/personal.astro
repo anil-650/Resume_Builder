@@ -6,17 +6,20 @@ import convertFormData from "../../../../../utils/convertFormData.js"
 if (Astro.request.method === "POST"){
     try{
     const data = await Astro.request.formData();
-    const d = {}
-    for (const [key,value] of data.entries()){
-    d[key] = value;
-    }
+    const d = Object.fromEntries(data.entries());
+
+    Astro.cookies.set('personal', JSON.stringify(d), {
+    maxAge: 60*60
+    })
+
+    console.log('Personal cookie', d)
 
     return Astro.redirect("/cv-builder/templates/ats01/form/experience")
-    console.log(d)
+
     } catch (err){
-    if (err instanceof Error){
-    console.error(err.message);
-    }
+        if (err instanceof Error){
+        console.error(err.message);
+        }
     }
 
 }
