@@ -1,0 +1,35 @@
+---
+const title = "500 Internal Server Error"
+---
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2>
+        {title}
+      </h2>
+      <p>
+        Please try again later.
+      </p>
+    </div>
+    <div>
+      <a href="/">
+        Back to Home
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+    h2 {
+        @apply mt-6 text-center text-3xl font-extrabold text-gray-900;
+    }
+
+    a {
+        @apply w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-orange-400;
+    }
+
+    p {
+        @apply mt-2 text-center text-lg text-gray-600;
+    }
+</style>
