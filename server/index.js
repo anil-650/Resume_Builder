@@ -13,6 +13,9 @@ app.use("/auth", require("./routes/jwtAuth"));
 // Dashboard route
 app.use("/dashboard", require("./routes/dashboard"));
 
+// Get templates data
+app.use("/templates", require("./routes/templates"));
+
 // check server running
 app.get("/", (req, res)=>{
     res.json({message: "hello from server"});
