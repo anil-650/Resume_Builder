@@ -1,0 +1,164 @@
+---
+import { Icon } from "astro-icon"
+import Userlayout from "../../../../../layouts/Userlayout.astro"
+import Text_input from "../../../../../components/Text_input.astro"
+import convertFormData from "../../../../../utils/convertFormData.js"
+
+let x;
+
+// Redirect for not having exp cookie
+
+if(!Astro.cookies.has("others")){
+return Astro.redirect("/cv-builder/templates/ats01/form/others")
+}
+
+if (Astro.request.method === "POST"){
+    try{
+        const data = await Astro.request.formData();
+        let s,l,c
+        let e = {}
+
+        if(data.has('skills[]')){
+        s = data.getAll("skills[]")
+        console.log(s)
+        e.skills = s.map(json=>JSON.parse(json))
+        }
+
+        if(data.has("languages[]")){
+        l = data.getAll("languages[]")
+        e.languages = l.map(json=>JSON.parse(json))
+        }
+
+        if(data.has("certificates[]")){
+        c = data.getAll("certificates[]")
+        e.certificates = c.map(json=>JSON.parse(json))
+        }
+
+
+        console.log("---------- Fotm data ----------")
+        console.log(e)
+        console.log("--------------------\n")
+
+        Astro.cookies.set("others", JSON.stringify(e), {
+        maxAge: 60*60
+        });
+
+        return Astro.redirect("/cv-builder/templates/ats01/form/final")
+
+        } catch(err){
+        if (err instanceof Error){
+        console.error(err.message);
+        }
+    }
+}
+
+// DEBUG ONLY
+x = Astro.cookies.get("others").json()
+
+console.log("----- x value -----")
+console.log(x)
+console.log("----------\n")
+---
+<Userlayout>
+    <div class="form_container">
+
+        <h1>Step:3/7 Confirm Personal Experience details</h1>
+
+        <hr>
+
+        <div class="my-2 leading-tight flex flex-col justify-center gap-2 border-green-500 bg-green-200 text-green-800 border-l-4 border-y rounded border-r mx-2">
+            <div class="flex gap-2 items-center font-bold">
+            <Icon name="mdi:lightbulb-on" class="w-8 "/>
+            Tips:
+            </div>
+            <p class="px-2 pb-1">
+            Uncheck all the options you don't want to add
+            </p>
+        </div>
+
+        <hr>
+
+        <form method="POST" id="myc" autocomplete="off">
+
+            { x.skills.length && <h3>Skills:</h3> }
+
+            {x.skills.length && x.skills.map(skills=>(
+            <div class="flex gap-3 items-center">
+                <input id={skills}
+                type="checkbox"
+                name="skills[]"
+                value={JSON.stringify(skills)} checked/>
+                <lable for={skills}>{skills}</lable>
+            </div>
+            ))}
+
+            { x.languages.length && <h3>Languages:</h3> }
+
+            {x.languages.length && x.languages.map(languages=>(
+            <div class="flex gap-3 items-center">
+                <input id={languages}
+                type="checkbox"
+                name="languages[]"
+                value={JSON.stringify(languages)} checked/>
+                <lable for={languages}>{languages}</lable>
+            </div>
+            ))}
+
+            { x.certificates.length && <h3>Certificates:</h3> }
+
+            {x.certificates.length && x.certificates.map(certificates=>(
+            <div class="flex gap-3 items-center">
+                <input id={certificates}
+                type="checkbox"
+                name="certificates[]"
+                value={JSON.stringify(certificates)} checked/>
+                <lable for={certificates}>{certificates}</lable>
+            </div>
+            ))}
+
+
+            <button class="submit" type="submit">Confirm</button>
+
+        </form>
+
+    <a href="/cv-builder/templates/ats01/form/others" class="container mx-auto max-w-sm md:max-w-2xl">
+        <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">Previous</div>
+    </a>
+
+    </div>
+</Userlayout>
+
+<style>
+    h1 {
+        @apply text-center font-bold text-gray-700 my-3;
+    }
+
+    h3 {
+        @apply text-center font-bold text-gray-700;
+    }
+
+    hr {
+        @apply border-2 my-4;
+    }
+
+    .form_container {
+        @apply container mx-auto max-w-sm md:max-w-2xl;
+    }
+
+    form {
+        @apply shadow-md p-8 gap-2 flex flex-col justify-center;
+    }
+
+    .submit {
+        @apply bg-orange-500 w-full my-4 py-4 text-white font-bold;
+    }
+
+    label {
+        @apply font-bold text-lg md:text-lg text-gray-600;
+    }
+
+    input {
+        @apply w-5 h-5 my-2;
+    }
+
+</style>
