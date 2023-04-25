@@ -3,7 +3,8 @@ import Userlayout from "../../layouts/Userlayout.astro"
 
 let templates;
 try {
-const response = await fetch("http://localhost:5000/templates");
+// const response = await fetch("http://localhost:5000/templates");
+const response = await fetch("http://localhost:3000/api/templates.json");
 
 if (!response.ok){
 throw new Error('Error fetching data');
@@ -117,6 +118,10 @@ templates = await response.json();
 </Userlayout>
 
 <style>
+    body {
+        @apply bg-gray-100;
+    }
+
     h1 {
         @apply font-bold text-xl md:text-2xl text-gray-600 text-center;
     }
