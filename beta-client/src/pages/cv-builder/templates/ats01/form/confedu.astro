@@ -70,19 +70,19 @@ console.log("----------\n")
                 type="checkbox"
                 name="education[]"
                 value={JSON.stringify(z)}
-                checked>
+                checked />
                 <label for={z.institute}>
                     {z.institute}, {z.course} - {z.i_address}
                 </label>
             </div>
             ))}
 
-            <button class="submit" type="submit">Confirm<button>
+            <button class="submit" type="submit">Confirm</button>
 
         </form>
 
-        <a href="/cv-builder/templates/ats01/form/education" class="bg-blue-500 px-28 py-5 my-2 text-white font-bold" >
-            Previous
+        <a href="/cv-builder/templates/ats01/form/education" class="container mx-auto max-w-sm md:max-w-2xl" >
+            <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">Previous</div>
         </a>
 
     </div>

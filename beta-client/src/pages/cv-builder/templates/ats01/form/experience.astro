@@ -14,6 +14,9 @@ if (Astro.request.method === "POST"){
 
         // OBJECT ENTRIES METHOD
         const d = Object.fromEntries(data.entries());
+        if("achievements" in d){
+        d.achievements = d.achievements.split('\r\n').map(b=>b.trim())
+        }
 
         // Check and assign exp cookie val to exp or []
         let exp = Astro.cookies.has("exp") ? Astro.cookies.get("exp").json() : [];
@@ -27,7 +30,7 @@ if (Astro.request.method === "POST"){
             console.log(exp)
             console.log("--------------------\n")
 
-            Astro.cookies.set('exp', JSON.stringify(exp), {maxAge: 60 * 60} )
+             Astro.cookies.set('exp', JSON.stringify(exp), {maxAge: 60 * 60} )
         }
 
         // code to convert into useable obj arrays
@@ -54,7 +57,9 @@ return date;
 // console.log(maxmonth);
 console.log(x)
 console.log("---------- Cookie val ----------")
+if(Astro.cookies.has("exp")){
 console.log(Astro.cookies.get("exp").value)
+}
 console.log("This is exp --------------------\n")
 
 ---
@@ -158,7 +163,7 @@ console.log("This is exp --------------------\n")
                 <label
                         id="ach_label"
                         class="my-2 font-bold text-gray-700"
-                        for="achivments">
+                        for="achievements">
                     Achievements or Things you worked on
                 </label>
 
@@ -172,7 +177,7 @@ console.log("This is exp --------------------\n")
 
             </fieldset>
 
-            <button class="submit" type="submit">Add<button>
+            <button class="submit" type="submit">Add</button>
 
         </form>
 
@@ -180,7 +185,7 @@ console.log("This is exp --------------------\n")
 
         {
         x &&
-        <div>
+        <div class="container mx-auto max-w-sm md:max-w-lg">
         <ol class="list-decimal list-inside font-semibold text-sm text-gray-600">
             {x.map(x => (
             <li>{x.company}, {x.desgnation} - {x.c_address}</li>
@@ -191,7 +196,8 @@ console.log("This is exp --------------------\n")
 
 
     </div>
-    <a href="/cv-builder/templates/ats01/form/confexp" >
+    <a href="/cv-builder/templates/ats01/form/confexp"
+       class="container mx-auto max-w-sm md:max-w-2xl">
         <div class="bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">NEXT</div>
     </a>
 </Userlayout>

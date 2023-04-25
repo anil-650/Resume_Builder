@@ -23,6 +23,10 @@ if (Astro.request.method === "POST"){
     }
 
 }
+
+// const apicc = await fetch()
+const apicc = await fetch(new URL('/api/cc.json',Astro.url)).then(res=>res.json()).catch(error=>console.error(error))
+
 ---
 <Userlayout>
     <div class="form_container">
@@ -41,6 +45,7 @@ if (Astro.request.method === "POST"){
                     id="fullname"
                     type="text"
                     lname="Full name"
+                    pattern="[a-zA-Z]+ (?:[A-Za-z]+) ?[A-Za-z]{2,}"
                     />
 
             <Text_input
@@ -77,25 +82,31 @@ if (Astro.request.method === "POST"){
                     name="cc"
                     required
                     id="cc"
-                    type="number"
-                    lname="Country code"
-                    minlength="1"
-                    maxlength="2"
-                    placeholder="00"
+                    type="tel"
+                    lname="(+)Country code"
+                    list="cc-list"
+                    placeholder="+XX"
+                    pattern="[+].*"
+                    minlength="2"
+                    maxlength="8"
                     />
+
 
             <Text_input
                     name="mobile"
                     required
                     id="mobile"
-                    type="number"
+                    type="tel"
                     lname="Mobile no."
+                    // fix telephone no and split exirince later
                     minlength="10"
-                    maxlength="10"
-                    placeholder="12345 67890"
+                    maxlength="12"
+                    pattern="[1-9]{1}[0-9]{2}[- ]?[0-9]{3}[- ]?[0-9]{4}"
+                    placeholder="XXX XXX XXXX"
                     />
 
             </div>
+
 
             <Text_input
                     name="address"
@@ -108,10 +119,17 @@ if (Astro.request.method === "POST"){
                     classes="mb-4"
                     />
 
-                    <button class="submit" type="submit">Next<button>
+                    <button class="submit" type="submit">Next</button>
 
         </form>
     </div>
+
+    <datalist id="cc-list">
+        {apicc.cc.map(c=>(
+        <option value={c}></option>
+        ))}
+    </datalist>
+
 </Userlayout>
 
 <style>
@@ -136,6 +154,6 @@ if (Astro.request.method === "POST"){
     }
 
     .mob_container {
-        @apply flex gap-1;
+        @apply flex gap-2;
     }
 </style>

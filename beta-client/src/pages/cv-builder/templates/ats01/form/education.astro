@@ -14,6 +14,9 @@ if (Astro.request.method === "POST"){
 
         // OBJECT ENTRIES METHOD
         const d = Object.fromEntries(data.entries());
+        if("achievements" in d){
+        d.achievements = d.achievements.split('\r\n').map(b=>b.trim())
+        }
 
         // Check and assign edu cookie val to edu or []
         let edu = Astro.cookies.has("edu") ? Astro.cookies.get("edu").json() : [];
@@ -54,7 +57,9 @@ return date;
 // console.log(maxmonth);
 console.log(x)
 console.log("---------- Cookie val ----------")
+if(Astro.cookies.has("edu")){
 console.log(Astro.cookies.get("edu").value)
+}
 console.log("This is edu --------------------\n")
 
 ---
@@ -105,7 +110,7 @@ console.log("This is edu --------------------\n")
                     required
                     id="course"
                     type="text"
-                    lname="Cource info"
+                    lname="Course info"
                     placeholder="ex: Master of Business Administration"
                     />
 
@@ -153,7 +158,7 @@ console.log("This is edu --------------------\n")
                 <label
                         id="ach_label"
                         class="my-2 font-bold text-gray-700"
-                        for="achivments">
+                        for="achievements">
                     Achievements or Things you worked on
                 </label>
 
