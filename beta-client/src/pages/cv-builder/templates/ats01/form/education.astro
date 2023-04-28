@@ -3,6 +3,7 @@ import { Icon } from "astro-icon"
 import Userlayout from "../../../../../layouts/Userlayout.astro"
 import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
+import { maxMonth } from "../../../../../utils/yearMonth.js"
 
 let x;
 
@@ -48,10 +49,7 @@ if (Astro.request.method === "POST"){
 
 // FOR SETTING MAX month in the form
 
-const maxmonth = await (()=>{
-let date = new Date().toJSON().slice(0, 7);
-return date;
-})();
+const maxmonth = maxMonth()
 
 // DEBUG ONLY
 // console.log(maxmonth);
@@ -133,9 +131,10 @@ console.log("This is edu --------------------\n")
                     name="admission"
                     required
                     id="admission"
-                    type="text"
-                    pattern="(19[9][0-9]|20[0-9][0-9])-(0[1-9]|1[0-2])"
-                    placeholder="2020-01"
+                    type="month"
+                    min="1990-01"
+                    max={maxmonth}
+                    classes="bg-white"
                     lname="Admission date"
                     />
 
@@ -143,10 +142,11 @@ console.log("This is edu --------------------\n")
                     name="graduated"
                     id="graduated"
                     required
-                    type="text"
+                    type="month"
+                    min="1990-01"
+                    max="2099-12"
+                    classes="bg-white"
                     lname="Course completed on"
-                    pattern="(19[9][0-9]|20[0-9][0-9])-(0[1-9]|1[0-2])"
-                    placeholder={maxmonth}
                     />
 
             <small class="text-gray-500">P.S. Leave Departed field if your currently hired for said company</small>

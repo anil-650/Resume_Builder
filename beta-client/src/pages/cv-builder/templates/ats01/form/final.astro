@@ -3,13 +3,15 @@ import { Icon } from "astro-icon"
 import Userlayout from "../../../../../layouts/Userlayout.astro"
 import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
+import yearMonth from "../../../../../utils/yearMonth"
+
 
 let x;
 
 // Redirect for not having edu cookie
 
-if(!Astro.cookies.has("edu")){
-return Astro.redirect("/cv-builder/templates/ats01/form/education")
+if(!Astro.cookies.has("personal")){
+return Astro.redirect("/cv-builder/templates/ats01/form/personal")
 }
 
 let p,exp,edu,o
@@ -97,22 +99,22 @@ console.log("----------\n")
                     <span>Designation: </span>{exp.desgnation}
                     </p>
                     <p>
-                    <span>From: </span>{exp.joined}
-                    <span>To: </span>{exp.departed}
+                    <span>From: </span>{yearMonth(exp.joined)}
+                    <span>To: </span>{(exp.departed === '') ? 'Present' : yearMonth(exp.departed)}
                     </p>
                     {
-                    (exp.achievements && exp.achievements.length)
-                    &&
+                    (exp.achievements && exp.achievements.filter(Boolean).length) ?
                     <p><span>Achievements:</span></p>
+                    : null
                     }
 
-                    {(exp.achievements && exp.achievements.length) && exp.achievements.map(x=>(
+                    {(exp.achievements && exp.achievements.filter(Boolean).length) ? exp.achievements.map(x=>(
                     <ul>
                         <li>
                             {x}
                         </li>
                     </ul>
-                    ))}
+                    )) : null }
                 </li>
                 ))}
             </ol>
@@ -131,24 +133,25 @@ console.log("----------\n")
                     <span>Course: </span>{edu.course}
                     </p>
                     <p>
-                    <span>From: </span>{edu.admission}
-                    <span>To: </span>{edu.graduated}
+                    <span>From: </span>{yearMonth(edu.admission)}
+                    <span>To: </span>{yearMonth(edu.graduated)}
                     </p>
                     {
-                    (edu.achievements && edu.achievements.length)
-                    && 
+                    (edu.achievements && edu.achievements.filter(Boolean).length)
+                    ?
                     <p><span>Achievements:</span></p>
+                    : null
                     }
                     {
-                    (edu.achievements && edu.achievements.length)
-                    &&
+                    (edu.achievements && edu.achievements.filter(Boolean).length)
+                    ?
                     edu.achievements.map(x=>(
                     <ul>
                         <li>
                             {x}
                         </li>
                     </ul>
-                    ))
+                    )) : null
                     }
                 </li>
                 ))}
@@ -189,11 +192,13 @@ console.log("----------\n")
         </div>
 
 
-        <a href="/cv-builder/templates/ats01/form/ft" class="container mx-auto max-w-sm md:max-w-2xl" >
-            <div class=" bg-orange-500 text-center py-4 text-white font-bold mx-1 my-3">Create Resume</div>
+        <a href="/cv-builder/templates/ats01/form/preview" class="container mx-auto max-w-sm md:max-w-2xl" >
+            <div class=" bg-orange-500 text-center py-4 text-white font-bold mx-1 my-3">Preview Resume</div>
         </a>
 
-        </form>
+        <a href="/cv-builder/templates/ats01/form/sendresumedata" class="container mx-auto max-w-sm md:max-w-2xl" >
+            <div class=" bg-orange-500 text-center py-4 text-white font-bold mx-1 my-3">Create Resume</div>
+        </a>
 
         <a href="/cv-builder/templates/ats01/form/resetall" class="container mx-auto max-w-sm md:max-w-2xl" >
             <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">Rest All</div>
