@@ -16,6 +16,8 @@ app.use("/dashboard", require("./routes/dashboard"));
 // Get templates data
 app.use("/templates", require("./routes/templates"));
 
+app.use("/resume", require("./routes/resume"));
+
 // check server running
 app.get("/", (req, res)=>{
     res.json({message: "hello from server"});
