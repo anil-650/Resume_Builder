@@ -1,10 +1,10 @@
--- SWITCH USER
-
-SET ROLE dev;
-
 -- SWITCH TO DATABASE
 
 \c myresumebuilder;
+
+-- SWITCH USER
+
+SET ROLE dev;
 
 -- CREATE templates TABLE
 

@@ -2,6 +2,7 @@
 -- 2 minus in front of the line are for commenting in SQL files
 -- CREATE 'dev' USER WITH CREATE DB AND CREATE ROLE
 
+\x
 CREATE USER dev WITH PASSWORD 'dev' CREATEDB CREATEROLE;
 
 -- SWITCH USER
@@ -18,6 +19,7 @@ CREATE DATABASE myresumebuilder;
 
 -- INSTALL "uuid-ossap" for UUID gENERATION
 
+SET ROLE dev;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- CREATE uuser TABLE
@@ -48,3 +50,4 @@ SELECT * FROM uuser;
 -- user_id                | user_name |  user_email   | user_password
 -- -----------------------------------+-----------+---------------+-------
 -- ce45af6c-3fe6-4b07-b8b4-b779450f4f8a | jay       | jay@gmail.com | 12345
+\i template_data.pgsql
