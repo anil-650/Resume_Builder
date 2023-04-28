@@ -1,23 +1,28 @@
--- SWITCH USER
-
-SET ROLE dev;
-
 -- SWITCH TO DATABASE
 
 \c myresumebuilder;
 
+-- SWITCH USER
+
+SET ROLE dev;
+
 -- CREATE resume TABLE
+DROP TABLE IF EXISTS resumes;
 CREATE TABLE resumes (
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     cv_no SERIAL NOT NULL,
+
     user_id uuid NOT NULL,
     cv_title VARCHAR(100) NOT NULL,
+    cv_objective VARCHAR(100) NOT NULL,
+    cv_template VARCHAR(100) NOT NULL,
     personal JSONB NOT NULL,
-    experience JSONB NOT NULL,
+    experience JSONB DEFAULT NULL,
     education JSONB NOT NULL,
     others JSONB NOT NULL,
-    preview_img VARCHAR(255) NOT NULL,
-    pdf VARCHAR(255) NOT NULL,
+
+    preview_img VARCHAR(255) DEFAULT NULL,
+    pdf VARCHAR(255) DEFAULT NULL,
     created_at DATE NOT NULL DEFAULT CURRENT_DATE,
     updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
     CONSTRAINT fk_user_id
