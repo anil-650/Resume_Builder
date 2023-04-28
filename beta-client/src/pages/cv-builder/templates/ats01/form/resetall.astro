@@ -1,19 +1,26 @@
 ---
+// RESET ALL COOKIES RELATED TO FORM
+
+// PERSONAL DETAILS COOKIES
 if(Astro.cookies.has("personal")){
 Astro.cookies.delete("personal")
 }
 
+// EXPERIENCE DETAILS COOKIES
 if(Astro.cookies.has("exp")){
 Astro.cookies.delete("exp")
 }
 
+// EDUCATION DETAILS COOKIES
 if(Astro.cookies.has("edu")){
 Astro.cookies.delete("edu")
 }
 
+// OTHERS SKILLS LANGUAGES CERTIFICATES DETAILS COOKIES
 if(Astro.cookies.has("others")){
 Astro.cookies.delete("others")
 }
 
-return Astro.redirect("/cv-builder/templates/ats01/personal")
+// REDIRECT TO PERSONAL From
+return Astro.redirect("/cv-builder/templates/ats01/form/personal")
 ---
