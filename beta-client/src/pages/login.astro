@@ -22,7 +22,9 @@ if (Astro.request.method === 'POST') {
        console.log(data.get('email'))
        const recive = await loginUser(data);
        if(recive.ok){
-           cookie = recive.token;
+       const data = await recive.json()
+           cookie = data.token;
+           console.log(cookie)
            Astro.cookies.set('isLoggedin', 'true', {
                httpOnly: true,
                maxAge: 60 * 60
@@ -31,7 +33,7 @@ if (Astro.request.method === 'POST') {
                httpOnly: true,
                maxAge: 60 * 60
            })
-           Astro.redirect('/user');
+           return Astro.redirect('/user');
         }
     } catch (error ) {
         if (error instanceof Error){
