@@ -36,7 +36,7 @@ if (Astro.request.method === 'POST') {
                httpOnly: true,
                maxAge: 60 * 60
            })
-           return Astro.redirect('/login');
+           return Astro.redirect('/user');
         }
         // NO SERVER ERROR HANDLING YET
     } catch (error ) {

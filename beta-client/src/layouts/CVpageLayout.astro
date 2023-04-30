@@ -41,9 +41,9 @@ const linksWrapper=[
 "mx-auto",
 "flex",
 "mb-5",
-"justify-between",
-"max-w-sm",
-"md:max-w-lg"
+"justify-center",
+"max-w-sm"
+
 ]
 
 
@@ -63,9 +63,11 @@ const { title }=Astro.props
                     <li>
                         <Links text="Add Resume" href="/cv-builder" icon={{ name: "ic:baseline-library-add", side: "left" }} classes={ styleAddResume } />
                     </li>
+                    <!--
                     <li>
                         <Links text="Dash board" href="/user/dashboard" icon={{ name: "majesticons:dashboard", side: "left"}} classes={ stylesDashboard } />
                     </li>
+                    -->
                 </ul>
                 <!-- SLOT HERE -->
                 <slot />
@@ -73,9 +75,10 @@ const { title }=Astro.props
             </div>
         </div>
     </div>
-    <!-- W  A   R   N    I    N    G    S -->
+    <!-- W  A   R   N    I    N    G    S
     <p class="font-bold pb-5 text-center text-4xl">hello Resumes</p>
     <p class="font-bold pb-5 text-center text-4xl"> ⚠️ IF YOU ARE HERE WITHOUT LOGIN THEN LOGIN CHECKING ARE EITHER NOT WORKING OR HAVEN'T BEEN SET ⚠️</p>
     <p class="font-bold pb-5 text-center text-4xl"> ⚠️  OR THE ROUTING IN USER/INDEX IS SET TO SEND YOU HERE ⚠️</p>
     <p class="font-bold pb-5 text-center text-4xl"> ⚠️  THIS IS FROM THE  CV PAGE LAYOUT ⚠️</p>
+-->
 </Userlayout>

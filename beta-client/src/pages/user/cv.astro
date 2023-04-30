@@ -7,12 +7,20 @@ import EmptyCVcard from "../../components/EmptyCVcard.astro"
 
 // SCRIPTS
 ---
-<CVpageLayout title="My Resumes">
+<CVpageLayout title="My Resumes" >
 <!-- CARDS STARTS HERE -->
 <CVcard title="Astro dev - (6 Months Exp)" created="05/04/2023"/>
 <CVcard title="PHP dev - (10 Years Exp)" updated="02/06/2023" created="05/04/2013"/>
 <!-- CARDS END HERE -->
 <!-- CARDS END HERE -->
+<!--
 <EmptyCVcard />
+-->
 <!-- CARDS END HERE -->
 </CVpageLayout>
+
+<style>
+h1 {
+    @apply sr-only;
+}
+</style>
