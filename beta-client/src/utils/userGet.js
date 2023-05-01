@@ -54,3 +54,8 @@ export async function updateUserPassword(user, token){
         body: user
     });
 }
+
+// GENERATE CV
+export async function generateCV( cvid ){
+    return fetch(`${url}/resume/gencv/${cvid}`)
+}
