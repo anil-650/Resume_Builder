@@ -3,7 +3,7 @@ import { Icon } from "astro-icon"
 import Userlayout from "../../../../../layouts/Userlayout.astro"
 import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
-
+import { cookieOpt } from "../../../../../utils/cookie.js"
 
 // function Handel skills type array
 // single word = all Uppercase
@@ -114,7 +114,7 @@ if (Astro.request.method === "POST"){
         console.log("--------------------\n")
 
         // SET COOKIE
-        Astro.cookies.set('others', JSON.stringify(others), {maxAge: 60*60})
+        Astro.cookies.set('others', JSON.stringify(others), cookieOpt)
 
         Astro.redirect(Astro.url.pathname)
 
