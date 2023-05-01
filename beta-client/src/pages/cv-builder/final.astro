@@ -1,9 +1,9 @@
 ---
 import { Icon } from "astro-icon"
-import Userlayout from "../../../../../layouts/Userlayout.astro"
-import Text_input from "../../../../../components/Text_input.astro"
-import convertFormData from "../../../../../utils/convertFormData.js"
-import yearMonth from "../../../../../utils/yearMonth"
+import Userlayout from "../../layouts/Userlayout.astro"
+import Text_input from "../../components/Text_input.astro"
+import convertFormData from "../../../utils/convertFormData.js"
+import yearMonth from "../../utils/yearMonth"
 
 
 let x;
@@ -31,6 +31,7 @@ edu = Astro.cookies.get("edu").json()
 if(Astro.cookies.has("others")){
 o = Astro.cookies.get("others").json()
 }
+
 
 // DEBUG ONLY
 console.log("----- p value -----")
@@ -95,7 +96,7 @@ console.log("----------\n")
                 <li>
                     <span>{exp.company}, {exp.c_address}</span>
                     <p>
-                    
+
                     <span>Designation: </span>{exp.desgnation}
                     </p>
                     <p>
@@ -192,15 +193,15 @@ console.log("----------\n")
         </div>
 
 
-        <a href="/cv-builder/templates/ats01/form/preview" class="container mx-auto max-w-sm md:max-w-2xl" >
+        <a href=`/cv-builder/preview/preview-${p.cv_template}` class="container mx-auto max-w-sm md:max-w-2xl" >
             <div class=" bg-orange-500 text-center py-4 text-white font-bold mx-1 my-3">Preview Resume</div>
         </a>
 
-        <a href="/cv-builder/templates/ats01/form/sendresumedata" class="container mx-auto max-w-sm md:max-w-2xl" >
+        <a href="/api/sendcv" class="container mx-auto max-w-sm md:max-w-2xl" >
             <div class=" bg-orange-500 text-center py-4 text-white font-bold mx-1 my-3">Create Resume</div>
         </a>
 
-        <a href="/cv-builder/templates/ats01/form/resetall" class="container mx-auto max-w-sm md:max-w-2xl" >
+        <a href="/api/resetall" class="container mx-auto max-w-sm md:max-w-2xl" >
             <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">Reset</div>
         </a>
 

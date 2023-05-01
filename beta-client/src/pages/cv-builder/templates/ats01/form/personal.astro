@@ -2,15 +2,14 @@
 import Userlayout from "../../../../../layouts/Userlayout.astro"
 import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
+import { cookieOpt } from "../../../../../utils/cookie.js"
 
 if (Astro.request.method === "POST"){
     try{
     const data = await Astro.request.formData();
     const d = Object.fromEntries(data.entries());
 
-    Astro.cookies.set('personal', JSON.stringify(d), {
-    maxAge: 60*60
-    })
+    Astro.cookies.set('personal', JSON.stringify(d), cookieOpt)
 
     console.log('Personal cookie', d)
 

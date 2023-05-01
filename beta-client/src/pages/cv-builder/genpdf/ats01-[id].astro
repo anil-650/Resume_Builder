@@ -1,6 +1,17 @@
 ---
-import PrintLayout from "../../../../../layouts/PrintLayout.astro"
-import yearMonth from "../../../../../utils/yearMonth"
+import PrintLayout from "../../../layouts/PrintLayout.astro"
+import yearMonth from "../../../utils/yearMonth.js"
+import { generateCV } from "../../../utils/userGet.js"
+
+// GET CV DETAILS
+const cvt = Astro.url.pathname.split('/').pop()
+
+// GET CV DETAILS
+const cv = cvt.split('-').slice(1).join('-')
+
+// GET CV DATA FROM BACK-END
+const response = await generateCV(cv)
+const data = await response.json()
 
 const cv_container=[
 'container',
@@ -20,23 +31,35 @@ const cv_container=[
 
 let p,exp,edu,o
 
-if(Astro.cookies.has("personal")){
-p = Astro.cookies.get("personal").json()
+if("personal" in data){
+p = data.personal
 }
 
-if(Astro.cookies.has("exp")){
-exp = Astro.cookies.get("exp").json()
+if("experience" in data){
+exp = data.experience
 }
 
-if(Astro.cookies.has("edu")){
-edu = Astro.cookies.get("edu").json()
+if("education" in data){
+edu = data.education
 }
 
-if(Astro.cookies.has("others")){
-o = Astro.cookies.get("others").json()
+if("others" in data){
+o = data.others
 }
 
+
+// DEBUG
+
+console.log(`---------- PERSONAL ------------`)
 console.log(p)
+console.log(`---------- EXPERIENCE ----------`)
+console.log(exp)
+console.log(`---------- EDUCATION -----------`)
+console.log(edu)
+console.log(`---------- OTHERS --------------`)
+console.log(o)
+console.log(`---------- END -----------------`)
+
 ---
 <PrintLayout>
     <div class:list={[cv_container]}>

@@ -3,6 +3,7 @@ import { Icon } from "astro-icon"
 import Userlayout from "../../../../../layouts/Userlayout.astro"
 import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
+import { cookieOpt } from "../../../../../utils/cookie.js"
 
 let x;
 
@@ -22,9 +23,7 @@ if (Astro.request.method === "POST"){
         console.log(e)
         console.log("--------------------\n")
 
-        Astro.cookies.set("edu", JSON.stringify(e), {
-        maxAge: 60*60
-        });
+        Astro.cookies.set("edu", JSON.stringify(e), cookieOpt);
 
         return Astro.redirect("/cv-builder/templates/ats01/form/others")
 

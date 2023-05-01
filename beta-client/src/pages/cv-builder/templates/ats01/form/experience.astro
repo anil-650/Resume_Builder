@@ -4,6 +4,7 @@ import Userlayout from "../../../../../layouts/Userlayout.astro"
 import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
 import { maxMonth } from "../../../../../utils/yearMonth.js"
+import { cookieOpt } from "../../../../../utils/cookie.js"
 
 let x;
 
@@ -31,7 +32,7 @@ if (Astro.request.method === "POST"){
             console.log(exp)
             console.log("--------------------\n")
 
-             Astro.cookies.set('exp', JSON.stringify(exp), {maxAge: 60 * 60} )
+             Astro.cookies.set('exp', JSON.stringify(exp), cookieOpt)
         }
 
         // code to convert into useable obj arrays

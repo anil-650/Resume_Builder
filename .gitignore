@@ -114,3 +114,5 @@ test-*
 mydb/
 *.swp
 logfile
+#### KEY FILE SHOULD BE DOWNLOADED FROM GCLOUD'S SERVICE ACCOUNT MANAGEMENT PAGE
+keyfile.json
