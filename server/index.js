@@ -18,10 +18,13 @@ app.use("/templates", require("./routes/templates"));
 
 app.use("/resume", require("./routes/resume"));
 
+app.use("/pup", require("./routes/pup"));
+
 // check server running
 app.get("/", (req, res)=>{
     res.json({message: "hello from server"});
 });
+
 
 // SERVER START
 app.listen(5000, ()=> {
