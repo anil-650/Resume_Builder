@@ -5,6 +5,7 @@ import Links from "../components/Links.astro"
 import Text_input from "../components/Text_input.astro"
 import Button from "../components/Button.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
+import { cookieOpt } from "../utils/cookie.js"
 // scripts
 import { loginUser } from "../utils/auth"
 
@@ -25,14 +26,9 @@ if (Astro.request.method === 'POST') {
        const data = await recive.json()
            cookie = data.token;
            console.log(cookie)
-           Astro.cookies.set('isLoggedin', 'true', {
-               httpOnly: true,
-               maxAge: 60 * 60
-           })
-           Astro.cookies.set('token', cookie, {
-               httpOnly: true,
-               maxAge: 60 * 60
-           })
+           Astro.cookies.set('isLoggedin', 'true', cookieOpt)
+           Astro.cookies.set('token', cookie, cookieOpt)
+
            return Astro.redirect('/user');
         }
     } catch (error ) {
