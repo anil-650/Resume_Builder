@@ -10,7 +10,7 @@ const { title , classes } = Astro.props;
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
-        <title>Print Page</title>
+        <title>{title}</title>
     </head>
     <body class="h-auto width-auto" >
         <slot />
