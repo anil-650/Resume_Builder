@@ -3,11 +3,55 @@
 import Userlayout from "../../layouts/Userlayout.astro";
 
 // IMPORTS
+import {getUser} from "../../utils/userGet.js"
+import { randomPic } from "../../utils/randomPic.js"
+
+let profile_pic = await randomPic();
+
+let token
+if(Astro.cookies.has("token")){
+token = Astro.cookies.get("token").value
+}
+
+console.log(token)
+const res = await getUser(token)
+const data = await res.json()
+const { user_name, user_email, count } = data
+console.log(data)
 
 ---
 
 <Userlayout title="Dashboard" >
-  <p class="font-bold pb-5 text-center text-4xl">hello Resumes</p>
-  <p class="font-bold pb-5 text-center text-4xl"> ⚠️ IF YOU ARE HERE WITHOUT LOGIN THEN LOGIN CHECKING ARE EITHER NOT WORKING OR HAVEN'T BEEN SET ⚠️</p>
-  <p class="font-bold pb-5 text-center text-4xl"> ⚠️  OR THE ROUTING IN USER/INDEX IS SET TO SEND YOU HERE ⚠️</p>
+        <div class="card">
+            <img src=`/images/profile-pic/${profile_pic}.svg` alt="">
+            <div class="card_text">
+                <h2>{user_name}</h2>
+                <h3>{user_email}</h3>
+                <p>Resumes created: {count}</p>
+            </div>
+    </div>
 </Userlayout>
+<style>
+    .card {
+        @apply  container mx-auto max-w-md md:max-w-full min-h-screen flex flex-col items-center justify-center justify-stretch gap-7 ;
+        @apply md:mx-auto md:container md:justify-center md:flex-row ;
+    }
+
+    img {
+        @apply h-80 w-80 ;
+    }
+
+    h3, h2, p { @apply text-gray-800 text-center }
+    h3,p { @apply font-mono tracking-widest }
+    h2 {
+        @apply font-bold text-4xl md:text-5xl xl:text-7xl;
+    }
+
+    h3 {
+        @apply font-light underline md:text-2xl xl:text-4xl;
+    }
+
+    p {
+        @apply md:text-xl xl:text-3xl ;
+    }
+</style>
