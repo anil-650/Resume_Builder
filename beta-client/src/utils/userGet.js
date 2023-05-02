@@ -8,6 +8,7 @@ const url = import.meta.env.BSA || 'http://localhost:5000'
 
 export async function getUser(token){
     return fetch(`${url}/dashboard`, {
+        method: "GET",
         headers: {
             'Conten-Type': 'application/json; cahrset=utf-8',
             'token': token,
@@ -15,8 +16,8 @@ export async function getUser(token){
     });
 }
 
-export async function getUserdata(token){
-    return  fetch('${url}/dashboard/users', {
+export async function getUserCVs(token){
+    return  fetch(`${url}/dashboard/cvs`, {
         method: 'GET',
         headers: {
             'token' : token

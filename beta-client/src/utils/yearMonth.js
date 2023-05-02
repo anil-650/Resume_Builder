@@ -9,3 +9,9 @@ export function maxMonth(){
     const d = new Date().toJSON().slice(0,7)
     return d
 }
+
+export function dayMonthYear(string){
+    const d = new Date(string)
+    const dmy = d.toLocaleDateString('en-IN', {day: 'numeric', month:'long', year:'numeric'})
+    return dmy
+}
