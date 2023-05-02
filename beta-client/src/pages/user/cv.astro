@@ -4,19 +4,35 @@ import CVpageLayout from "../../layouts/CVpageLayout.astro"
 import CVcard from "../../components/CVcard.astro"
 import EmptyCVcard from "../../components/EmptyCVcard.astro"
 // IMPORTS
+import { getUserCVs } from "../../utils/userGet.js"
+
 
 // SCRIPTS
+let token
+if(Astro.cookies.has("token")){
+token = Astro.cookies.get("token").value
+}
+
+const res = await getUserCVs(token)
+const data = await res.json()
+// console.log(data)
 ---
 <CVpageLayout title="My Resumes" >
 <!-- CARDS STARTS HERE -->
-<CVcard title="Astro dev - (6 Months Exp)" created="05/04/2023"/>
-<CVcard title="PHP dev - (10 Years Exp)" updated="02/06/2023" created="05/04/2013"/>
-<!-- CARDS END HERE -->
-<!-- CARDS END HERE -->
-<!--
+{
+(data.length > 0) ? data.map((data) =>(
+<CVcard title={data.cv_title}
+created={data.created_at}
+updated={data.updated_at}
+pdf={data.pdf}
+template={data.cv_template}
+id={data.id}/>
+
+)) : (
 <EmptyCVcard />
--->
-<!-- CARDS END HERE -->
+)
+}
+
 </CVpageLayout>
 
 <style>

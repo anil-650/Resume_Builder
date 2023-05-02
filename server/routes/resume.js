@@ -117,9 +117,34 @@ router.post("/save" , authorize, async (req, res)=>{
 
 router.get("/download", async (req, res)=>{});
 
+router.delete("/deletecv", authorize, async(req, res) =>{
+    const { id } = req.body
+    console.log(id)
+
+    try{
+        // DELETE DATA
+        const delCV ={
+            text: `DELETE FROM resumes
+            WHERE
+            id = $1
+            `,
+            values: [id]
+        }
+
+        await pool.query(delCV);
+
+        // SEND back data
+        res.sendStatus(200)
+
+    } catch (error){
+        console.error(error.message);
+        res.status(403).json({"error":error.message});
+    }
+})
+
 module.exports = router;
 
-
+// FUNCTIONS HERE
 async function genPDF(id, cv_template){
 
     // LAUNCH BROWSER 1020p res
@@ -173,3 +198,4 @@ async function genPDF(id, cv_template){
     }
 
 }
+
