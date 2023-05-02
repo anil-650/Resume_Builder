@@ -2,15 +2,18 @@
 export interface Props{
 title: string;
 created: string;
-updated?: string
+updated?: string;
+pdf?: string;
+template?: string
 }
 
-const { title, created, updated }=Astro.props
+const { title, created, updated, pdf, template, id }=Astro.props
 
 // VISUALS
 import { Icon } from "astro-icon";
 
 // IMPORTS
+import { dayMonthYear } from "../utils/yearMonth.js"
 
 // THIS MOVED WITH COMPONENT
 const cardBody=[
@@ -121,13 +124,13 @@ TextColorSecondary
 <div id="card-body" class:list={[ cardBody ]}>
     <h5 class:list={[ cardHeading ]}  >{ title }</h5>
 
-    { updated && (
+    { !(updated === created) ? (
 
-    <p id="created on" class:list={[ cardTimeData ]} >Updated : { updated } </p>
+    <p id="updated on" class:list={[ cardTimeData ]} >Updated : { dayMonthYear(updated) } </p>
 
-    )}
+    ): null}
 
-    <p id="created on" class:list={[ cardTimeData ]} >Created : { created }</p>
+    <p id="created on" class:list={[ cardTimeData ]} >Created : { dayMonthYear(created) }</p>
 
     <!-- LINK WRAPPER -->
     <div class="flex flex-row-reverse">
@@ -135,25 +138,27 @@ TextColorSecondary
         <ul class:list={[ ulClass, "flex", "flex-row-reverse","justify-between", "md:gap-2"]}>
             <!-- VIEW LINK -->
             <li class:list={[ liColorPrimary, liHoverPrimary, liClass ]}>
-                <a href="#" class:list={[ aSizing ]}>
+                <a href=`/user/viewcv/${template}-${id}` class:list={[ aSizing ]}>
                     <Icon name="mdi:eye" class="w-7 hover:w-8 " />
                     <span class:list={[ aTextStyles ]}>View</span>
                 </a>
             </li>
             <!-- LINK END -->
-            <!-- UPDATE LINK -->
+            <!-- DISABLED CURRENCY -->
+            <!-- UPDATE LINK
             <li class:list={[ liColorPrimary, liHoverPrimary, liClass ]}>
                 <a href="#" class:list={[ aSizing ]}>
                     <Icon name="mdi:square-edit-outline" class="w-7 hover:w-8 " />
                     <span class:list={[ aTextStyles ]}>Update</span>
                 </a>
-            </li>
+                </li>
+            -->
             <!-- LINK END -->
-            <!-- SHARE LINK -->
+            <!-- DOWNLOAD LINK -->
             <li class:list={[ liColorPrimary, liHoverSecondary, liClass ]}>
-                <a href="#" class:list={[ aSizing ]}>
-                    <Icon name="mdi:share" class="w-7 hover:w-8 " />
-                    <span class:list={[ aTextStyles ]}>Share</span>
+                <a href={pdf} class:list={[ aSizing ]}>
+                    <Icon name="mdi:download" class="w-7 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>Download</span>
                 </a>
             </li>
             <!-- LINK END -->
@@ -162,7 +167,7 @@ TextColorSecondary
         <ul class:list={[ ulClass , "flex-1"]}>
             <!-- DELETE LINK -->
             <li class:list={[ liColorSecondary, liHoverDanger, liClass]}>
-                <a href="#" class:list={[ aSizing ]}>
+                <a href=`/api/delcv?id=${id}` class:list={[ aSizing ]}>
                     <Icon name="mdi:trashcan-outline" class="w-7 md:w-8 hover:w-8 " />
                     <span class:list={[ aTextStyles ]}>Delete</span>
                 </a>
