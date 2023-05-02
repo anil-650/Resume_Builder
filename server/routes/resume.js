@@ -124,7 +124,6 @@ async function genPDF(id, cv_template){
 
     // LAUNCH BROWSER 1020p res
     const browser = await pup.launch({
-        args: ['--no-sandbox'],
         defaultViewport: {
             width: 1280,
             height: 720
