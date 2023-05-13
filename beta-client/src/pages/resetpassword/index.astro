@@ -1,0 +1,126 @@
+---
+//visuals
+import { Icon } from "astro-icon"
+import AuthInput from "../../components/Auth_Input.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+//../ scripts
+
+let errors = null
+let token = "no token"
+
+if(Astro.url.searchParams.has('link')){
+token = Astro.url.searchParams.get('link')
+}
+
+const url = new URL('/api/passwd', Astro.url)
+
+if(Astro.request.method === "POST"){
+try{
+    const data = await Astro.request.formData();
+
+    // These are just for removing spaces from front and back of the passwords
+    // @ts-ignore
+    const plainpasswd = data.get('plain')!.trim()
+    // @ts-ignore
+    const passwd = data.get('password')!.trim()
+
+    if(plainpasswd !== passwd){
+        errors = "Please make sure to enter the password correctly in both fields"
+    }else{
+
+        const header = new Headers([
+        ['Content-Type', 'application/json; charset=utf-8'],
+        ['Cookie', `token=${token}`]
+        ]);
+
+        console.log(`before going to api token: ${token}`)
+
+        const recive = await fetch(url, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify({"password": passwd})
+        })
+
+        if(recive.ok){
+            return Astro.redirect('/resetpassword/sucess')
+        }else if(recive.status >= 400 && recive.status <= 499){
+            const data = await recive.json()
+
+            // DEBUG
+            console.log(`this is error data from `)
+            console.dir(data)
+
+            errors = data.error
+        }else if (recive.status >= 500 && recive.status <= 599){
+            return Astro.redirect('/500')
+        }
+    }
+
+
+    console.log(plainpasswd, passwd, errors)
+}catch(err){
+    if(err instanceof Error){
+        console.error(err.message)
+        return Astro.redirect('/forgotpassword')
+    }
+}
+}
+
+// styles for input
+
+---
+<BaseLayout title="Forgot Password" classes="bg-slate-100">
+    <div class="flex-1 flex justify-center items-center">
+
+        <!-- WHOLE FORM WITH ICON AND EVERYTHING -->
+        <div
+                class="container mx-auto max-w-xs md:max-w-md lg:max-w-lg w-full rounded-lg bg-white p-6 mb-6 shadow-lg">
+            <div class="flex flex-col items-center mb-2">
+                <div class="bg-white ring ring-orange-600 p-5 rounded-full">
+                    <Icon name="fluent:key-reset-20-filled" class="w-11  text-orange-500 center" />
+                </div>
+                <h2 class="font-bold text-xl mt-2 pb-6 text-gray-600">Reset Password</h2>
+
+                    { ( errors !== null) &&
+                    <p class="warning">{errors}</p>
+                    }
+
+            </div>
+            <form method="POST">
+                <div class="relative space-y-5 mb-12" data-te-input-wrapper-init>
+                    <AuthInput icon="mdi:form-textbox" input_type="text" id="uplain" lname="Enter new password" name="plain" minlength="6" required />
+                    <AuthInput icon="mdi:form-textbox-password" input_type="password" id="upasssord" lname="Enter new password again" name="password" minlength="6" required />
+                </div>
+                <button type="submit" class="btn btn-orange" >Reset Password</button>
+            </form>
+            <a href="/" >
+                <button class="btn btn-back btn-blue">Abort</button>
+            </a>
+        </div>
+        <!-- WHOLE FORM WITH ICON AND EVERYTHING -->
+
+    </div>
+</BaseLayout>
+
+<style>
+    .btn {
+        @apply shadow-md container mx-auto text-white font-bold p-4;
+    }
+
+    .btn-orange {
+        @apply bg-orange-500;
+    }
+
+    .btn-blue {
+        @apply bg-blue-500;
+    }
+
+    .btn-back {
+        @apply my-3;
+    }
+
+    .warning {
+        @apply text-center text-base text-red-400 font-bold pb-5 ;
+    }
+
+</style>
