@@ -8,3 +8,10 @@ export const cookieDel={
     maxAge: 0,
     path: '/'
 }
+
+export const cookieShort={
+    maxAge: 60 * 15,
+    httpOnly: true,
+    path: '/'
+}
+

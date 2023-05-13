@@ -45,15 +45,9 @@ export async function updateUserProfile(user, token){
     });
 }
 
-export async function updateUserPassword(user, token){
-    return fetch(`${url}/dashboard/password`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json; cahrset=utf-8',
-            'token': token,
-        },
-        body: user
-    });
+// GET EMAIL FOR RESET PASSWORD
+export async function userEmail(email){
+    return fetch(`${url}/resetpasswd?email=${email}`);
 }
 
 // GENERATE CV
