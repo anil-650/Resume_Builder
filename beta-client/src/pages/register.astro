@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon"
 import Links from "../components/Links.astro"
-import Text_input from "../components/Text_input.astro"
+import AuthInput from "../components/Auth_Input.astro"
 import Button from "../components/Button.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 import { cookieOpt } from "../utils/cookie.js"
@@ -11,19 +11,16 @@ import { createUser } from "../utils/auth"
 
 // CHECK FOR LOGIN COOKIE
 let cookie;
+let errors = null;
 
 if (Astro.cookies.has('isLoggedin') && Astro.cookies.has('token')){
 return Astro.redirect('/user')
 }
 
 // SET COOKIES FOR LOGGING IN USER
-// NO USER ERROR HANDLING YET
 if (Astro.request.method === 'POST') {
     try {
        const data = await Astro.request.formData();
-       // const email = data.get('email')
-       // const name = data.get('name')
-       // const password = data.get('password')
        const recive = await createUser(data);
        if(recive.ok){
             const data = await recive.json();
@@ -32,8 +29,19 @@ if (Astro.request.method === 'POST') {
            Astro.cookies.set('isLoggedin', 'true', cookieOpt)
            Astro.cookies.set('token', cookie, cookieOpt)
            return Astro.redirect('/user');
+        }else if(recive.status >= 400 && recive.status <= 499){
+            const data = await recive.json()
+
+            // DEBUG
+            console.error(`\u001b[1;31m this is error data from `)
+            console.dir(data)
+            console.error('\u001b[0m')
+
+            errors = data.error
+        }else if (recive.status >= 500 && recive.status <= 599){
+            return Astro.redirect('/500')
         }
-        // NO SERVER ERROR HANDLING YET
+
     } catch (error ) {
         if (error instanceof Error){
             console.error(error.message)
@@ -45,20 +53,31 @@ if (Astro.request.method === 'POST') {
 <BaseLayout title="Register Page" classes="bg-slate-200">
  <div class="flex-1 flex justify-center items-center">
     <div
-  class="container mx-auto max-w-xs md:max-w-md lg:max-w-lg w-full rounded-lg bg-white p-6 shadow-lg">
+  class="container mx-auto max-w-xs mb-6 md:max-w-md lg:max-w-lg w-full rounded-lg bg-white p-6 shadow-lg">
    <div class="flex flex-col items-center mb-2">
-   <Icon name="majesticons:briefcase-line" class="w-11 text-gray-500 center" />
-  <h2 class="font-bold text-xl text-gray-600">Sign Up</h2>
+   <Icon name="mdi:card-account-details-outline" class="w-20 h-20 text-gray-500 center" />
+  <h2 class="font-bold text-xl mb-12 text-gray-600">Sign Up</h2>
+
+                    { ( errors !== null) &&
+                    <p class="warning">{errors}</p>
+                    }
+
    </div>
   <form method="POST">
-    <div class="relative mb-12" data-te-input-wrapper-init>
-     <Text_input lname="Name:" input_type="text" name="name" id="username" input_type="text"  required/>
-     <Text_input lname="Email:" input_type="email" name="email" id="useremail" input_type="email" required />
-     <Text_input lname="Password:" input_type="password" name="password" id="userpassword" input_type="password" minlength="6"  required/>
+    <div class="relative space-y-5 mb-12" data-te-input-wrapper-init>
+     <AuthInput icon="fluent:person-12-filled" lname="Name:" input_type="text" name="name" id="username" input_type="text"  required/>
+     <AuthInput icon="line-md:email-twotone-alt" lname="Email:" input_type="email" name="email" id="useremail" input_type="email" required />
+     <AuthInput icon="mdi:form-textbox-password" lname="Password:" input_type="password" name="password" id="userpassword" input_type="password" minlength="6"  required />
     </div>
     <Button type="submit" name="Register" classes="bg-blue-500 hover:bg-blue-600" />
-    <Links href="/login" text="Already have an accout? Sign In" classes="text-blue-500 visited:text-purple-600 hover:underline hover:font-medium "/>
+    <Links href="/login" text="Already have an accout? Sign In" classes="text-blue-500 visited:text-purple-600 hover:underline hover:font-medium " />
   </form>
 </div>
  </div>
 </BaseLayout>
+<style>
+
+    .warning {
+        @apply text-center text-base text-red-400 font-bold pb-5 ;
+    }
+</style>
