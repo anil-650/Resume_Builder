@@ -9,7 +9,9 @@ export default defineConfig({
   experimental: {
     assets: true
   },
-  integrations: [tailwind(), compress()],
+  integrations: [tailwind(), compress({
+      css: { restructure: false }
+      })],
   output: "server",
   adapter: node({
     mode: "standalone"
