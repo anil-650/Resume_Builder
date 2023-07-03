@@ -35,12 +35,9 @@ This is a BCA final year group project for Making resume in web.
 
 ## [Backend Server Setup](./server/README.md)
 
-### Group members
-- MRITYUNJAYA NAYAK
+### members
 - BIGHNESH PANDA
 - ANIL KUMAR HANSDA
-- SATYA PRADHAN
-- MEERA MEHER
 
 ### Abstract:
 
