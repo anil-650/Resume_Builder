@@ -1,0 +1,120 @@
+---
+import { Icon } from "astro-icon"
+import Userlayout from "../../../../../layouts/Userlayout.astro"
+import Text_input from "../../../../../components/Text_input.astro"
+import convertFormData from "../../../../../utils/convertFormData.js"
+import { cookieOpt } from "../../../../../utils/cookie.js"
+
+let x;
+
+// Redirect for not having exp cookie
+
+if(!Astro.cookies.has("exp")){
+return Astro.redirect("/cv-builder/templates/ats01/form/experience")
+}
+
+if (Astro.request.method === "POST"){
+    try{
+        const data = await Astro.request.formData();
+        const d = data.getAll("experience[]")
+        const e = d.map(json=>JSON.parse(json))
+
+        console.log("---------- Fotm data ----------")
+        console.log(e)
+        console.log("--------------------\n")
+
+        Astro.cookies.set("exp", JSON.stringify(e), cookieOpt);
+
+        return Astro.redirect("/cv-builder/templates/ats01/form/education")
+
+        } catch(err){
+        if (err instanceof Error){
+        console.error(err.message);
+        }
+    }
+}
+
+// DEBUG ONLY
+x = Astro.cookies.get("exp").json()
+
+console.log("----- x value -----")
+console.log(x)
+console.log("----------\n")
+---
+<Userlayout>
+    <div class="form_container">
+
+        <h1>Step:3/7 Confirm Personal Experience details</h1>
+
+        <hr>
+
+        <div class="my-2 leading-tight flex flex-col justify-center gap-2 border-green-500 bg-green-200 text-green-800 border-l-4 border-y rounded border-r mx-2">
+            <div class="flex gap-2 items-center font-bold">
+            <Icon name="mdi:lightbulb-on" class="w-8 "/>
+            Tips:
+            </div>
+            <p class="px-2 pb-1">
+            Uncheck all the options you don't want to add
+            </p>
+        </div>
+
+        <hr>
+
+        <form method="POST" id="myc" autocomplete="off">
+
+            {
+            x && x.map(z =>(
+            <div class="flex gap-3 items-center">
+                <input id={z.company}
+                type="checkbox"
+                name="experience[]"
+                value={JSON.stringify(z)}
+                checked />
+                <label for={z.company}>
+                    {z.company}, {z.desgnation} - {z.c_address}
+                </label>
+            </div>
+            ))
+            }
+
+            <button class="submit" type="submit">Confirm</button>
+
+        </form>
+
+        <a href="/cv-builder/templates/ats01/form/experience" class="container mx-auto max-w-sm md:max-w-2xl" >
+            <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">Previous</div>
+        </a>
+
+    </div>
+</Userlayout>
+
+<style>
+    h1 {
+        @apply text-center font-bold text-gray-700 my-3;
+    }
+
+    hr {
+        @apply border-2 my-4;
+    }
+
+    .form_container {
+        @apply container mx-auto max-w-sm md:max-w-2xl;
+    }
+
+    form {
+        @apply shadow-md p-8 gap-2 flex flex-col justify-center;
+    }
+
+    .submit {
+        @apply bg-orange-500 w-full my-4 py-4 text-white font-bold;
+    }
+
+    label {
+        @apply font-bold text-lg md:text-lg text-gray-600;
+    }
+
+    input {
+        @apply w-5 h-5 my-3;
+    }
+
+</style>

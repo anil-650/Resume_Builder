@@ -1,13 +1,42 @@
 ---
 // VISUALS
-import Userlayout from "../../layouts/Userlayout.astro";
-
+import CVpageLayout from "../../layouts/CVpageLayout.astro"
+import CVcard from "../../components/CVcard.astro"
+import EmptyCVcard from "../../components/EmptyCVcard.astro"
 // IMPORTS
+import { getUserCVs } from "../../utils/userGet.js"
 
+
+// SCRIPTS
+let token
+if(Astro.cookies.has("token")){
+token = Astro.cookies.get("token").value
+}
+
+const res = await getUserCVs(token)
+const data = await res.json()
+// console.log(data)
 ---
+<CVpageLayout title="My Resumes" >
+<!-- CARDS STARTS HERE -->
+{
+(data.length > 0) ? data.map((data) =>(
+<CVcard title={data.cv_title}
+created={data.created_at}
+updated={data.updated_at}
+pdf={data.pdf}
+template={data.cv_template}
+id={data.id}/>
 
-<Userlayout title="Dashboard" >
-  <p class="font-bold pb-5 text-center text-4xl">hello Resumes</p>
-  <p class="font-bold pb-5 text-center text-4xl"> ⚠️ IF YOU ARE HERE WITHOUT LOGIN THEN LOGIN CHECKING ARE EITHER NOT WORKING OR HAVEN'T BEEN SET ⚠️</p>
-  <p class="font-bold pb-5 text-center text-4xl"> ⚠️  OR THE ROUTING IN USER/INDEX IS SET TO SEND YOU HERE ⚠️</p>
-</Userlayout>
+)) : (
+<EmptyCVcard />
+)
+}
+
+</CVpageLayout>
+
+<style>
+h1 {
+    @apply sr-only;
+}
+</style>

@@ -22,7 +22,7 @@ export async function createUser(user){
 }
 
 
-export async function loginUser(user, token){
+export async function loginUser(user){
     const data = user; // JUST TO BE SURE
     const sendData = await convertFormData(data);
 
@@ -34,7 +34,6 @@ export async function loginUser(user, token){
         method: 'POST',
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            'token': token,
         },
         body: sendData
     });

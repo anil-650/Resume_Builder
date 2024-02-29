@@ -1,0 +1,84 @@
+---
+// VISUALS
+import Links from "../components/Links.astro";
+import Userlayout from "./Userlayout.astro";
+
+// LAYOUT STYLES
+const cvWraper="flex items-center"
+const cvS="container mx-auto max-w-sm md:max-w-3xl lg:max-w-6xl "
+
+const stylesForLinks=[
+"flex",
+"gap-1",
+"p-5",
+"md:px-6",
+"mx-3",
+"font-mono",
+"font-semibold",
+"text-white",
+"md:text-xl",
+"drop-shadow-lg",
+"shadow-md",
+"shadow-slate-500",
+// HOVER FOCUS EFFECT:
+"transition-all",
+"md:hover:-translate-y-3",
+"md:focus:-translate-y-3"
+]
+
+const styleAddResume=[
+"bg-blue-500",
+stylesForLinks
+]
+
+const stylesDashboard=[
+"bg-gray-600",
+stylesForLinks
+]
+
+const linksWrapper=[
+"container",
+"mx-auto",
+"flex",
+"mb-5",
+"justify-center",
+"max-w-sm"
+
+]
+
+
+export interface Props{
+title: string;
+}
+
+const { title }=Astro.props
+
+
+---
+<Userlayout title={ title } classes="w-full">
+    <div id="cv-warper" class:list={[ cvWraper ]}>
+        <div id="cv-s" class:list={[ cvS ]}>
+            <div class="my-3" id="card-space">
+                <ul class:list={[ linksWrapper ]}>
+                    <li>
+                        <Links text="Add Resume" href="/cv-builder" icon={{ name: "ic:baseline-library-add", side: "left" }} classes={ styleAddResume } />
+                    </li>
+                    <!--
+                    <li>
+                        <Links text="Dash board" href="/user/dashboard" icon={{ name: "majesticons:dashboard", side: "left"}} classes={ stylesDashboard } />
+                    </li>
+                    -->
+                </ul>
+                <!-- SLOT HERE -->
+                <slot />
+                <!-- SLOT HERE -->
+            </div>
+        </div>
+    </div>
+    <!-- W  A   R   N    I    N    G    S
+    <p class="font-bold pb-5 text-center text-4xl">hello Resumes</p>
+    <p class="font-bold pb-5 text-center text-4xl"> ⚠️ IF YOU ARE HERE WITHOUT LOGIN THEN LOGIN CHECKING ARE EITHER NOT WORKING OR HAVEN'T BEEN SET ⚠️</p>
+    <p class="font-bold pb-5 text-center text-4xl"> ⚠️  OR THE ROUTING IN USER/INDEX IS SET TO SEND YOU HERE ⚠️</p>
+    <p class="font-bold pb-5 text-center text-4xl"> ⚠️  THIS IS FROM THE  CV PAGE LAYOUT ⚠️</p>
+-->
+</Userlayout>

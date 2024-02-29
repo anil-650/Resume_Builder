@@ -13,6 +13,9 @@ app.use("/auth", require("./routes/jwtAuth"));
 // Dashboard route
 app.use("/dashboard", require("./routes/dashboard"));
 
+//  Password
+app.use("/resetpasswd", require("./routes/resetPassword"));
+
 // check server running
 app.get("/", (req, res)=>{
     res.json({message: "hello from server"});

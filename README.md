@@ -32,21 +32,31 @@ This is a BCA final year group project for Making resume in web.
         - ✅ Navigation-bar, Footer, Hero Section
     - ❌ Functional Front-end
     - ❌ Fully functional Front-end
+    
+- Documentation
+    - ✅ INTRODUCTION
+    - ✅ SYSTEM ANAYSIS
+    - ✅ SYSTEM DESIGN
+    - ❌ PROJECT MODULES
+    - ❌ IMPLEMENTATION DETAILS
+    - ✅ FEASIBILITY STUDY
+    - ✅ TESTING
+    - ❌ SCREENSHOT
+    - ✅ CONCLUSION
+    - ❌ FUTURE ENHANCEMENT
+    - ✅ REFERENCE
 
 ## [Backend Server Setup](./server/README.md)
+
 
 ### members
 - BIGHNESH PANDA
 - ANIL KUMAR HANSDA
 
+
 ### Abstract:
 
-***MyResumeBuilder*** is a web-based platform designed to simplify the process of
-creating professional resumes for job seekers. This website provides users with
-an easy-to-use interface to create, edit, and manage their resumes online. With
-a lot of well crafted templates, users can tailor their resumes to their
-specific needs and preferences, and download the finished product in various
-formats, including PDF and Word documents.
+***MyResumeBuilder*** is a web-based platform designed to simplify the process of creating professional resumes for job seekers. This website provides users with an easy-to-use interface to create, edit, and manage their resumes online. With a lot of well crafted templates, users can tailor their resumes to their specific needs and preferences, and download the finished product in various formats, including PDF and Word documents.
 
 ### Objectives:
 

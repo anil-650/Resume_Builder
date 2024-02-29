@@ -1,0 +1,158 @@
+---
+import Userlayout from "../../../../../layouts/Userlayout.astro"
+import Text_input from "../../../../../components/Text_input.astro"
+import convertFormData from "../../../../../utils/convertFormData.js"
+import { cookieOpt } from "../../../../../utils/cookie.js"
+
+if (Astro.request.method === "POST"){
+    try{
+    const data = await Astro.request.formData();
+    const d = Object.fromEntries(data.entries());
+
+    Astro.cookies.set('personal', JSON.stringify(d), cookieOpt)
+
+    console.log('Personal cookie', d)
+
+    return Astro.redirect("/cv-builder/templates/ats01/form/experience")
+
+    } catch (err){
+        if (err instanceof Error){
+        console.error(err.message);
+        }
+    }
+
+}
+
+// const apicc = await fetch()
+const apicc = await fetch(new URL('/api/cc.json',Astro.url)).then(res=>res.json()).catch(error=>console.error(error))
+
+---
+<Userlayout>
+    <div class="form_container">
+
+        <h1>Step:1/7 Name and Contact details</h1>
+
+        <hr>
+
+        <form method="POST" id="myc">
+
+            <input type="hidden" name="cv_template" value="ats01" id="cv_template">
+
+            <Text_input
+                    name="name"
+                    required
+                    id="fullname"
+                    type="text"
+                    lname="Full name"
+                    pattern="[a-zA-Z]+ (?:[A-Za-z]+) ?[A-Za-z]{2,}"
+                    />
+
+            <Text_input
+                    name="cv_title"
+                    required
+                    id="cv_title"
+                    type="text"
+                    lname="CV title"
+                    placeholder="ex: PHP dev-4 yrs experience"
+                    />
+
+            <Text_input
+                    name="cv_objective"
+                    required
+                    id="cv_objective"
+                    type="text"
+                    lname="Objective"
+                    placeholder="ex: Applying for xyz Company"
+                    />
+
+                    <hr>
+
+            <Text_input
+                    name="email"
+                    required
+                    id="email"
+                    type="email"
+                    lname="Email"
+                    />
+
+            <div class="mob_container">
+
+            <Text_input
+                    name="cc"
+                    required
+                    id="cc"
+                    type="tel"
+                    lname="(+)Country code"
+                    list="cc-list"
+                    placeholder="+XX"
+                    pattern="[+].*"
+                    minlength="2"
+                    maxlength="8"
+                    />
+
+
+            <Text_input
+                    name="mobile"
+                    required
+                    id="mobile"
+                    type="tel"
+                    lname="Mobile no."
+                    // fix telephone no and split exirince later
+                    minlength="10"
+                    maxlength="12"
+                    pattern="[1-9]{1}[0-9]{2}[- ]?[0-9]{3}[- ]?[0-9]{4}"
+                    placeholder="XXX XXX XXXX"
+                    />
+
+            </div>
+
+
+            <Text_input
+                    name="address"
+                    required
+                    id="address"
+                    type="text"
+                    lname="Address"
+                    placeholder="e.x: Bhubaneswar, Odisha"
+                    minlength="3"
+                    classes="mb-4"
+                    />
+
+                    <button class="submit" type="submit">Next</button>
+
+        </form>
+    </div>
+
+    <datalist id="cc-list">
+        {apicc.cc.map(c=>(
+        <option value={c}></option>
+        ))}
+    </datalist>
+
+</Userlayout>
+
+<style>
+    h1 {
+        @apply text-center font-bold text-gray-700 my-3;
+    }
+
+    hr {
+        @apply border-2 my-4;
+    }
+
+    .form_container {
+        @apply container mx-auto max-w-sm md:max-w-2xl;
+    }
+
+    form {
+        @apply shadow-md p-8;
+    }
+
+    .submit {
+        @apply bg-blue-500 w-full my-4 py-4 text-white font-bold;
+    }
+
+    .mob_container {
+        @apply flex gap-2;
+    }
+</style>

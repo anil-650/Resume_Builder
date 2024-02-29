@@ -1,0 +1,41 @@
+---
+//visuals
+import { Icon } from "astro-icon"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+//../ scripts
+
+---
+<BaseLayout title="Reset Link Sent" classes="bg-slate-100">
+    <div class="flex-1 flex justify-center items-center">
+        <div
+                class="container mx-auto max-w-xs md:max-w-md lg:max-w-lg w-full rounded-lg bg-white p-6 md:py-32 shadow-lg">
+            <div class="flex flex-col items-center mb-2">
+                <div class="p-5 ring ring-orange-500 my-3 rounded-full">
+                    <Icon name="noto-v1:locked-with-key" class="w-20 h-20 text-white center" />
+                </div>
+                <h2 class="font-bold text-xl pb-6 text-gray-600">Password Reset Complete</h2>
+            </div>
+            <p class="info i-top">
+            <span class="t-A">P</span>assword has been <span class="t-orange">reset successfully</span> . Please proceed to <a href="/login" class="t-orange underline"><span class="t-A">L</span>ogin</a> page.
+            </p>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .info {
+        @apply text-center text-gray-600 font-semibold text-sm md:text-base px-4;
+    }
+
+    .i-top {
+        @apply md:mt-6;
+    }
+
+    .t-orange {
+        @apply text-orange-500;
+    }
+
+    .t-A {
+        @apply text-xl font-bold;
+    }
+</style>

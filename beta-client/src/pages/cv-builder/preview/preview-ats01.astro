@@ -1,0 +1,190 @@
+---
+import PrintLayout from "../../../layouts/PrintLayout.astro"
+import yearMonth from "../../../utils/yearMonth.js"
+
+const cv_container=[
+'container',
+'print:h-a4',
+'print:w-a4',
+'mx-auto',
+'border-2',
+'border-black',
+'p-8',
+'m-4',
+'mt-0',
+'h-a4',
+'w-a4',
+// Page Specific styles
+'font-serif'
+]
+
+let p,exp,edu,o
+
+if(Astro.cookies.has("personal")){
+p = Astro.cookies.get("personal").json()
+}
+
+if(Astro.cookies.has("exp")){
+exp = Astro.cookies.get("exp").json()
+}
+
+if(Astro.cookies.has("edu")){
+edu = Astro.cookies.get("edu").json()
+}
+
+if(Astro.cookies.has("others")){
+o = Astro.cookies.get("others").json()
+}
+
+console.log(p)
+---
+<PrintLayout title="Preview Page">
+    <div class:list={[cv_container]}>
+        <h1>
+            {p.name}
+        </h1>
+
+        <div class="personal_box">
+            <p class="pr-2 ">{p.email}</p>
+            <p class="px-2 border-x border-gray-700">{p.cc} {p.mobile}</p>
+            <p class="pl-2 ">{p.address}</p>
+        </div>
+
+        <!-- desgnation is wrong change cookie name -->
+        <h2>EXPERIENCE</h2>
+        <hr>
+        <div id="exp1" class="exp_card">
+            {exp && exp.map(exp=>(
+            <div>
+                <h3>{exp.company}</h3>
+                <h3>{yearMonth(exp.joined)}-{(exp.departed === null || exp.departed === '') ? 'Present' : yearMonth(exp.departed)}</h3>
+            </div>
+            <div>
+                <h4>{exp.desgnation}</h4>
+                <h4>{exp.c_address}</h4>
+            </div>
+            <div>
+                <ul>
+                {(exp.achievements && exp.achievements.filter(Boolean).length) ? exp.achievements.map(x=>(
+                    <li>
+                        {x}
+                    </li>
+                )) : null }
+                </ul>
+            </div>
+            ))}
+        </div>
+
+        <h2>EDUCATION</h2>
+        <hr>
+
+        <div id="edu1" class="edu_card">
+                {edu && edu.map(edu=>(
+            <div>
+                <h3>{edu.institute}</h3>
+                <h3>{yearMonth(edu.graduated)}</h3>
+            </div>
+            <div>
+                <h4>{edu.course}</h4>
+                <h4>{edu.i_address}</h4>
+            </div>
+            <div>
+                <ul>
+                {(edu.achievements && edu.achievements.filter(Boolean).length) ? edu.achievements.map(x=>(
+                    <li>
+                        {x}
+                    </li>
+                )) : null }
+                </ul>
+            </div>
+                ))}
+        </div>
+
+        <h2>OTHERS</h2>
+        <hr>
+
+        <div id="others">
+        <ul>
+            {o.skills &&
+            <li>
+                <span>Technical Skills:</span>
+                { o.skills.join(', ') }
+            </li>
+            }
+
+            {
+            o.certificates &&
+            <li>
+                <span>Certificates & Training:</span>
+                { o.certificates.join(', ') }
+            </li>
+            }
+
+            {
+            o.languages &&
+            <li>
+                <span>Languages:</span>
+                { o.languages.join(', ') }
+            </li>
+            }
+        </ul>
+    </div>
+
+        </div>
+</PrintLayout>
+
+<style>
+
+    /*
+       after apply are all tailwind classes
+
+    .cv_container {
+        @apply container print:h-a4 print:w-a4 mx-auto border-2 border-black p-8 m-4 mt-0 h-a4 w-a4 font-serif;
+    }
+
+     */
+
+    .personal_box {
+        @apply flex mb-3;
+    }
+
+    h1, h2, h3 {
+        @apply font-bold;
+    }
+
+    h1 {
+        @apply text-2xl;
+    }
+
+    h2 {
+        @apply text-base;
+    }
+
+    h3, h4 {
+        @apply text-sm;
+    }
+
+    hr {
+        @apply border border-gray-600;
+    }
+
+    ul {
+        @apply text-sm list-disc;
+    }
+
+    ul > li > span {
+        @apply font-bold;
+    }
+
+    #others {
+        @apply my-2;
+    }
+
+    .edu_card, .exp_card {
+        @apply my-2;
+    }
+
+    .edu_card > div, .exp_card > div {
+        @apply flex justify-between;
+    }
+</style>

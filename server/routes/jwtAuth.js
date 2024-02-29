@@ -36,7 +36,8 @@ router.post("/register",  validinfo, async (req, res) => {
 
 
         // 5. JWT token generation
-        const token = jwtGenerator(newUser.rows[0].user_id);
+        const token_time = "2hr"
+        const token = jwtGenerator(newUser.rows[0].user_id, token_time);
 
         // DEBUG ONLY
         console.log("token sent");
@@ -76,7 +77,8 @@ router.post("/login", validinfo, async (req, res)=> {
         }
 
         // 4. Set token; redirect to dashboard
-        const token = jwtGenerator(user.rows[0].user_id);
+        const token_time = "2hr"
+        const token = jwtGenerator(user.rows[0].user_id, token_time);
 
 
         // DEBUG ONLY
