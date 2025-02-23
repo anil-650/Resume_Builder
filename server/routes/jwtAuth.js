@@ -1,5 +1,5 @@
 const pool = require("../db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwtGenerator = require("../utils/jwtGenerator");
 const router = require("express").Router();
 const validinfo = require("../middleware/validinfo");
