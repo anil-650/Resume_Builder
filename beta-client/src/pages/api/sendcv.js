@@ -45,7 +45,8 @@ export async function get ({ cookies , redirect}){
         token = cookies.get("token").value
     }
 
-    const res = await fetch("http://localhost:5000/resume/save", {
+    const backendUrl = import.meta.env.BSA || "http://localhost:5000"
+    const res = await fetch(`${backendUrl}/resume/save`, {
         method: "POST",
         headers: { 'Content-Type':'application/json; charset=utf-8', 'token':token },
         body: JSON.stringify(payload)
