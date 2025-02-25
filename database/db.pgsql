@@ -50,4 +50,3 @@ SELECT * FROM uuser;
 -- user_id                | user_name |  user_email   | user_password
 -- -----------------------------------+-----------+---------------+-------
 -- ce45af6c-3fe6-4b07-b8b4-b779450f4f8a | jay       | jay@gmail.com | 12345
-\i template_data.pgsql
