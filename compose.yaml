@@ -1,0 +1,46 @@
+name: my_resume_builder
+services:
+  astro:
+    container_name: fe-1
+    networks:
+      - app-network
+    build:
+      context: ./beta-client  
+    ports:
+      - "3000:3000"
+    depends_on:
+      - express
+    environment:
+      BSA: http://express:5000
+
+  express:
+    container_name: be-1
+    build:
+      context: ./server
+    ports:
+      - "8080:5000"
+    environment:
+      FROENT_END_SITE: host.docker.internal:3000
+      BASEURL: http://astro:3000
+      PORT: 5000
+      DB_URL: postgresql://dev:dev@pg:5432/myresumebuilder
+    depends_on:
+      - pg
+    networks:
+      - db-network
+      - app-network
+        
+  pg:
+    build:
+      context: ./database
+    container_name: db-1
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: root
+    networks:
+      - db-network
+
+networks:
+  app-network:
+  db-network:
