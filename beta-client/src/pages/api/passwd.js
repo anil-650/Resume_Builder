@@ -12,7 +12,7 @@ export async function get ({ redirect, url }){
         const init = {
             status: 200,
             statusText: 'OK',
-            headers: { 'Conten-Type': 'text/plain' }
+            headers: { 'Content-Type': 'text/plain' }
         }
 
         return new Response(body, init)
@@ -24,7 +24,7 @@ export async function get ({ redirect, url }){
         const init = {
             status: 400,
             statusText: 'Bad Request',
-            headers: { 'Conten-Type': 'text/plain'}
+            headers: { 'Content-Type': 'text/plain'}
         }
 
         return new Response(body, init)
@@ -49,7 +49,7 @@ export async function post ({ cookies, request }){
         const init = {
             status: 200,
             statusText: 'OK',
-            headers: { 'Conten-Type': 'text/plain' }
+            headers: { 'Content-Type': 'text/plain' }
         }
 
         return new Response(body, init)
@@ -63,7 +63,7 @@ export async function post ({ cookies, request }){
         const init = {
             status: 400,
             statusText: 'Bad Request',
-            headers: { 'Conten-Type': 'application/json; charset=utf-8'}
+            headers: { 'Content-Type': 'application/json; charset=utf-8'}
         }
 
         return new Response(JSON.stringify(body), init)
@@ -79,7 +79,7 @@ export async function post ({ cookies, request }){
             status: status_code,
             statusText: status_text,
             headers: {
-                'Conten-Type': 'application/json; charset=utf-8'
+                'Content-Type': 'application/json; charset=utf-8'
             }
         })
     }

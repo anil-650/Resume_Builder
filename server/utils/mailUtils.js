@@ -6,7 +6,7 @@ const mail = JSON.parse(process.env.MAIL)
 
 // change it to real ip on the website
 // const website_link = "http://192.168.29.169:3000"
-const website_link = process.env.FROENT_END_SITE
+const website_link = process.env.FRONT_END_SITE
 
 const reset_page = "/resetpassword"
 const forget_page = "/forgotpassword"
@@ -76,7 +76,7 @@ function genTemp(website, weblink, uname, rlink, emailType){
 
     if(emailType === 'passReset'){
 
-        eIntro = `You have recived this email beacuse a password reset request for your account was recived on ${currentTime}.`
+        eIntro = `You have received this email because a password reset request for your account was recived on ${currentTime}.`
         eInstruction = "Click the button below to reset your password:"
         eText = "Reset your password"
         eOutro = "If you didn't request this password reset no further action is needed on your part"

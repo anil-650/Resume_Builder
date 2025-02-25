@@ -16,7 +16,7 @@ This file contains the instruction to set up the database of the project
 ## WE ARE USING
 
 - **PostgreSQL** *v14.2* (anything after *v14.0* is fine) as database.
-  - [Download Node.js](https://www.postgresql.org/download)
+  - [Download PostgreSQL](https://www.postgresql.org/download)
 
 ## SETUP POSTGRESQL
 
