@@ -23,7 +23,7 @@ const bucket = storage.bucket("myresume-b-1")
 // SET BASE URL FOR THE CLIENT SITE
 
 // const baseurl = 'http://34.29.31.48:3000'
-const baseurl = 'http://localhost:3000'
+const baseurl = process.env.BASEURL || 'http://localhost:3000'
 
 router.get("/gencv/:id", async (req, res)=>{
     try{
@@ -149,10 +149,18 @@ async function genPDF(id, cv_template){
 
     // LAUNCH BROWSER 1020p res
     const browser = await pup.launch({
-        defaultViewport: {
-            width: 1280,
-            height: 720
-        }
+        defaultViewport: { width: 1280, height: 720 },
+        executablePath: '/usr/bin/chromium-browser',
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--disable-software-rasterizer',
+            '--hide-scrollbars',
+            '--mute-audio',
+        ],
+        headless: "new"
     })
 
     const url = new URL(`/cv-builder/genpdf/${cv_template}-${id}`, baseurl)
