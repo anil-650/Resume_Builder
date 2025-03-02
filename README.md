@@ -2,12 +2,12 @@
 
 This is a BCA final year group project for Making resume in web.
 
-## ⚠️ This project is currently undergoing  development... Things will change as time goes
-
 ## Title: MyResumeBuilder - An Online Resume Building Website
 
-
 ### Current Goals
+
+<details>
+    <summary>Goals</summary>
 
 - ✅ Choosing Project
 - ✅ Creating git repo
@@ -17,37 +17,94 @@ This is a BCA final year group project for Making resume in web.
 - ✅ Synopsis Submission
     - ✅ Synopsis Writing
 
-- ❌ Project
+- ✅ Project
     - ✅ Partial functional Database
     - ✅ Functional Database
-    - ❌ Fully functional Database
+    - ✅ Fully functional Database
     - ✅ Partial functional Back-end
     - ✅ Functional Back-end
         - ✅ register
         - ✅ login
         - ✅ dashboard
-    - ❌ Fully functional Back-end
+    - ✅ Fully functional Back-end
     - ✅ Partial functional Front-end
         - ✅ display landing, register, login page
         - ✅ Navigation-bar, Footer, Hero Section
-    - ❌ Functional Front-end
-    - ❌ Fully functional Front-end
+    - ✅ Functional Front-end
+    - ✅ Fully functional Front-end
     
 - Documentation
     - ✅ INTRODUCTION
     - ✅ SYSTEM ANAYSIS
     - ✅ SYSTEM DESIGN
-    - ❌ PROJECT MODULES
-    - ❌ IMPLEMENTATION DETAILS
+    - ✅ PROJECT MODULES
+    - ✅ IMPLEMENTATION DETAILS
     - ✅ FEASIBILITY STUDY
     - ✅ TESTING
-    - ❌ SCREENSHOT
+    - ✅ SCREENSHOT
     - ✅ CONCLUSION
-    - ❌ FUTURE ENHANCEMENT
+    - ✅ FUTURE ENHANCEMENT
     - ✅ REFERENCE
 
-## [Backend Server Setup](./server/README.md)
 
+</details>
+
+## Run project
+
+### ⚙️ Pre-requisite
+
+1. **git**
+    - Linux: use respective package managers
+    - Windows: [Download git for windows](https://git-scm.com/download/win)
+2. **Docker** (Only if using docker)
+    - [Get docker ➡️](https://docs.docker.com/get-started/get-docker/)
+
+### 🕊️ Clone repo
+
+First clone the repo and cd into it
+
+```sh
+git clone --single-branch --branch devlopment --depth 1 https://github.com/anil-650/Resume_Builder.git && cd Resume_Builder
+```
+
+Methods to run the project ⬇️
+
+### 🐙 🐳 Docker compose
+
+With docker compose you can set up the project in one go
+
+> start all services
+
+```
+docker compose up -d
+```
+
+> stop all services
+
+```
+docker compose down
+```
+
+> clean up after stopping services
+
+```
+docker compose down --rmi all
+```
+
+[learn more](https://docs.docker.com/compose/) about Docker compose.
+
+### 👩‍💻 Manual setup
+
+Respective setups of each service
+
+- 🚀 [Frontend Server Setup](./beta-client/README.md)
+- 🌐 [Backend Server Setup](./server/README.md)
+- 💽 [Database Setup](./database/README.md)
+
+
+----
+
+## Synopsis
 
 ### members
 - BIGHNESH PANDA
