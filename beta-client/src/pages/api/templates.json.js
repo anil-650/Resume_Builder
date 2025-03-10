@@ -5,14 +5,16 @@ export async function get ({ params }){
                 image: "/images/ats01.jpg",
                 text: "This is a simple ATS CV template for entry level and intermidiate level resumes",
                 tags: ["ats", "entry-level", "intermidiate-level"],
-                page: "/cv-builder/templates/ats01"
+                page: "/cv-builder/templates/ats01",
+                temp_view: "/cv-builder/templates/ats01/template-view"
             },
             {
                 name: "MODERN01",
                 image: "/images/modern01.jpg",
                 text: "This is a simple MODERN CV template for entry level and intermidiate level resumes",
                 tags: ["modern", "entry-level", "intermidiate-level"],
-                page: "/cv-builder/templates/modern01"
+                page: "/cv-builder/templates/modern01",
+                temp_view: "/cv-builder/templates/modern01/template-view"
             }
         ]
 
