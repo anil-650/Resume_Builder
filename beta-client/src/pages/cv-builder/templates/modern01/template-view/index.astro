@@ -1,5 +1,5 @@
 ---
-import PrintLayout from "../../../../layouts/PrintLayout.astro"
+import PrintLayout from "../../../../../layouts/PrintLayout.astro"
 
 const cv_container=[
 'container',
@@ -18,9 +18,8 @@ const cv_container=[
 'flex',
 ]
 
-return Astro.redirect("/cv-builder/templates/modern01/form/personal")
 ---
-<PrintLayout>
+<PrintLayout title="MODERN01 template">
     <div class:list={[cv_container]}>
         <div id="personal_key_skill" class="personal_key_skill" >
             <div class="name">
@@ -88,6 +87,13 @@ return Astro.redirect("/cv-builder/templates/modern01/form/personal")
             </div>
         </div>
     </div>
+
+<div class="linkcontainer">
+	<a href="/cv-builder">
+		<span>BACK</span>
+	</a>
+</div>
+
 </PrintLayout>
 
 <style>
@@ -137,4 +143,14 @@ return Astro.redirect("/cv-builder/templates/modern01/form/personal")
     ul {
         @apply list-disc my-2;
     }
+
+	.linkcontainer {
+		@apply h-20 flex items-end justify-end md:justify-center
+			md:items-center;
+	}
+
+	.linkcontainer > a {
+		@apply border text-white rounded-xl font-bold text-xl text-white
+			bg-blue-600 drop-shadow-lg px-3 py-3;
+	}
 </style>

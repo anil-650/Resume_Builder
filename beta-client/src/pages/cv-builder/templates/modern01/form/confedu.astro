@@ -7,25 +7,25 @@ import { cookieOpt } from "../../../../../utils/cookie.js"
 
 let x;
 
-// Redirect for not having exp cookie
+// Redirect for not having edu cookie
 
-if(!Astro.cookies.has("exp")){
-return Astro.redirect("/cv-builder/templates/ats01/form/experience")
+if(!Astro.cookies.has("edu")){
+return Astro.redirect("/cv-builder/templates/modern01/form/education")
 }
 
 if (Astro.request.method === "POST"){
     try{
         const data = await Astro.request.formData();
-        const d = data.getAll("experience[]")
+        const d = data.getAll("education[]")
         const e = d.map(json=>JSON.parse(json))
 
         console.log("---------- Fotm data ----------")
         console.log(e)
         console.log("--------------------\n")
 
-        Astro.cookies.set("exp", JSON.stringify(e), cookieOpt);
+        Astro.cookies.set("edu", JSON.stringify(e), cookieOpt);
 
-        return Astro.redirect("/cv-builder/templates/ats01/form/education")
+        return Astro.redirect("/cv-builder/templates/modern01/form/others")
 
         } catch(err){
         if (err instanceof Error){
@@ -35,7 +35,7 @@ if (Astro.request.method === "POST"){
 }
 
 // DEBUG ONLY
-x = Astro.cookies.get("exp").json()
+x = Astro.cookies.get("edu").json()
 
 console.log("----- x value -----")
 console.log(x)
@@ -44,7 +44,7 @@ console.log("----------\n")
 <Userlayout>
     <div class="form_container">
 
-        <h1>Step:3/7 Confirm Personal Experience details</h1>
+        <h1>Step:5/7 Confirm Education details</h1>
 
         <hr>
 
@@ -65,23 +65,22 @@ console.log("----------\n")
             {
             x && x.map(z =>(
             <div class="flex gap-3 items-center">
-                <input id={z.company}
+                <input id={z.institute}
                 type="checkbox"
-                name="experience[]"
+                name="education[]"
                 value={JSON.stringify(z)}
                 checked />
-                <label for={z.company}>
-                    {z.company}, {z.designation} - {z.c_address}
+                <label for={z.institute}>
+                    {z.institute}, {z.course} - {z.i_address}
                 </label>
             </div>
-            ))
-            }
+            ))}
 
             <button class="submit" type="submit">Confirm</button>
 
         </form>
 
-        <a href="/cv-builder/templates/ats01/form/experience" class="container mx-auto max-w-sm md:max-w-2xl" >
+        <a href="/cv-builder/templates/modern01/form/education" class="container mx-auto max-w-sm md:max-w-2xl" >
             <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">Previous</div>
         </a>
 

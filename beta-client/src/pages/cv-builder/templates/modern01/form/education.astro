@@ -5,10 +5,9 @@ import Text_input from "../../../../../components/Text_input.astro"
 import convertFormData from "../../../../../utils/convertFormData.js"
 import { maxMonth } from "../../../../../utils/yearMonth.js"
 import { cookieOpt } from "../../../../../utils/cookie.js"
-
 let x;
 
-x = Astro.cookies.has("exp") ? Astro.cookies.get("exp").json() : null;
+x = Astro.cookies.has("edu") ? Astro.cookies.get("edu").json() : null;
 
 if (Astro.request.method === "POST"){
     try{
@@ -20,23 +19,23 @@ if (Astro.request.method === "POST"){
         d.achievements = d.achievements.split('\r\n').map(b=>b.trim())
         }
 
-        // Check and assign exp cookie val to exp or []
-        let exp = Astro.cookies.has("exp") ? Astro.cookies.get("exp").json() : [];
+        // Check and assign edu cookie val to edu or []
+        let edu = Astro.cookies.has("edu") ? Astro.cookies.get("edu").json() : [];
 
-        const isDuplicate = exp.some((obj)=> JSON.stringify(obj) === JSON.stringify(d));
+        const isDuplicate = edu.some((obj)=> JSON.stringify(obj) === JSON.stringify(d));
 
         if(!isDuplicate){
-            exp.push(d);
+            edu.push(d);
 
-            console.log("---------- exp val ----------")
-            console.log(exp)
+            console.log("---------- edu val ----------")
+            console.log(edu)
             console.log("--------------------\n")
 
-             Astro.cookies.set('exp', JSON.stringify(exp), cookieOpt)
+            Astro.cookies.set('edu', JSON.stringify(edu), cookieOpt)
         }
 
         // code to convert into useable obj arrays
-        x = exp.filter(e => typeof e === "object")
+        x = edu.filter(e => typeof e === "object")
 
         Astro.redirect(Astro.url.pathname)
 
@@ -52,21 +51,20 @@ if (Astro.request.method === "POST"){
 
 const maxmonth = maxMonth()
 
-
 // DEBUG ONLY
 // console.log(maxmonth);
 console.log(x)
 console.log("---------- Cookie val ----------")
-if(Astro.cookies.has("exp")){
-console.log(Astro.cookies.get("exp").value)
+if(Astro.cookies.has("edu")){
+console.log(Astro.cookies.get("edu").value)
 }
-console.log("This is exp --------------------\n")
+console.log("This is edu --------------------\n")
 
 ---
 <Userlayout>
     <div class="form_container">
 
-        <h1>Step:2/7 Personal Experience details</h1>
+        <h1>Step:4/7 Education details</h1>
 
         <hr>
 
@@ -76,7 +74,7 @@ console.log("This is exp --------------------\n")
             Tips:
             </div>
             <p class="px-2 pb-1">
-            Fill out the details in chronological order, from recent to past.
+            Fill out the info in chronological order, from most recent to past.
             </p>
         </div>
 
@@ -86,11 +84,7 @@ console.log("This is exp --------------------\n")
             Things to keep in mind:
             </div>
             <p class="px-2 pb-1">
-            If you don't have at least 15 years of experience keep your achievements to 4-5 points.
-            Only write about relevant points, short and concise.
-            </p>
-            <p class="px-2 pb-1">
-            Do not try to pad-out your resume.
+            Only try to put relevant degrees and school/college/university experience
             </p>
         </div>
 
@@ -99,32 +93,31 @@ console.log("This is exp --------------------\n")
         <form method="POST" id="myc" autocomplete="off">
 
             <fieldset>
-                <legend class="text-sm text-gray-600 font-semibold">Most Recent Experience:</legend>
 
             <Text_input
-                    name="company"
-                    
-                    id="company"
+                    name="institute"
+                    required
+                    id="institute"
                     type="text"
-                    lname="Company name"
-                    placeholder="XYZ Company"
+                    lname="Institute name"
+                    placeholder="XYZ institute"
                     />
 
             <Text_input
-                    name="designation"
-                    
-                    id="designation"
+                    name="course"
+                    required
+                    id="course"
                     type="text"
-                    lname="Desgnation"
-                    placeholder="ex: Junior Programmer"
+                    lname="Course info"
+                    placeholder="ex: Master of Business Administration"
                     />
 
             <Text_input
-                    name="c_address"
-                    
-                    id="c_address"
+                    name="i_address"
+                    required
+                    id="i_address"
                     type="text"
-                    lname="Company Address"
+                    lname="Institute Address"
                     placeholder="ex: Unit-3, Bhubaneswar"
                     />
 
@@ -135,25 +128,25 @@ console.log("This is exp --------------------\n")
             <small class="text-gray-500">Input a valid date from 1990-01 to {maxmonth} </small>
 
             <Text_input
-                    name="joined"
-                    
-                    id="joined"
+                    name="admission"
+                    required
+                    id="admission"
                     type="month"
                     min="1990-01"
                     max={maxmonth}
-                    placeholder="2020-01"
-                    lname="Joined on"
                     classes="bg-white"
+                    lname="Admission date"
                     />
 
             <Text_input
-                    name="departed"
-                    id="departed"
+                    name="graduated"
+                    id="graduated"
+                    required
                     type="month"
                     min="1990-01"
-                    max={maxmonth}
-                    lname="Departed on"
+                    max="2099-12"
                     classes="bg-white"
+                    lname="Course completed on"
                     />
 
             <small class="text-gray-500">P.S. Leave Departed field if your currently hired for said company</small>
@@ -173,24 +166,25 @@ console.log("This is exp --------------------\n")
                         id="achievements"
                         name="achievements"
                         class="resize-y bg-gray-100 border-2 rounded"
-                        placeholder="Ex: Wrote code for SaaS web app in Python\r\nEach newline is a new point"
+                        placeholder="Ex: Awards: Bill & Melinda Gates Fellow (only 5 awarded to class), Director's List 2017 (top 10%)\r\nEach newline is a new point"
                         rows="4"></textarea>
             </div>
 
             </fieldset>
 
-            <button class="submit" type="submit">Add</button>
+            <button class="submit" type="submit">Add<button>
 
         </form>
 
-        <h2 class="my-3 text-center font-semibold text-gray-600">Added experience will appear under here:</h2>
+
+        <h2 class="my-3 text-center md:text-right font-semibold text-gray-600 ">Added Institutes will appear under here:</h2>
 
         {
         x &&
-        <div class="container mx-auto max-w-sm md:max-w-lg">
-        <ol class="list-decimal list-inside font-semibold text-sm text-gray-600">
+        <div>
+        <ol class="text-start list-decimal list-inside grid row-auto grid-flow-row font-semibold text-sm text-gray-600">
             {x.map(x => (
-            <li>{x.company}, {x.designation} - {x.c_address}</li>
+            <li>{x.institute}, {x.course} - {x.i_address}</li>
             ))}
         </ol>
         </div>
@@ -198,8 +192,7 @@ console.log("This is exp --------------------\n")
 
 
     </div>
-    <a href="/cv-builder/templates/ats01/form/confexp"
-       class="container mx-auto max-w-sm md:max-w-2xl">
+    <a href="/cv-builder/templates/modern01/form/confedu" >
         <div class="bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">NEXT</div>
     </a>
 </Userlayout>

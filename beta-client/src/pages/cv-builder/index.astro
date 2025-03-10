@@ -103,6 +103,9 @@ templates = await response.json();
                         ))}
                     </div>
                     <div class="linkcontainer">
+                        <a href={templates.temp_view}>
+                            <span>VIEW</span>
+                        </a>
                         <a href={templates.page}>
                             <span>USE</span>
                         </a>
@@ -167,7 +170,7 @@ templates = await response.json();
     }
 
     .linkcontainer {
-        @apply h-20 flex justify-end items-end;
+        @apply h-20 flex gap-2 justify-end items-end;
     }
 
     .linkcontainer > a {

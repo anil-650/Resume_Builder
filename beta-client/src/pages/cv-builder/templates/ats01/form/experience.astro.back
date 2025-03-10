@@ -100,9 +100,9 @@ console.log(Astro.cookies.get("exp").value)
                     />
 
             <Text_input
-                    name="desgnation"
+                    name="designation"
                     required
-                    id="desgnation"
+                    id="designation"
                     type="text"
                     lname="Desgnation"
                     placeholder="ex: Junior Programmer"
@@ -177,7 +177,7 @@ console.log(Astro.cookies.get("exp").value)
         <div>
         <ol class="list-decimal list-inside font-semibold text-sm text-gray-600">
             {x.map(x => (
-            <li>{x.company}, {x.desgnation} - {x.c_address}</li>
+            <li>{x.company}, {x.designation} - {x.c_address}</li>
             ))}
         </ol>
         </div>

@@ -1,9 +1,9 @@
 ---
 import { Icon } from "astro-icon"
-import Userlayout from "../../layouts/Userlayout.astro"
-import Text_input from "../../components/Text_input.astro"
-import convertFormData from "../../../utils/convertFormData.js"
-import yearMonth from "../../utils/yearMonth"
+import Userlayout from "../../../../../layouts/Userlayout.astro"
+import Text_input from "../../../../../components/Text_input.astro"
+import convertFormData from "../../../../../utils/convertFormData.js"
+import yearMonth from "../../../../../utils/yearMonth"
 
 
 let x;
@@ -11,7 +11,7 @@ let x;
 // Redirect for not having edu cookie
 
 if(!Astro.cookies.has("personal")){
-return Astro.redirect("/cv-builder/templates/ats01/form/personal")
+return Astro.redirect("/cv-builder/templates/modern01/form/personal")
 }
 
 let p,exp,edu,o
@@ -83,8 +83,20 @@ console.log("----------\n")
         <span>Contact no: </span>
         {p.cc} {p.mobile}</p>
         <p>
-        <span>Contact Address: </span>
-        {p.address}</p>
+        <span>Street Address: </span>
+        {p.saddr}</p>
+        <p>
+        <span>City/Town:</span>
+        {p.city}</p>
+        <p>
+        <span>State:</span>
+        {p.state}</p>
+        <p>
+        <span>Pincode:</span>
+        {p.pincode}</p>
+        <p>
+        <span>Introduction: </span>
+        {p.introduction}</p>
         )}
         <hr>
 
@@ -171,6 +183,7 @@ console.log("----------\n")
 
         <hr>
 
+				<!---
         <div>
             <h2>Languages: </h2>
             <ul class="in_ul">
@@ -190,7 +203,7 @@ console.log("----------\n")
                 ))}
             </ul>
         </div>
-
+				--->
 
         <a href=`/cv-builder/preview/preview-${p.cv_template}` class="container mx-auto max-w-sm md:max-w-2xl" >
             <div class=" bg-orange-500 text-center py-4 text-white font-bold mx-1 my-3">Preview Resume</div>
@@ -233,7 +246,7 @@ console.log("----------\n")
     }
 
     .in_ul{
-        @apply text-base list-disc grid grid-rows-3 md:grid-rows-4 grid-flow-col ;
+        @apply text-base list-disc grid row-auto grid-flow-row ;
     }
 
     label {
