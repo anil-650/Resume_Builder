@@ -1,0 +1,163 @@
+digraph G {
+    pad=1.0
+    splines="ortho";
+    bgcolor=white;
+    nodesep=1.0
+
+
+    edge [ arrowtail=empty dir=back arrowsize=3.0 penwidth=3.0 ]
+
+    /* INVISIBLE SUPPORT NODES */
+    node [label=""  width="0.0" height="0.0"]
+    l0 l1 l2 l3 l4 
+
+    /* Entities */
+    node [ shape=record penwidth="1.5" style=filled fontname="Handlee" fontsize=26.0]
+
+    user [
+        label="{
+            User
+            |
+            + user_id : UUID\l
+            - user_name : String\l
+            - user_email : String\l
+            # user_password : String\l
+            |
+            - createUser (in: Object)\l
+            + getUserProfile (in: String, out : Object)\l
+            + getUserEmail (in: String, out : Object)\l
+            + getUsercV (in: String, out : Array)\l
+            # updateUserPassword (in: String)\l
+        }"
+    ]
+
+    resume [
+        label="{
+            Resume
+            |
+            + id : UUID\l
+            - cv_no : Integer\l
+            - cv_title : String\l
+            - cv_objective : String\l
+            - cv_template : String\l
+            - personal : Object\l
+            - experience : Object\l
+            - education : Object\l
+            - others : Object\l
+            - pdf : String\l
+            # created_at : Timestamp\l
+            # updated_at : Timestamp\l
+            |
+            + createCV (in: Object)\l
+            - getCVs (in: String, out: Object)\l
+            - updateCV (in: Object)\l
+            - deleteCV (in: String)\l
+        }"
+        fillcolor="#84e9b0"
+    ]
+
+    node [fillcolor="#f5d468"]
+
+    templates [
+        label="{
+            Templates
+            |
+            + name : String\l
+            + image : String\l
+            + text : String\l
+            + tags : Array\l
+            + page : String\l
+        }"
+    ]
+
+    node [fillcolor="#f3f58a"]
+
+    personal [
+        label="{
+            Personal
+            |
+            Fullname : String\l
+            Email : String\l
+            Phone number : Integer\l
+            cv_title : String\l
+            cv_objective : String\l
+            Address : String\l
+        }"
+    ]
+
+    experience [
+        label="{
+            Experience
+            |
+            Company name : String\l
+            Company Address : String\l
+            Designation : String\l
+            Joined on : Date\l
+            Departed on : Date\l
+            Achievement : Array\l
+        }"
+    ]
+
+    education [
+        label="{
+            Education 
+            |
+            Institute name : String\l
+            Institute Address : String\l
+            Course name : String\l
+            Admission date : Date\l
+            Graduation date : Date\l
+            Achievements : Array\l
+        }"
+    ]
+
+    others [
+        label="{
+            Others
+            |
+            Skills : Array\l
+            Langusages : Array\l
+            Certificates : Array\l
+        }"
+    ]
+
+    utils [
+        label="{
+            Utilities
+            |
+            + convertFormData (inout: Object)\l
+            + yearMonth (out: String)\l
+            + randomPic (out: String)\l
+        }"
+        fillcolor="#3ff1cb"
+    ]
+
+    u_yearMonth [
+        label="{
+            yearMonth
+            |
+            + yearMonth (out: String)\l
+            + maxMonth (out: String)\l
+            + dayMonthYear (out: String)\l
+        }"
+        fillcolor="#8eecf0"
+    ]
+    
+    
+    /* Relationships */
+    resume -> templates [constraint=false arrowtail="odiamond" minlen=2]
+    resume -> user [ arrowtail=none constraint=false ]
+    personal -> experience -> education -> others [style=invis]
+    resume -> {personal experience education others} [arrowtail="diamond"]
+    utils -> u_yearMonth [arrowtail=diamond minlen=3]
+    
+    edge [ style=invis]
+    l0 ->  l1  [minlen=2]
+    l1 -> l2 -> l3
+    l3 -> l4 [minlen=4 ]
+    
+    /* Ranks */
+    { rank=same; l1 templates resume};
+    { rank=same; l3 personal experience education others};
+    { rank=same; l4 utils u_yearMonth};
+}

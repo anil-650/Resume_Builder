@@ -1,0 +1,127 @@
+---
+//visuals
+import { Icon } from "astro-icon"
+import AuthInput from "../../components/Auth_Input.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+//../ scripts
+
+let errors = null
+const url = new URL('/api/passwd', Astro.url)
+
+if(Astro.request.method === "POST"){
+try{
+    const data = await Astro.request.formData();
+    const emailData = data.get('email')
+    url.search=`?email=${emailData}`
+
+    const recive = await fetch(url)
+    if(recive.ok){
+    return Astro.redirect('/forgotpassword/sucess')
+    }else if(recive.status == 400){
+    errors = `email provided is invalid / not registered. Try again`
+    }else{
+    return Astro.redirect('/500')
+    }
+
+    console.log(emailData)
+}catch(err){
+    if(err instanceof Error){
+        console.error(err.message)
+        return Astro.redirect('/forgotpassword')
+    }
+}
+}
+
+// styles for input
+
+const uemail_style=[
+"appearance-none",
+"border-gray-600",
+"border-b",
+"w-full",
+"py-2",
+"px-3",
+"peer",
+// focus settings
+"focus:appearance-none",
+"focus:outline-none",
+"focus:border-none",
+"focus:rounded-lg",
+"focus:ring",
+"focus:ring-orange-500",
+"focus:placeholder-transparent"
+]
+
+
+const uemail_label_style=[
+"absolute",
+"left-0",
+"top-2",
+"px-3",
+"ml-0",
+"bg-transparent",
+"text-transparent",
+// focus settings
+"peer-focus:text-orange-500",
+"transition-all ease-in-out",
+"duration-200",
+"peer-focus:-top-4",
+"peer-focus:px-1",
+"peer-focus:ml-3",
+"peer-focus:text-xs",
+"peer-focus:bg-white"
+]
+
+---
+<BaseLayout title="Forgot Password" classes="bg-slate-100">
+    <div class="flex-1 flex justify-center items-center">
+
+        <!-- WHOLE FORM WITH ICON AND EVERYTHING -->
+        <div
+                class="container mx-auto max-w-xs md:max-w-md lg:max-w-lg w-full rounded-lg bg-white p-6 mb-6 shadow-lg">
+            <div class="flex flex-col items-center mb-2">
+                <div class="bg-white ring ring-orange-600 p-5 rounded-full">
+                    <Icon name="mdi:lock-question" class="w-11  text-orange-500 center" />
+                </div>
+                <h2 class="font-bold text-xl mt-2 pb-6 text-gray-600">Forgot Password</h2>
+                    { ( errors !== null) &&
+                    <p class="warning">{errors}</p>
+                    }
+            </div>
+            <form method="POST">
+                <div class="relative mb-12" data-te-input-wrapper-init>
+                    <AuthInput icon="mdi:email" input_type="email" id="uemail" lname="Enter Your email:" name="email" />
+                </div>
+                <button type="submit" class="btn btn-orange" >Send Reset Link</button>
+            </form>
+            <a href="/" >
+                <button class="btn btn-back btn-blue">Back Home</button>
+            </a>
+        </div>
+        <!-- WHOLE FORM WITH ICON AND EVERYTHING -->
+
+    </div>
+</BaseLayout>
+
+<style>
+    .btn {
+        @apply shadow-md container mx-auto text-white font-bold p-4;
+    }
+
+    .btn-orange {
+        @apply bg-orange-500;
+    }
+
+    .btn-blue {
+        @apply bg-blue-500;
+    }
+
+    .btn-back {
+        @apply my-3;
+    }
+
+    .warning {
+        @apply text-center text-base text-red-400 font-bold pb-5;
+    }
+
+</style>

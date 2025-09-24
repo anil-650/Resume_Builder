@@ -1,130 +1,150 @@
-# SERVER SETUP
+# 🖥️🌐 Server Setup
 
 This file contains the instruction to set up the backend of the project
 
-**⚠️BACK-END IS NOW FUNCTIONAL⚠️**
-## Current project setup
+## 🗃️ Current project setup
+
+<details>
+    <summary> 📂 server structure</summary>
 
 ```
 📂 server
 ├── 📄 APIU_TEST.rest
-├── 📄 db.js
-├── 📄 db.pgsql
-├── 📄 index.js
-├── 📄 package.json
-├── 📄 pnpm-lock.yaml
+├── 📄 Dockerfile
 ├── 📄 README.md
-├── 📄 .env
+├── 📄 cities.csv
+├── 📄 cities.sql
+├── 📄 db.js
+├── 📄 index.js
+├── 📄 index.js.back
 ├── 📂 middleware
-│  ├── 📄 authorize.js
-│  └── 📄 validinfo.js
+│   ├── 📄 authorize.js
+│   ├── 📄 validemail.js
+│   └── 📄 validinfo.js
+├── 📄 package.json
+├── 📄 puppeteer-alpine-setup.sh
 ├── 📂 routes
-│   ├── 📄 dashboard.js
-│   └── 📄 jwtAuth.js
-└── 📂 utils
-    └── 📄 jwtGenerator.js
+│   ├── 📄 dashboard.js
+│   ├── 📄 jwtAuth.js
+│   ├── 📄 resetPassword.js
+│   ├── 📄 resume.js
+│   └── 📄 templates.js
+├── 📂 utils
+│   ├── 📄 jwtGenerator.js
+│   └── 📄 mailUtils.js
+└── 📄 yarn.lock
 ```
+
+</details>
 
 ## WE ARE USING
 
-- **Node.js** *v18.15.0* as server backend.
+| package manager | runtime | version control |
+|:---------------:|:-------:|:---------------:|
+| ![yarn][yarn_img] <br> **yarn** <br> *v1.22.22* | <br> ![node][node_img] <br><br> **nodejs** <br> *v22.14.0* |<br> ![git][git_img] <br> **git** <br> *v2.48.1* |
+
+### Manual Installation for project setup.
+- **Node.js** *v22.14.0*
   - [Download Node.js](https://nodejs.org/en/download)
-- **PostgreSQL** *v14.2* (anything after *v14.0* is fine) as database.
-  - [Download Node.js](https://www.postgresql.org/download)
-- **pnpm** *v7.30.0* as the node package manager.
-  - [pnpm setup](#setup-pnpm)
-- **Git** and **GitHub** for version control.
-  - [Download Node.js](https://git-scm.com/download/win)
+  - Use your package manager to install on Linux
+- **yarn** *v1.22.22*
+  - [yarn setup](#setup-yarn)
+- **Git** and **GitHub**
+  - If you don't have a github acc [Create GitHub account](https://github.com/signup) here
+  - [Download git for windows](https://git-scm.com/download/win)
+  - Use your package manager to install on Linux
 
-## SETUP POSTGRESQL
+### 🔑 Important environment variables to set before starting the project
 
-### SETUP IN WINDOWS:
-***Do it yourself or google***
+> [!TIP]
+> You can either Create an `.env` file or set them directly yourself.
 
-### SETUP IN UBUNTU *v20.04* or WSL(UBUNTU):
-1. First update the repositories
+| env | type | example value |
+|:---:|:----:|:-------------:|
+| `jwtSecret` | `string` | "I_am_batman" |
+| `FRONT_END_SITE` | `url` | `http://localhost:3000` |
+| `MAIL` | `json_obj` | `{ "SERVICE": "gmail", "USERNAME": "MyresumeBuilder", "EMAIL": "myresumebuilder.site@gmail.com", "PASS": "<your_password>" }`
 
-```sh
-sudo apt update -y && sudo apt upgrade -y
-```
 
-2. Install git, curl/wget, PostgreSQL
+----
 
-```sh
-sudo apt install git wget curl postgresql ca-certificates -y
-```
+## 💻🚀 Steps to setup/run the project
 
-⚠️**IF** you haven't downloaded the git repo yet, `git clone` it and set branch to **devlopment** (it's not a spelling error) or you can also download the zip files.⚠️
-
-### Modify PostgreSQL's pg_hba.conf and postgresql.conf file
-
-These files should be inside your DATABASE folder.
-
-1. **pg_hba.conf** add to the end of file
-
-```
-# ALLOW FOR REMOTE CONNECTIONS
-host    all     all         0.0.0.0/0   scram-sha-256
-host    all     all         ::/0        scram-sha-256
-```
-
-2. **postgresql.conf** find this setting in file and change it.
-
-```conf
-# -Connection settings-
-# listening_addresses = 'localhost' # < this one
-
-# to
-
-# This allows remote managment 
-# MIGHT CLOSE IT IN FINAL VERSION
-listening_addresses = '*'
-```
-
-**After Installation Restart your PostgreSQL server.**
-
-Check if PostgreSQL is running and restart it for changes to take effect.
-
-#### UBUNTU
+<details>
+    <summary>
+    <h3>Mehtond 1: 🐳 Docker Setup (Recommended) </h3>
+</summary>
 
 ```sh
-sudo systemctl status spostgresql
-sudo systemctl restart spostgresql
+# Set <your_image_name> to your preferred name
+# Build the image first
+docker build -t <your_image_name> .
+
+# Run the image
+docker run -d --name my_db_container <your_image_name>
 ```
 
-#### WSL (UBUNTU)
+</details>
 
-```sh
-sudo service postgresql status
-sudo service postgresql restart
+----
+
+<details>
+    <summary>
+    <h3>Mehtond 2: 👩‍💻 Manual Setup</h3>
+    </summary>
+
+#### 🧞 Puppeteer setup
+
+> [!NOTE]
+> If you are using the docker method to setup the project methods below are not needed.
+
+There are 2 ways to setup Puppeteer.
+
+1. ***Download*** it along with `yarn install` the package.json
+    - Please remove the `executablePath` option from the function in the given
+      location below [1].
+    - Continue to next [step](#🚀-setup-yarn)
+2. ***Pre-download*** the Browser before installing the package.json
+    - Set an env variable `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD` to `ture`
+        - Linux bash: `export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=ture`
+        - Windows cmd/poweshell: `setx /m PUPPETEER_SKIP_CHROMIUM_DOWNLOAD ture`
+    - Set the `executablePath` option in the location shown in code [1].
+
+
+> routes/resume.js: line no:153
+
+```javascript
+148 async function genPDF(id, cv_template){
+149
+150     // LAUNCH BROWSER 1020p res
+151     const browser = await pup.launch({
+152         defaultViewport: { width: 1280, height: 720 },
+    # [1]: Change the `executablePath` to your browsers path
+153         executablePath: '/usr/bin/chromium-browser',
+154         args: [
+155             '--no-sandbox',
 ```
 
-#### WINDOWS
+#### 🚀 Setup YARN
 
-**Idk🗿** figure it out.
-
-### Create role, database and table
-
-If you have done everything correctly you should be able to run `psql` and get into the PostgreSQL's prompt. Run the below cmd inside the `psql` prompt and you should probably be fine.
-
-```
-\i db.pgsql
-```
-
-For more details look into the [pgsql file](./db.pgsql)
-
-## SETUP PNPM
-
-Instructions for *pnpm* our node package manager. ***Node.js v18.15.0*** comes with a version manager for node package managers **`corepack`** we will use it to install our packages through **`pnpm`**
+Instructions for *yarn* our node package manager. ***Node.js v22.14.0*** comes with a version manager for node package managers **`corepack`** we will use it to install our packages through **`yarn`**
 
 - Run this in windows poweshell or cmdline and ubuntu's terminal inside server folder/directory.
 
 ```sh
-corepack enable
-pnpm install
+# install yarn and dependecies
+corepack enable yarn
+yarn install
 ```
 
-## START THE SERVER
+- START THE SERVER
+
+```sh
+yarn run dev
+```
+
+</details>
+
 
 <!--
 Create a `.evn` file inside the root directory for jwt secret.
@@ -137,12 +157,10 @@ jwtSecret="<you_screat>"
 ```
 -->
 
-We are finally here just run this and it will be started
-
-```
-pnpm dev
-```
-
 P.S.:
 - At later date I will try to make an install script
 - if you wanna test out something then don't touch the original files just copy the file and add `test-` in front of it, git will ignore it.
+
+[yarn_img]: https://raw.githubusercontent.com/yarnpkg/assets/refs/heads/master/yarn-kitten-circle.svg
+[node_img]: https://www.vectorlogo.zone/logos/nodejs/nodejs-ar21~bgwhite.svg
+[git_img]: https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg

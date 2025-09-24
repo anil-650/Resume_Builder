@@ -1,0 +1,141 @@
+graph G {
+    bgcolor=white;
+    graph [fontname="Handlee"]
+    node [fontname="Handlee" fontsize=30 penwidth=3.0]
+    edge [fontname= "Handlee" fontsize=30 penwidth=3.0]
+
+    rankdir="LR"
+
+// NODES
+
+    node [shape=oval]
+
+// USER ATTRIBUTES
+
+    u1 [label="user_id"]
+    u2 [label="user_name"]
+    u3 [label="user_email"]
+    u4 [label="user_password"]
+
+// TEMPLATES ATTRIBUTES
+
+    t1 [label="name"]
+    t2 [label="image"]
+    t3 [label="text"]
+    t4 [label="tags"]
+    t5 [label="page"]
+
+// RESUME ATTRIBUTES
+
+    r1 [label="id"]
+    r2 [label="cv_no"]
+    r3 [label="cv_title"]
+    r4 [label="cv_objective"]
+    r5 [label="cv_template"]
+    r6 [label="personal"]
+    r7 [label="experience"]
+    r8 [label="education"]
+    r9 [label="others"]
+    r10 [label="pdf"]
+    r11 [label="created_at"]
+    r12 [label="updated_at"]
+
+// ENTITIES
+
+    node [shape=rect margin=0.3]
+    uuser [label=<<b>uuser</b>>]
+    templates [label=< <b>temlates</b>> ]
+    resumes [label=< <b>resumes</b>> ]
+
+// RELATIONSHIPS
+
+    node [shape=diamond margin=0.1]
+    uses
+    owns
+    depends [label="depends on"]
+
+// SUPPORT STRUCTURE EMPTY NODES
+
+    node [color=white label=""]
+    u01
+    u02
+    u03
+    u04
+        
+    t01
+    t02
+    t03
+    t04
+    t05
+
+    r01
+    r02
+    r03
+    r04
+    r05
+    r06
+    r07
+    r08
+    r09
+    r010
+    r011
+    r012
+
+// EDGES
+
+    u1 -- u2 -- u3 -- u4 [style=invis minlen=2]
+    u01 -- u02 -- u03 -- u04 [tailclip=false headclip=false minlen=2]
+    t01 -- t02 -- t03 -- t04 -- t05 [headclip=false tailclip=false minlen=3]
+    r01 -- r02 -- r03 -- r04 -- r05 -- r06 -- r07 -- r08 -- r09 -- r010 -- r011 -- r012 [headclip=false tailclip=false]
+    r1 -- r2 -- r3 -- r4 -- r5 -- r6 -- r7 -- r8 -- r9 -- r10 -- r11 -- r12 [style=invis]
+
+    u03 -- uuser [tailclip=false]
+    uuser -- uses [minlen=2 label="M" ]
+    uses -- templates [minlen=2 label="N"]
+    templates -- t03 [headclip=false]
+    uuser -- owns [minlen=5 label="M" ]
+    templates -- depends [minlen=5 label="            1" ]
+    uses -- resumes [style=invis minlen=5]
+    owns -- resumes [label="M"]
+    resumes -- depends [label="N"]
+
+    resumes -- r06 [headclip=false minlen=4]
+    r06 -- r6 [tailclip=false]
+    
+    edge [headclip=false]
+    u1 -- u01
+    u2 -- u02
+    u3 -- u03
+    u4 -- u04
+
+    edge [headclip=true tailclip=false]
+    t01 -- t1
+    t02 -- t2
+    t03 -- t3
+    t04 -- t4
+    t05 -- t5
+
+    edge [constraint=false headclip=false tailclip=true]
+    r1 -- r01
+    r2 -- r02
+    r3 -- r03
+    r4 -- r04
+    r5 -- r05
+    r7 -- r07
+    r8 -- r08
+    r9 -- r09
+    r10 -- r010
+    r11 -- r011
+    r12 -- r012
+
+// NODE ALIGNMENTS
+
+    { rank=same; u1 u2 u3 u4 };
+    { rank=same; u01 u02 u03 u04 };
+    { rank=same; t1 t2 t3 t4 t5};
+    { rank=same; t01 t02 t03 t04 t05};
+    { rank=same; uuser owns };
+    { rank=same; templates depends };
+    { rank=same; uses resumes r06 r6};
+   
+}

@@ -2,7 +2,70 @@
 import BaseLayout from "../layouts/BaseLayout.astro"
 import HeroSec from "../components/HeroSection.astro"
 ---
-<BaseLayout title="">
+<BaseLayout title="Landing Page">
     <HeroSec />
-    <p>Wrapped page</p>
+
+    <div class="p-4 ">
+    <div class="content_card flex_norm">
+        <div class="content_image" style="background-image: url('/images/res_re.svg')"></div>
+        <div class="content_text">
+            <h3>Resume Builder</h3>
+            <p>
+            Create your professional Resume in just a few simple steps.
+            </p>
+        </div>
+    </div>
+
+    <div class="content_card flex_rev">
+        <div class="content_image" style="background-image: url('/images/fast_n_easy.svg')"></div>
+        <div class="content_text">
+            <h3> Fast and Easy to </h3>
+            <p>
+            Use Our free resume builder lets you easily and quickly create a resume.
+            </p>
+        </div>
+    </div>
+
+    <div class="content_card flex_norm">
+        <div class="content_image" style="background-image: url('/images/res_down.svg')"></div>
+        <div class="content_text">
+            <h3>Download your resume as PDF</h3>
+            <p class="pr-5 ">
+            Download your resume and send it straight to the hiring manager. We've got you covered
+            </p>
+        </div>
+    </div>
+
+
+    </div>
 </BaseLayout>
+
+<style>
+
+    /* Unfinished work*/
+    .content_card {
+        @apply rounded-2xl max-w-sm pt-4 py-4 container mx-auto  md:max-w-4xl gap-2;
+    }
+
+    .flex_norm {
+        @apply flex flex-col md:flex-row  justify-center items-center;
+    }
+
+    .flex_rev {
+        @apply flex flex-col md:flex-row-reverse  justify-center items-center;
+    }
+
+    .content_image {
+        @apply bg-contain bg-no-repeat w-60 h-60 ;
+    }
+
+    h3 {
+        @apply text-2xl text-center md:text-start font-bold text-gray-700 ;
+    }
+
+    p {
+        @apply max-w-xs text-gray-700 font-semibold text-center md:text-start  ;
+    }
+
+
+</style>

@@ -1,0 +1,302 @@
+---
+import { Icon } from "astro-icon"
+import Userlayout from "../../../../../layouts/Userlayout.astro"
+import Text_input from "../../../../../components/Text_input.astro"
+import convertFormData from "../../../../../utils/convertFormData.js"
+import { cookieOpt } from "../../../../../utils/cookie.js"
+
+// function Handel skills type array
+// single word = all Uppercase
+
+let capSkill = (array) => (
+array.map(b=>{
+    if(!b.includes(" ")){
+    return b.toUpperCase()
+    } else {
+    return b
+    }
+}));
+
+// function Handel languages type array
+// single word = first letter Uppercase
+
+let capLang = (array) => (
+array.map(b=>
+b[0].toUpperCase() + b.substring(1).toLowerCase()
+));
+
+
+// function to sanitize input strings
+
+function sanitize(string, arrayName){
+// split them into array
+// remove space from before and after element
+
+    let array = string.split(',').map(b => b.trim()).filter(b => b)
+
+// respective Capitalization of array
+
+    if(arrayName === "skill"){
+    array = capSkill(array)
+    }
+
+    if(arrayName === "languages"){
+    array = capLang(array)
+    }
+
+    return array
+}
+
+// function to combine pre and new values
+
+function total(a1, a2){
+
+// concatenate 2 array remove false values
+
+let array = a1.concat(a2).filter(b=>b)
+
+// remove duplicates and sort
+
+array = ([...new Set(array)]).sort()
+return array
+}
+
+if (Astro.request.method === "POST"){
+    try{
+        const data = await Astro.request.formData();
+
+        // INITIALISE others obj
+
+        const others = Astro.cookies.has("others") ? Astro.cookies.get("others").json() : {};
+
+        // UPDATE SKILLS
+
+        if(data.has("skills")){
+        let newSkill
+        let preSkill = 'skills' in others ? others.skills : null
+
+        const inputSkills = data.get("skills");
+        newSkill = sanitize(inputSkills, 'skill')
+
+        let tSkill = total(newSkill, preSkill)
+        others.skills = tSkill
+        }
+
+        // UPDATE LANGUAGES
+
+        if(data.has("languages")){
+        let newLang
+        let preLang = 'languages' in others ? others.languages : null
+
+        const inputLang = data.get("languages");
+        newLang = sanitize(inputLang, 'languages')
+
+        let tLang = total(newLang, preLang)
+        others.languages = tLang
+        }
+
+       // UPDATE CERTIFICATES
+
+        if(data.has("certificates")){
+        let newCert
+        let preCert = 'certificates' in others ? others.certificates : null;
+
+        const inputCert = data.get("certificates");
+        newCert = sanitize(inputCert, 'skill')
+
+        let tCert = total(newCert, preCert)
+        others.certificates = tCert
+        }
+
+        // DEBUG ONLY
+        console.log("---------- others val ----------")
+        console.log(others)
+        console.log("--------------------\n")
+
+        // SET COOKIE
+        Astro.cookies.set('others', JSON.stringify(others), cookieOpt)
+
+        Astro.redirect(Astro.url.pathname)
+
+    } catch (err){
+        if (err instanceof Error){
+        console.error(err.message);
+        }
+    }
+
+}
+
+// FOR SETTING MAX month in the form
+
+const maxmonth = await (()=>{
+let date = new Date().toJSON().slice(0, 7);
+return date;
+})();
+
+let x = 'empty';
+console.log("---------- Cookie val ----------")
+if(Astro.cookies.has("others")){
+    x = Astro.cookies.get("others").json()
+
+    console.log(Astro.cookies.get("others").json())
+}
+console.log("This is others --------------------\n")
+
+---
+<Userlayout>
+    <div class="form_container">
+
+        <h1>Step:6/7 Skills, Languages and other details</h1>
+
+        <hr>
+
+        <div class="my-2 leading-tight flex flex-col justify-center gap-2 border-green-500 bg-green-200 text-green-800 border-l-4 border-y rounded border-r mx-2">
+            <div class="flex gap-2 items-center font-bold">
+            <Icon name="mdi:lightbulb-on" class="w-8 "/>
+            Tips:
+            </div>
+            <p class="px-2 pb-1">
+            You can use comma to separate different skills, languages
+            </p>
+        </div>
+
+        <div class="my-2 leading-tight flex flex-col justify-center gap-2 border-yellow-500 bg-yellow-200 text-yellow-800 border-l-4 border-y rounded border-r mx-2">
+            <div class="flex gap-2 items-center font-bold">
+            <Icon name="mdi:warning" class="w-8 "/>
+            Things to keep in mind:
+            </div>
+            <p class="px-2 pb-1">
+            Only try adding in skills you are confident in.
+            </p>
+            <p class="px-2 pb-1">
+            Do not try to pad-out your resume.
+            </p>
+        </div>
+
+        <hr>
+
+        <form method="POST" id="myc" autocomplete="off">
+
+            <fieldset>
+                <legend class="text-sm text-gray-600 font-semibold">Skills, Languages proficiency and Certificates</legend>
+
+            <Text_input
+                    name="skills"
+                    id="skills"
+                    type="text"
+                    lname="Technical Skills"
+                    placeholder="PHP, HTML, etc"
+                    />
+
+            <Text_input
+                    name="languages"
+                    id="languages"
+                    type="text"
+                    lname="Spoken or written languages"
+                    placeholder="ex: Odia(native), English(intermidaiate)"
+                    />
+
+            <Text_input
+                    name="certificates"
+                    id="certificates"
+                    type="text"
+                    lname="Certificates & Tranning"
+                    placeholder="ex: CCNA, CompTIA+"
+                    />
+
+                    <hr>
+            </fieldset>
+
+            <button class="submit" type="submit">Add</button>
+
+        </form>
+
+        <h2 class="my-3 text-center font-semibold text-gray-600">Added fields will appear under here:</h2>
+
+        <div class="container px-5 mx-auto max-w-sm md:max-w-md ">
+        {
+        !(x==='empty') &&
+        <ul class="space-y-4">
+            {x.skills.length ? (
+            <li>
+                <h3 class="oh">Skills:</h3>
+                <ul class="in_ul">
+                    {x.skills.map(skill => (
+                    <li>{skill}</li>
+                    ))}
+                </ul>
+            </li>
+            ):(
+            <p class="nty">No added Skills yet</p>
+            )}
+            {x.languages.length ? (
+            <li>
+                <h3 class="oh">Languages:</h3>
+                <ul class="in_ul">
+                    {x.languages.map(language => (
+                    <li>{language}</li>
+                    ))}
+                </ul>
+            </li>
+            ):(
+            <p class="nty">No added Languages yet</p>
+            )}
+            {x.certificates.length ? (
+            <li>
+                <h3 class="oh">Certificates:</h3>
+                <ul class="in_ul">
+                    {x.certificates.map(certificate => (
+                    <li>{certificate}</li>
+                    ))}
+                </ul>
+            </li>
+            ):(
+            <p class="nty">No Certificates yet</p>
+            )}
+        </ul>
+        }
+
+        </div>
+
+    </div>
+    <a href="/cv-builder/templates/ats01/form/confothers" class="container mx-auto max-w-sm md:max-w-2xl">
+        <div class=" bg-blue-500 text-center py-4 text-white font-bold mx-1 my-3">NEXT</div>
+    </a>
+</Userlayout>
+
+<style>
+    body{
+        @apply bg-gray-100;
+    }
+    h1 {
+        @apply text-center font-bold text-gray-700 my-3;
+    }
+
+    hr {
+        @apply border-2 my-4;
+    }
+
+    .form_container {
+        @apply container mx-auto max-w-sm md:max-w-2xl bg-white;
+    }
+
+    form {
+        @apply shadow-md p-8;
+    }
+
+    .submit {
+        @apply bg-orange-500 w-full my-4 py-4 text-white font-bold;
+    }
+
+    .in_ul{
+        @apply text-base list-disc grid grid-rows-3 md:grid-rows-4 grid-flow-col ;
+    }
+
+    .oh{
+        @apply font-bold text-center;
+    }
+
+    .nty{
+        @apply text-gray-400 text-center;
+    }
+</style>

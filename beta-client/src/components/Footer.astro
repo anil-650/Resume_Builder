@@ -2,12 +2,36 @@
 const date = new Date();
 ---
 
-<footer class="p-8  bg-slate-700">
+<footer class="p-8  bg-slate-700 flex flex-col items-center justify-center mt-2">
+    <div class="flink_container">
+        <h3>Useful Links</h3>
+        <ul>
+            <li><a href="/faq">FAQs</a></li>
+        </ul>
+    </div>
+    <hr>
     <div class="container mx-auto flex items-center justify-center ">
-    <small class="text-slate-400">
-        Copyright &copy;
-        <span id="copyright">{date}</span> |
-        All rights Reserved
-    </small>
+        <small class="text-slate-400">
+            Copyright &copy;
+            <span id="copyright">{date}</span> |
+            All rights Reserved
+        </small>
     </div>
 </footer>
+<style>
+    h3 {
+        @apply font-bold py-2;
+    }
+
+    .flink_container{
+        @apply text-slate-400 border-t-2 border-slate-400 container max-w-sm md:max-w-xl px-6 py-2;
+    }
+
+    ul{
+        @apply justify-start;
+    }
+
+    hr {
+        @apply border border-slate-400 my-3 px-40 md:px-72;
+    }
+</style>

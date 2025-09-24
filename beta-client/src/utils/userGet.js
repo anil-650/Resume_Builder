@@ -8,6 +8,7 @@ const url = import.meta.env.BSA || 'http://localhost:5000'
 
 export async function getUser(token){
     return fetch(`${url}/dashboard`, {
+        method: "GET",
         headers: {
             'Conten-Type': 'application/json; cahrset=utf-8',
             'token': token,
@@ -15,8 +16,8 @@ export async function getUser(token){
     });
 }
 
-export async function getUserdata(token){
-    return  fetch('${url}/dashboard/users', {
+export async function getUserCVs(token){
+    return  fetch(`${url}/dashboard/cvs`, {
         method: 'GET',
         headers: {
             'token' : token
@@ -44,13 +45,12 @@ export async function updateUserProfile(user, token){
     });
 }
 
-export async function updateUserPassword(user, token){
-    return fetch(`${url}/dashboard/password`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json; cahrset=utf-8',
-            'token': token,
-        },
-        body: user
-    });
+// GET EMAIL FOR RESET PASSWORD
+export async function userEmail(email){
+    return fetch(`${url}/resetpasswd?email=${email}`);
+}
+
+// GENERATE CV
+export async function generateCV( cvid ){
+    return fetch(`${url}/resume/gencv/${cvid}`)
 }

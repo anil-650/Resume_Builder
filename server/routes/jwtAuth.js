@@ -1,26 +1,26 @@
 const pool = require("../db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwtGenerator = require("../utils/jwtGenerator");
 const router = require("express").Router();
 const validinfo = require("../middleware/validinfo");
 const authorize = require("../middleware/authorize");
 
-router.post("/register",  validinfo, async (req, res) => {
+router.post("/register", validinfo, async (req, res) => {
 
     // 1. de-structure body name,  email, password
-    const {name, email, password} = req.body;
+    const { name, email, password } = req.body;
 
     try {
         // 2. check if user exists
 
-        const user = await pool.query("SELECT * FROM uuser WHERE user_email = $1", [ email ]);
+        const user = await pool.query("SELECT * FROM uuser WHERE user_email = $1", [email]);
 
         if (user.rows.length !== 0) {
 
             // for debugging
             console.log("User already exists !!");
 
-            return res.status(401).json({error: "User already exists !!"});
+            return res.status(401).json({ error: "User already exists !!" });
         }
 
         // 3. Bcrypt user password
@@ -30,13 +30,14 @@ router.post("/register",  validinfo, async (req, res) => {
         const bcryptPassword = await bcrypt.hash(password, salt);
 
         // 4. enter user inside database
-        let newUser = await  pool.query(
+        let newUser = await pool.query(
             "INSERT INTO uuser (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *;"
-            ,[name, email, bcryptPassword]);
+            , [name, email, bcryptPassword]);
 
 
         // 5. JWT token generation
-        const token = jwtGenerator(newUser.rows[0].user_id);
+        const token_time = "2hr"
+        const token = jwtGenerator(newUser.rows[0].user_id, token_time);
 
         // DEBUG ONLY
         console.log("token sent");
@@ -46,24 +47,24 @@ router.post("/register",  validinfo, async (req, res) => {
 
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({ error: "Server Error" }) 
+        res.status(500).json({ error: "Server Error" })
     }
 });
 
 // LOGIN ROUTE
 
-router.post("/login", validinfo, async (req, res)=> {
+router.post("/login", validinfo, async (req, res) => {
 
     // 1. De-structure body
     const { email, password } = req.body;
 
-    try{
+    try {
 
         // 2. Check if user does not exist
-        const user = await pool.query("SELECT * FROM uuser WHERE user_email = $1", [ email ]);
+        const user = await pool.query("SELECT * FROM uuser WHERE user_email = $1", [email]);
 
         if (user.rows.length === 0) {
-            return res.status(401).json({error:"Password or Email Incorrect."});
+            return res.status(401).json({ error: "Password or Email Incorrect." });
         }
         // 3. check if incoming password is the same as the database password
         const validPassword = await bcrypt.compare(
@@ -72,11 +73,12 @@ router.post("/login", validinfo, async (req, res)=> {
         );
 
         if (!validPassword) {
-            return res.status(401).json({error:"Password or Email Incorrect."});
+            return res.status(401).json({ error: "Password or Email Incorrect." });
         }
 
         // 4. Set token; redirect to dashboard
-        const token = jwtGenerator(user.rows[0].user_id);
+        const token_time = "2hr"
+        const token = jwtGenerator(user.rows[0].user_id, token_time);
 
 
         // DEBUG ONLY
@@ -87,17 +89,17 @@ router.post("/login", validinfo, async (req, res)=> {
 
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Server Error") 
+        res.status(500).send("Server Error")
     }
 });
 
 
-router.post("/verify", authorize, (req, res)=>{
-    try{
+router.post("/verify", authorize, (req, res) => {
+    try {
         res.json(true);
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({error: "Server Error"});
+        res.status(500).json({ error: "Server Error" });
     }
 })
 

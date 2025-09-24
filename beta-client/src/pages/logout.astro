@@ -1,12 +1,16 @@
 ---
 // scripts
+import { cookieDel } from "../utils/cookie.js"
 
 // DELETE COOKIES OF token AND isLoggedin
 
 if(Astro.cookies.has('isLoggedin')){
-Astro.cookies.get('isLoggedin').value;
-Astro.cookies.set('isLoggedin', false, {maxAge: 0});
-Astro.cookies.set('token', '', {maxAge: 0});
+Astro.cookies.set("isLoggedin", '',cookieDel)
+Astro.cookies.set("token", '',cookieDel)
+Astro.cookies.set("personal", '',cookieDel)
+Astro.cookies.set("edu", '',cookieDel)
+Astro.cookies.set("exp", '',cookieDel)
+Astro.cookies.set("others", '',cookieDel)
 return Astro.redirect('/login');
 }
 

@@ -1,0 +1,180 @@
+---
+export interface Props{
+title: string;
+created: string;
+updated?: string;
+pdf?: string;
+template?: string
+}
+
+const { title, created, updated, pdf, template, id }=Astro.props
+
+// VISUALS
+import { Icon } from "astro-icon";
+
+// IMPORTS
+import { dayMonthYear } from "../utils/yearMonth.js"
+
+// THIS MOVED WITH COMPONENT
+const cardBody=[
+"border-2",
+"border-gray-700",
+"rounded-lg",
+"p-4",
+"m-4",
+"hover:ring",
+"focus-within:ring",
+"ring-gray-800"
+]
+
+const cardHeading=[
+"text-base",
+"md:text-2xl",
+"font-bold",
+"font-mono",
+"mb-1"
+]
+
+const cardTimeData=[ // FOR CV CREATE AND UPDATE DATE
+"text-sm",
+"font-semibold",
+"md:font-medium",
+"md:text-base",
+"text-gray-700"
+]
+
+const ulClass=[
+"bg-white",
+"flex",
+"justify-between",
+]
+
+const liClass=[
+"m-2",
+"rounded-full",
+"md:rounded-none",
+"hover:text-white",
+"focus-within:text-white",
+// Remove Focus outline when tabbing
+"focus-within:outline-none",
+// Put tailwind rings instead
+"focus-within:ring",
+"transition-color",
+"duration-200"
+]
+
+const aSizing=[
+"flex",
+"focus:outline-none",
+"p-1",
+"md:p-3",
+"items-center",
+"justify-center"
+]
+
+const aTextStyles=[
+"text-lg",
+"sr-only",
+"font-bold",
+"md:not-sr-only"
+]
+
+const TextColorPrimary=[
+"text-zinc-600"
+]
+
+const TextColorSecondary=[
+"text-zinc-400"
+]
+
+const liBaseBG=[
+"bg-white"
+]
+
+const liHoverPrimary=[
+"hover:bg-blue-500",
+"focus-within:ring-blue-400",
+"focus-within:bg-blue-500"
+]
+
+const liHoverSecondary=[
+"hover:bg-emerald-500",
+"focus-within:ring-emerald-400", // ring color
+"focus-within:bg-emerald-500"
+]
+
+const liHoverDanger=[
+"hover:bg-rose-500",
+"focus-within:ring-rose-500",
+"focus-within:bg-rose-700"
+]
+
+const liColorPrimary=[
+liBaseBG,
+TextColorPrimary
+]
+
+const liColorSecondary=[
+liBaseBG,
+TextColorSecondary
+]
+
+---
+<!-- CARD STARTS HERE -->
+<div id="card-body" class:list={[ cardBody ]}>
+    <h5 class:list={[ cardHeading ]}  >{ title }</h5>
+
+    { !(updated === created) ? (
+
+    <p id="updated on" class:list={[ cardTimeData ]} >Updated : { dayMonthYear(updated) } </p>
+
+    ): null}
+
+    <p id="created on" class:list={[ cardTimeData ]} >Created : { dayMonthYear(created) }</p>
+
+    <!-- LINK WRAPPER -->
+    <div class="flex flex-row-reverse">
+        <!-- LINK GROUP TWO -->
+        <ul class:list={[ ulClass, "flex", "flex-row-reverse","justify-between", "md:gap-2"]}>
+            <!-- VIEW LINK -->
+            <li class:list={[ liColorPrimary, liHoverPrimary, liClass ]}>
+                <a href=`/user/viewcv/${template}-${id}` class:list={[ aSizing ]}>
+                    <Icon name="mdi:eye" class="w-7 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>View</span>
+                </a>
+            </li>
+            <!-- LINK END -->
+            <!-- DISABLED CURRENCY -->
+            <!-- UPDATE LINK
+            <li class:list={[ liColorPrimary, liHoverPrimary, liClass ]}>
+                <a href="#" class:list={[ aSizing ]}>
+                    <Icon name="mdi:square-edit-outline" class="w-7 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>Update</span>
+                </a>
+                </li>
+            -->
+            <!-- LINK END -->
+            <!-- DOWNLOAD LINK -->
+            <li class:list={[ liColorPrimary, liHoverSecondary, liClass ]}>
+                <a href={pdf} class:list={[ aSizing ]}>
+                    <Icon name="mdi:download" class="w-7 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>Download</span>
+                </a>
+            </li>
+            <!-- LINK END -->
+        </ul>
+        <!-- LINK GROUP ONE -->
+        <ul class:list={[ ulClass , "flex-1"]}>
+            <!-- DELETE LINK -->
+            <li class:list={[ liColorSecondary, liHoverDanger, liClass]}>
+                <a href=`/api/delcv?id=${id}` class:list={[ aSizing ]}>
+                    <Icon name="mdi:trashcan-outline" class="w-7 md:w-8 hover:w-8 " />
+                    <span class:list={[ aTextStyles ]}>Delete</span>
+                </a>
+            </li>
+            <!-- LINK END -->
+        </ul>
+    </div>
+    <!-- LINK WRAPPER END HERE -->
+</div>
+<!-- CARD END HERE -->

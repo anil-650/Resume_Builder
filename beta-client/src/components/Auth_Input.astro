@@ -1,0 +1,79 @@
+---
+import { Icon } from 'astro-icon';
+
+export interface Props {
+lname?: string;
+name: string;
+id: string;
+input_type: 'text' | 'password' | 'email' ;
+required?: boolean;
+classes?: string;
+icon: string;
+}
+
+const {
+lname,
+icon,
+name,
+id,
+input_type,
+required=false,
+classes,
+...rest
+} = Astro.props;
+
+const input_class=[
+"appearance-none",
+"border-gray-600",
+"border-b",
+"w-full",
+"py-2",
+"pl-1",
+"peer",
+// focus settings
+"focus:appearance-none",
+"focus:outline-none",
+"focus:border-b-4",
+"focus:placeholder-transparent",
+"focus:border-orange-500"
+]
+
+
+const label_class=[
+"absolute",
+"left-0",
+"top-2",
+"ml-0",
+"bg-transparent",
+"text-transparent",
+// focus settings
+"peer-focus:text-orange-500",
+"transition-all ease-in-out",
+"duration-200",
+"peer-focus:-top-4",
+"peer-focus:px-1",
+"peer-focus:text-xs",
+"peer-focus:bg-white"
+]
+
+---
+<div class="flex gap-2">
+    <Icon name={icon} class="w-11 text-orange-500 center" />
+    <div class="relative flex w-full items-center">
+        <input
+                class:list={[classes, input_class]}
+                type={input_type}
+                placeholder={lname}
+                name={name}
+                required={required}
+                id={id}
+                {...rest}
+                />
+                <label
+                        class:list={[classes, label_class]}
+                        for={id}
+                        >
+                        {lname}
+                </label>
+    </div>
+</div>
